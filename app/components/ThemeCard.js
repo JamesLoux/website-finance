@@ -3,7 +3,7 @@
 
 export default function ThemeCard({ icon, title, description }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md hover:border-blue-300 transition-all">
+    <div className="bg-white border border-gray-300 rounded-xl p-6 hover:shadow-md hover:border-blue-300 transition-all">
 
       {/* Icône de la thématique */}
       <div className="text-3xl mb-4">{icon}</div>

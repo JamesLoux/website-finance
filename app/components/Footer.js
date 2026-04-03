@@ -3,7 +3,7 @@
 
 export default function Footer() {
   return (
-    <footer id="footer" className="bg-white border-t border-gray-200 py-10 px-6">
+    <footer id="footer" className="bg-white border-t border-gray-300 py-10 px-6">
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
 
         {/* Nom du site dans le footer */}

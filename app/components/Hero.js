@@ -1,6 +1,8 @@
 // Composant Hero : section d'accroche en haut de la page d'accueil
 // C'est la première chose que voit le visiteur
 
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section className="bg-white py-24 px-6">
@@ -23,14 +25,14 @@ export default function Hero() {
           et pédagogie !
         </p>
 
-        {/* Appel à l'action */}
+        {/* Appel à l'action — renvoie vers la page des cours */}
         <div className="mt-10">
-          <a
-            href="#thematiques"
+          <Link
+            href="/cours"
             className="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Explorer les thématiques
-          </a>
+            Explorer les cours
+          </Link>
         </div>
 
       </div>
