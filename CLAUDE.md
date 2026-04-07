@@ -35,7 +35,9 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 2 / Modèles de diffusion
 - [x] **Module 2 — Pricing : COMPLET (3/3 pages)**
 - [x] Module 3 / L'essentiel des Greeks (grecques-premier-ordre)
-- [ ] Module 3 restants (Quelques démonstrations, Arbitrage Theta-Gamma)
+- [x] Module 3 / Quelques démonstrations (grecques-second-ordre)
+- [x] Module 3 / Arbitrage Theta-Gamma (arbitrage-theta-gamma)
+- [x] **Module 3 — The Greeks : COMPLET (3/3 pages)**
 - [ ] Modules 4 à 8
 - [ ] Simulateur de stratégies
 - [ ] Quiz Modules 2 à 8
@@ -99,7 +101,9 @@ app/
       TableOfContents.js             ← TOC flottante sticky à droite (visible xl+), scan h2[id] + délai 100ms
       BrownianMotionChart.js         ← Composant interactif : simulation MB avec slider σ
       DiffusionComparisonChart.js    ← Composant interactif : densités Normale (bleue) vs Log-Normale (verte), slider σ 0.1→1.0, ligne rouge frontière zéro, parsing:false + LinearScale
-      GreeksChart.js                 ← Composant interactif : Greek sélectionné (dropdown) en fonction de S, Call + Put côte à côte, courbes noires, zones vert/rouge, ligne orange y=0, Filler plugin
+      GreeksChart.js                 ← Composant interactif : Greek sélectionné (dropdown) en fonction de S, Call + Put côte à côte (flex-col xl:flex-row), courbes noires, zones vert/rouge, ligne orange y=0, Filler plugin
+      CallValueChart.js              ← Composant : prime BS vs valeur intrinsèque, zone verte valeur temps, fill:'+1', plage S 70-130, K=100 σ=20% r=5% τ=1an
+      BachelierChart.js              ← Composant : décomposition Bachelier — bruit bleu + tendance orange pointillés + trajectoire complète noire, Box-Muller, N=252 jours, bouton "Nouvelle simulation"
     module-1-calcul-stochastique/
       mouvement-brownien/page.js     ← ⭐ TEMPLATE DE RÉFÉRENCE pour toutes les pages de cours
       lemme-ito/page.js              ← ✅ Fait
@@ -110,8 +114,8 @@ app/
       modeles-diffusion/page.js      ← ✅ Fait
     module-3-grecques/
       grecques-premier-ordre/page.js ← ✅ Fait (titre : "L'essentiel des Greeks", slug conservé)
-      grecques-second-ordre/page.js  ← (à créer, titre prévu : "Quelques démonstrations")
-      arbitrage-theta-gamma/page.js  ← (à créer)
+      grecques-second-ordre/page.js  ← ✅ Fait (titre : "Quelques démonstrations", slug conservé)
+      arbitrage-theta-gamma/page.js  ← ✅ Fait
   quiz/
     page.js                          ← Index des quiz — Module 1 lien actif, autres badges "Bientôt disponible"
     module-1/
@@ -187,9 +191,33 @@ app/
   - **Composant GreeksChart** (`app/cours/components/GreeksChart.js`) : deux canvas côte à côte Call/Put, dropdown 9 Greeks. CDF normale Abramowitz & Stegun (erreur < 7.5e-8). 4 datasets par graphique : zone positive (fill origin, fond vert rgba(34,197,94,0.15)), zone négative (fill origin, fond rouge rgba(239,68,68,0.15)), ligne y=0 en pointillés orange, courbe principale noire. Filler plugin Chart.js enregistré. Tooltip filtré sur la courbe noire uniquement. Légende dynamique : "Zone verte = long {greek} · Zone rouge = short {greek}". Paramètres fixes affichés (K=100, r=5%, q=2%, σ=20%, τ=1an).
   - **Renommages Module 3** : "Les Grecques" → "The Greeks" (sidebar, cours/page.js, quiz/page.js, lien nav modeles-diffusion). Sous-pages : "Greeks de 1er ordre" → "L'essentiel des Greeks", "Greeks de 2nd ordre" → "Quelques démonstrations" (sidebar, cours/page.js, lien Suivant de la page, lien Suivant de modeles-diffusion). Slugs conservés (`grecques-premier-ordre`, `grecques-second-ordre`).
 
+- **2026-04-07** :
+  - **Page "Quelques démonstrations"** (`app/cours/module-3-grecques/grecques-second-ordre/page.js`) créée et complétée. 3 sections h2 (Delta ∂C/∂S, Gamma ∂²C/∂S², Vega ∂C/∂σ).
+    - **Section Delta** : formule Call encadrée en `bg-gray-50`, dérivation en 4 étapes (règle du produit → calcul ∂d₁/∂S = ∂d₂/∂S = 1/(Sσ√τ) → identité fondamentale Se^{-qτ}n(d₁) = Ke^{-rτ}n(d₂) en boîte bleue → résultat Δ_call = e^{-qτ}N(d₁) encadré).
+    - **Section Gamma** : formule Δ encadrée, 2 étapes → résultat Γ = e^{-qτ}n(d₁)/(Sσ√τ) encadré, boîte bleue "Gamma Call = Gamma Put" (parité Call-Put, constante disparaît à la dérivation).
+    - **Section Vega** : développement de d₁ et d₂ en isolant les termes en σ → calcul ∂d₁/∂σ et ∂d₂/∂σ en 4 étapes → factorisation via identité fondamentale → différence √τ → résultat 𝒱_call = Se^{-qτ}n(d₁)√τ encadré, boîte bleue "Vega Call = Vega Put" (parité C−P indépendante de σ).
+    - **Encadré "À savoir"** ajouté entre l'introduction et la section Delta : `bg-blue-50 border border-blue-300`, rappel de la règle de dérivation de fonction composée appliquée à N(d₁) — dérivée de N est n, x désigne S ou σ selon le Greek.
+    - Navigation : ← L'essentiel des Greeks / → Arbitrage Theta-Gamma.
+  - **Page "Arbitrage Theta-Gamma"** (`app/cours/module-3-grecques/arbitrage-theta-gamma/page.js`) créée et complétée. 4 sections h2.
+    - **Section 1 — Jensen** : inégalité de Jensen 𝔼[f(Sₜ)] ≥ f(𝔼[Sₜ]) encadrée, boîte bleue "Traduction financière" (valeur temps dictée par la volatilité).
+    - **Section 2 — P&L Delta-neutre** : dV depuis le lemme d'Itô, construction Π = V − ΔSₜ, annulation de ΔdSₜ, résultat encadré dΠ = (Θ + ½σ²Sₜ²Γ)dt.
+    - **Section 3 — Relation fondamentale** : sous r=0, dΠ = 0 → Θ = −½σ²Sₜ²Γ encadré. Boîte bleue "Gamma Scalping" (achat bas / vente haut). Boîte bleue "Condition d'arbitrage" (σ_réal vs σ_impl).
+    - **Section 4 — Anomalie** : EDP complète Θ = −½σ²Sₜ²Γ + r(V − SₜΔ). Put Deep-ITM : V≈K, Δ≈−1, Γ→0. Calcul 3 étapes → Θ ≈ rK encadré. Boîte amber "Attention" (Européen seulement). Boîte bleue "Explication économique" (actualisation de K).
+    - Quiz badge "Bientôt disponible". Navigation : ← Quelques démonstrations / → Swaps & Flux (/cours/module-4-taux-credit/swaps-flux).
+  - **Module 3 — The Greeks : COMPLET (3/3 pages)**.
+  - **Composant CallValueChart** (`app/cours/components/CallValueChart.js`) : composant client Chart.js. Affiche la prime BS d'un Call (courbe pleine rouge) vs la valeur intrinsèque max(S−K,0) (pointillés rouges). Zone verte `rgba(134,239,172,0.5)` entre les deux courbes via `fill: '+1'` (dataset helper transparent). Ligne verticale grise en pointillés au strike K=100. Plage S : 70 à 130 (200 points). Légende filtrée (masque le helper et la ligne K). Tooltip sur les deux courbes visibles uniquement. Paramètres fixes : K=100, σ=20%, r=5%, q=0, τ=1an. Intégré dans `arbitrage-theta-gamma/page.js` section 1 (après boîte bleue Jensen), avec phrase de transition.
+  - **Composant BachelierChart** (`app/cours/components/BachelierChart.js`) : composant client Chart.js. Décompose le modèle Bachelier en trois séries partageant le même Brownien (Box-Muller) : bruit pur σdW (bleu, `#3b82f6`), tendance μdt (orange pointillés, `#f97316`), Bachelier complet (noir épais, `#111827`). S₀=100, μ=8%, σ=15%, N=252 jours. Bouton "Nouvelle simulation" (state `count`). Tooltip désactivé. Intégré dans `modeles-diffusion/page.js` section 2 (Bachelier), après la boîte bleue "Utilisations actuelles", avec phrase de transition.
+  - **GreeksChart — layout responsive** : wrapper des deux canvas Call/Put modifié de `grid grid-cols-2 gap-4` → `flex flex-col xl:flex-row gap-6`. Mobile/tablette : empilés verticalement. xl+ : côte à côte.
+  - **TableOfContents — largeur TOC** : `w-48` → `w-64` (+33%) dans `TableOfContents.js`. Seule la colonne TOC droite est affectée.
+
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000
 - Arrêter le serveur : Ctrl+C
+- Commande Git dans l'ordre terminal dans website_finance:
+git add . → je sélectionne tout
+git status → je vérifie avant d'agir
+git commit -m "..." → je sauvegarde localement avec un message clair
+git push → j'envoie sur GitHub → Vercel déploie automatiquement
 
 ## Liens utiles
 - GitHub : https://github.com/JamesLoux/website-finance

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { InlineMath, BlockMath } from '../../../components/Math';
 import DiffusionComparisonChart from '../../components/DiffusionComparisonChart';
+import BachelierChart from '../../components/BachelierChart';
 
 export const metadata = {
   title: 'Modèles de diffusion — Finance according to James',
@@ -140,6 +141,11 @@ export default function ModelesDiffusionPage() {
           passé brièvement sous zéro car personne n'en voulait les coûts de stockage devenaient pesants). Dans ces cas, la loi Normale est le bon cadre.
         </p>
       </div>
+
+      <p className="text-gray-600 leading-relaxed mb-4">
+        La simulation suivante décompose visuellement les deux forces du modèle :
+      </p>
+      <BachelierChart />
 
       {/* ══════════════════════════════════════════════════════════════
           Section 3 — Black-Scholes

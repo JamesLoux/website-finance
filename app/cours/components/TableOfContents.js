@@ -21,7 +21,7 @@ export default function TableOfContents() {
   if (toc.length === 0) return null;
 
   return (
-    <aside className="hidden xl:block w-48 shrink-0 sticky top-[57px] h-[calc(100vh-57px)] overflow-y-auto py-8 pl-6 pr-2 border-l border-gray-300">
+    <aside className="hidden xl:block w-64 shrink-0 sticky top-[57px] h-[calc(100vh-57px)] overflow-y-auto py-8 pl-6 pr-2 border-l border-gray-300">
       <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest mb-3 px-2">
         Sur cette page
       </p>

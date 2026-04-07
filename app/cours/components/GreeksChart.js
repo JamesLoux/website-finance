@@ -233,7 +233,7 @@ export default function GreeksChart() {
       </div>
 
       {/* Deux graphiques côte à côte */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="flex flex-col xl:flex-row gap-6">
         <div>
           <p className="text-sm font-semibold text-gray-700 mb-2 text-center">Call</p>
           <canvas ref={callCanvasRef} />
