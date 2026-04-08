@@ -296,40 +296,18 @@ export default function ArbitrageThetaGammaPage() {
       </div>
 
       {/* ── Lien quiz ── */}
-      <div className="mt-12 p-5 bg-gray-50 border border-gray-300 rounded-xl flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium text-gray-800">Prêt à tester tes connaissances ?</p>
-          <p className="text-sm text-gray-500 mt-0.5">Quiz sur le Module 3 — The Greeks</p>
-        </div>
-        <span className="shrink-0 bg-gray-200 text-gray-500 text-sm font-semibold px-5 py-2.5 rounded-lg cursor-default">
-          Bientôt disponible
-        </span>
+      <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
+        Un quiz sur le Module 3 sera bientôt disponible.
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}
-      <div className="mt-8 pt-8 border-t border-gray-300 flex items-center justify-between gap-4">
-
-        {/* Précédent */}
-        <Link
-          href="/cours/module-3-grecques/grecques-second-ordre"
-          className="group w-1/2 flex flex-col items-start p-4 border border-gray-300 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all"
-        >
-          <span className="text-xs text-gray-400 mb-1">← Chapitre précédent</span>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-            Quelques démonstrations
-          </span>
-        </Link>
-
-        {/* Suivant */}
-        <Link
-          href="/cours/module-4-taux-credit/swaps-flux"
-          className="group w-1/2 flex flex-col items-end p-4 border border-gray-300 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all text-right"
-        >
-          <span className="text-xs text-gray-400 mb-1">Chapitre suivant →</span>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-            Swaps &amp; Flux
-          </span>
-        </Link>
+      <div className="flex justify-between mt-12 pt-6 border-t border-gray-300">
+        <a href="/cours/module-3-grecques/grecques-second-ordre" className="text-blue-600 hover:underline text-sm">
+          ← Quelques démonstrations
+        </a>
+        <a href="/cours/module-4-taux-credit/swaps-flux" className="text-blue-600 hover:underline text-sm">
+          Swaps &amp; Flux →
+        </a>
       </div>
 
     </article>

@@ -280,29 +280,19 @@ export default function GreeksSecondOrdrePage() {
         </p>
       </div>
 
-      {/* ── Navigation Précédent / Suivant ── */}
-      <div className="mt-12 pt-8 border-t border-gray-300 flex items-center justify-between gap-4">
-        {/* Précédent */}
-        <Link
-          href="/cours/module-3-grecques/grecques-premier-ordre"
-          className="group w-1/2 flex flex-col items-start p-4 border border-gray-300 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all"
-        >
-          <span className="text-xs text-gray-400 mb-1">← Chapitre précédent</span>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-            L&apos;essentiel des Greeks
-          </span>
-        </Link>
+      {/* ── Lien quiz ── */}
+      <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
+        Un quiz sur le Module 3 sera bientôt disponible.
+      </div>
 
-        {/* Suivant */}
-        <Link
-          href="/cours/module-3-grecques/arbitrage-theta-gamma"
-          className="group w-1/2 flex flex-col items-end p-4 border border-gray-300 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all text-right"
-        >
-          <span className="text-xs text-gray-400 mb-1">Chapitre suivant →</span>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-            Arbitrage Theta-Gamma
-          </span>
-        </Link>
+      {/* ── Navigation Précédent / Suivant ── */}
+      <div className="flex justify-between mt-12 pt-6 border-t border-gray-300">
+        <a href="/cours/module-3-grecques/grecques-premier-ordre" className="text-blue-600 hover:underline text-sm">
+          ← L&apos;essentiel des Greeks
+        </a>
+        <a href="/cours/module-3-grecques/arbitrage-theta-gamma" className="text-blue-600 hover:underline text-sm">
+          Arbitrage Theta-Gamma →
+        </a>
       </div>
 
     </article>

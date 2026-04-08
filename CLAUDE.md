@@ -33,12 +33,17 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 2 / Équation de Black-Scholes
 - [x] Module 2 / Formule de Black-Scholes
 - [x] Module 2 / Modèles de diffusion
-- [x] **Module 2 — Pricing : COMPLET (3/3 pages)**
+- [x] Module 2 / Simulation de Monte-Carlo
+- [x] **Module 2 — Pricing : COMPLET (4/4 pages)**
 - [x] Module 3 / L'essentiel des Greeks (grecques-premier-ordre)
 - [x] Module 3 / Quelques démonstrations (grecques-second-ordre)
 - [x] Module 3 / Arbitrage Theta-Gamma (arbitrage-theta-gamma)
 - [x] **Module 3 — The Greeks : COMPLET (3/3 pages)**
-- [ ] Modules 4 à 8
+- [x] Module 6 / Vol implicite et nappes
+- [ ] Module 6 / Vol stochastique
+- [ ] Module 6 / Variance Swap & VIX
+- [ ] Module 6 / Skew Delta
+- [ ] Modules 4, 5, 7, 8
 - [ ] Simulateur de stratégies
 - [ ] Quiz Modules 2 à 8
 
@@ -56,13 +61,13 @@ Accueil / Cours / Simulateur / Quiz / À propos
 
 ### Structure des cours (8 modules)
 - `/cours/module-1-calcul-stochastique` — mouvement-brownien, lemme-ito, girsanov-risque-neutre
-- `/cours/module-2-pricing` — equation-black-scholes, probabilites-d1-d2, modeles-diffusion (ordre de navigation)
+- `/cours/module-2-pricing` — equation-black-scholes, probabilites-d1-d2, modeles-diffusion, monte-carlo (ordre de navigation)
   - ⚠️ Le slug `probabilites-d1-d2` est conservé tel quel mais la page s'intitule **"Formule de Black-Scholes"** — le nom affiché et le slug divergent intentionnellement (renommage sans migration d'URL).
 - `/cours/module-3-grecques` — grecques-premier-ordre ("L'essentiel des Greeks"), grecques-second-ordre ("Quelques démonstrations"), arbitrage-theta-gamma
   - ⚠️ Même divergence slug/titre que pour module-2 : les slugs sont conservés, les titres affichés diffèrent.
 - `/cours/module-4-taux-credit` — swaps-flux, produits-courbe, modeles-taux
 - `/cours/module-5-produits-equity` — vanilles-combinaisons, options-exotiques, produits-structures
-- `/cours/module-6-volatilite` — variance-swap, vol-locale-stochastique
+- `/cours/module-6-volatilite` — vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta
 - `/cours/module-7-quanto-fx` — options-quanto, options-composites
 - `/cours/module-8-macro` — plomberie-fed, gestion-reserves, politique-monetaire
 
@@ -80,6 +85,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
 ## Dépendances notables
 - `katex` — rendu des formules LaTeX côté serveur (ajouté 2026-03-31)
 - `chart.js` + `react-chartjs-2` — graphiques interactifs (ajouté 2026-03-31)
+- `three` — rendu 3D WebGL pour la nappe de volatilité (ajouté 2026-04-09)
 
 ## Architecture des fichiers clés
 ```
@@ -103,7 +109,9 @@ app/
       DiffusionComparisonChart.js    ← Composant interactif : densités Normale (bleue) vs Log-Normale (verte), slider σ 0.1→1.0, ligne rouge frontière zéro, parsing:false + LinearScale
       GreeksChart.js                 ← Composant interactif : Greek sélectionné (dropdown) en fonction de S, Call + Put côte à côte (flex-col xl:flex-row), courbes noires, zones vert/rouge, ligne orange y=0, Filler plugin
       CallValueChart.js              ← Composant : prime BS vs valeur intrinsèque, zone verte valeur temps, fill:'+1', plage S 70-130, K=100 σ=20% r=5% τ=1an
+      MonteCarloChart.js             ← Composant : canvas 2D natif (pas Chart.js), 30 trajectoires GBM bleues, ligne K rouge. Boutons toggle M (1 000/10 000/100 000), slider σ uniquement. S₀=K=100, T=1an, r=5% fixes. 3 cartes : prix MC (bleu), prix BS (gris), écart relatif en %. normCDF corrigée (A&S 7.1.26 → passer x/√2)
       BachelierChart.js              ← Composant : décomposition Bachelier — bruit bleu + tendance orange pointillés + trajectoire complète noire, Box-Muller, N=252 jours, bouton "Nouvelle simulation"
+      VolSurfaceChart.js             ← Composant Three.js : nappe de volatilité 3D interactive — skew actions (sigmImpl avec term structure + skew + convexité exponentiels), heatmap vertexColors, wireframe, axes 3D (Line), labels (Sprite+CanvasTexture), rotation souris+touch natives. Three.js = npm dep.
     module-1-calcul-stochastique/
       mouvement-brownien/page.js     ← ⭐ TEMPLATE DE RÉFÉRENCE pour toutes les pages de cours
       lemme-ito/page.js              ← ✅ Fait
@@ -112,10 +120,14 @@ app/
       equation-black-scholes/page.js ← ✅ Fait
       probabilites-d1-d2/page.js     ← ✅ Fait (titre affiché : "Formule de Black-Scholes", slug conservé)
       modeles-diffusion/page.js      ← ✅ Fait
+      monte-carlo/page.js            ← ✅ Fait
     module-3-grecques/
       grecques-premier-ordre/page.js ← ✅ Fait (titre : "L'essentiel des Greeks", slug conservé)
       grecques-second-ordre/page.js  ← ✅ Fait (titre : "Quelques démonstrations", slug conservé)
       arbitrage-theta-gamma/page.js  ← ✅ Fait
+    module-6-volatilite/
+      vol-implicite-nappes/page.js   ← ✅ Fait
+      vol-implicite-nappes/VolSurfaceWrapper.js ← Wrapper 'use client' nécessaire pour next/dynamic {ssr:false} depuis Server Component
   quiz/
     page.js                          ← Index des quiz — Module 1 lien actif, autres badges "Bientôt disponible"
     module-1/
@@ -150,11 +162,46 @@ app/
 - Chaque page de cours inclut : fil d'Ariane, titre h1, sections h2 avec `id` (pour la TOC), propriétés en boîtes bleues, navigation Précédent/Suivant, lien Quiz
 - Formules LaTeX : `<InlineMath>` pour l'inline, `<BlockMath>` pour les équations centrées
 - **CRITIQUE — syntaxe LaTeX** : toujours `{'\\formule'}` (guillemets simples), jamais `` {`\\formule`} `` (backticks). Les backticks dans `<InlineMath>` causent une erreur de parsing à la compilation.
+- **Chemin d'import Math.js** : tous les modules (1 à 8) utilisent `'../../../components/Math'` (3 niveaux). La structure `app/cours/[module]/[page]/page.js` est identique pour tous les modules — 3 niveaux suffisent pour remonter à `app/`.
+- **⚠️ CRITIQUE — next/dynamic {ssr:false} depuis un Server Component** : impossible d'utiliser `next/dynamic(() => import('...'), { ssr: false })` directement dans un fichier `page.js` (qui est un Server Component par défaut). Il faut créer un fichier wrapper `'use client'` intermédiaire (ex. `VolSurfaceWrapper.js`) dans le même dossier que la page, qui fait l'import dynamique, puis importer ce wrapper dans `page.js`. Applicable à tout composant Three.js ou browser-only.
+- **⚠️ Chemin dans le wrapper `'use client'`** : le wrapper est dans `module-X/page-slug/`, donc pour atteindre `cours/components/`, il faut `'../../components/NomComposant'` (2 niveaux), pas 3.
 - **Style texte** : ne pas utiliser de tirets longs (—) comme séparateurs décoratifs dans le corps du texte
 - La TOC est générée automatiquement par `TableOfContents.js` (scan `h2[id]` avec délai 100ms) — panneau flottant sticky à droite, visible uniquement sur écrans xl+ (≥1280px)
 - La TOC se met à jour automatiquement dès qu'on modifie le texte ou l'`id` d'un `h2` — pas besoin de toucher à `TableOfContents.js` ni à la sidebar
 - Contenu rédigé par le propriétaire, composants interactifs créés par Claude Code
 - Sessions courtes et thématiques, CLAUDE.md mis à jour à chaque fin de session
+
+### Pattern standardisé du bas de page (appliqué à toutes les pages depuis 2026-04-08)
+Toutes les pages de cours doivent terminer avec exactement ce pattern, dans cet ordre :
+
+**1. Bloc quiz** (juste avant la navigation) :
+```jsx
+{/* ── Lien quiz ── */}
+<div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
+  Un quiz sur le Module X sera bientôt disponible.
+</div>
+```
+Exception : si le quiz du module existe, remplacer par un lien actif :
+```jsx
+<div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
+  Le quiz du Module 1 est disponible — <a href="/quiz/module-1" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
+</div>
+```
+Actuellement, seul le **Module 1** a un quiz actif (`/quiz/module-1`).
+
+**2. Navigation Précédent/Suivant** :
+```jsx
+{/* ── Navigation Précédent / Suivant ── */}
+<div className="flex justify-between mt-12 pt-6 border-t border-gray-300">
+  <a href="/cours/..." className="text-blue-600 hover:underline text-sm">
+    ← Titre précédent
+  </a>
+  <a href="/cours/..." className="text-blue-600 hover:underline text-sm">
+    Titre suivant →
+  </a>
+</div>
+```
+Si première page (pas de précédent) : `<div />` à la place du lien gauche. Utiliser `<a>` simples, **pas** `<Link>` avec carte.
 
 ## Journal des sessions
 - **2026-03-30** : Construction complète de la page d'accueil (composants Header, Hero, Thématiques, Footer), ajustements du Hero, et mise en place du déploiement (Git, GitHub, Vercel).
@@ -209,6 +256,26 @@ app/
   - **Composant BachelierChart** (`app/cours/components/BachelierChart.js`) : composant client Chart.js. Décompose le modèle Bachelier en trois séries partageant le même Brownien (Box-Muller) : bruit pur σdW (bleu, `#3b82f6`), tendance μdt (orange pointillés, `#f97316`), Bachelier complet (noir épais, `#111827`). S₀=100, μ=8%, σ=15%, N=252 jours. Bouton "Nouvelle simulation" (state `count`). Tooltip désactivé. Intégré dans `modeles-diffusion/page.js` section 2 (Bachelier), après la boîte bleue "Utilisations actuelles", avec phrase de transition.
   - **GreeksChart — layout responsive** : wrapper des deux canvas Call/Put modifié de `grid grid-cols-2 gap-4` → `flex flex-col xl:flex-row gap-6`. Mobile/tablette : empilés verticalement. xl+ : côte à côte.
   - **TableOfContents — largeur TOC** : `w-48` → `w-64` (+33%) dans `TableOfContents.js`. Seule la colonne TOC droite est affectée.
+
+- **2026-04-08** :
+  - **Page "Simulation de Monte-Carlo"** (`app/cours/module-2-pricing/monte-carlo/page.js`) créée. 6 sections h2 (intuition π, application au pricing, algorithme + code Python, convergence TCL, simulateur, quand utiliser MC). Encadré schéma exact GBM sous ℚ. Bloc code Python en `bg-gray-50`. Deux colonnes "Quand MC s'impose / Limites". Navigation : ← Modèles de diffusion / → L'essentiel des Greeks.
+  - **Composant MonteCarloChart** (`app/cours/components/MonteCarloChart.js`) : canvas 2D natif (pas Chart.js) — 30 trajectoires GBM bleues semi-transparentes, ligne K rouge en pointillés. Trois cartes : Prix MC (bleu), Prix BS exact (gris), Écart relatif en %. Boutons toggle M : 1 000 / 10 000 / 100 000 (pas de slider M). Slider σ uniquement (5%→80%). Paramètres fixes : S₀=K=100, T=1an, r=5%, 50 pas. Calcul en `setTimeout(10ms)`. State : `{ M: 1000, sigma: 0.2 }` seulement.
+  - **Bug normCDF corrigé dans MonteCarloChart.js** : la formule A&S 7.1.26 approxime `erf(z)`, donc `N(x) = 0.5*(1+erf(x/√2))` — il faut passer `x/Math.sqrt(2)` à la formule, pas `x` directement. Le bug produisait des prix gonflés (ex. ~7.99 € au lieu de ~6.81 € pour σ=10%). `GreeksChart.js` utilise A&S 26.2.17 (coefficients `0.2316419`), appliqué directement à `x` — correct et inchangé.
+  - **Sidebar** : "Simulation de Monte-Carlo" ajoutée après "Modèles de diffusion" dans Module 2. Module 2 passe de 3 à 4 sous-pages.
+  - **cours/page.js** : Module 2 passe à 4 badges.
+  - **Module 2 — Pricing : COMPLET (4/4 pages)**.
+  - **Standardisation des bas de page** (toutes les pages de cours, 9 fichiers modifiés) : remplacement du bloc quiz `bg-gray-50` avec bouton ou span "Bientôt disponible" → bloc compact `bg-blue-50 border-blue-100 mt-10 p-4`. Remplacement des navigations `<Link>` carte → `<div className="flex justify-between mt-12 pt-6 border-t border-gray-300">` avec simples `<a>`. Module 1 (quiz existant) → lien actif vers `/quiz/module-1`. Modules 2 et 3 → "Un quiz sur le Module X sera bientôt disponible."
+  - **grecques-premier-ordre** : lien Précédent corrigé — pointait vers "Modèles de diffusion", désormais vers "Simulation de Monte-Carlo" (chaîne de navigation cohérente après ajout de monte-carlo).
+  - **arbitrage-theta-gamma** : même standardisation du bas de page appliquée.
+
+- **2026-04-08 (suite)** :
+  - **Refonte Module 6 — Volatilité** : remplacement des anciens slugs (`variance-swap`, `vol-locale-stochastique`) par 4 nouvelles sous-pages (`vol-implicite-nappes`, `vol-stochastique`, `variance-swap-vix`, `skew-delta`). Sidebar et cours/page.js mis à jour.
+  - **Page "Vol implicite et nappes"** (`app/cours/module-6-volatilite/vol-implicite-nappes/page.js`) créée. 4 sections h2 (volatilité implicite, smile/skew, nappe de volatilité, Dupire). Section 1 : inversion de la formule BS encadrée (`bg-gray-50`) + boîte amber "Calibration" (Newton-Raphson / Vega). Section 2 : deux boîtes bleues côte à côte (skew actions vs smile forex) avec SVG inline dans chaque boîte — courbe décroissante avec légère remontée OTM Call pour le skew, courbe en U asymétrique pour le smile forex. Section 3 : axes de la nappe (liste 3 lignes), composant `VolSurfaceChart` interactif 3D, sous-section "Les contraintes d'arbitrage" avec deux boîtes bleues (calendar spread, butterfly), paragraphe SVI/SSVI. Section 4 : EDS avec vol locale encadrée, formule de Dupire encadrée, deux boîtes bleues numérateur/dénominateur. Navigation : ← Arbitrage Theta-Gamma / → Vol stochastique.
+
+- **2026-04-09** :
+  - **Composant VolSurfaceChart** (`app/cours/components/VolSurfaceChart.js`) : composant client Three.js — nappe de volatilité 3D interactive. `sigmImpl(K, T)` = `atmVol(T) + skew(T)×m + convexity(T)×m²` avec term structure, skew et convexité qui s'écrasent exponentiellement avec T (court terme = skew fort + smile prononcé, long terme = quasi-plat). Heatmap bleu→cyan→vert→jaune→rouge via `vertexColors`. Wireframe noir opacité 15% par-dessus. Axes 3D via `THREE.Line` (rouge K, vert T, bleu σ). Labels via `THREE.Sprite` + `CanvasTexture`. Rotation souris + touch natives (pas OrbitControls). Cleanup complet (geo, mat, tex, renderer). Canvas 420px hauteur.
+  - **VolSurfaceWrapper** (`app/cours/module-6-volatilite/vol-implicite-nappes/VolSurfaceWrapper.js`) : wrapper client nécessaire pour importer `VolSurfaceChart` dynamiquement avec `next/dynamic { ssr: false }` depuis une page Server Component. ⚠️ `next/dynamic` dans un Server Component ne peut pas utiliser `{ ssr: false }` directement — il faut un wrapper `'use client'` intermédiaire.
+  - **SVG skew/smile** : deux SVG inline JSX dans les boîtes bleues de la section 2. Skew : courbe part haut gauche, descend vers ATM, remonte légèrement à droite (`path` cubique). Smile : courbe en U asymétrique (gauche plus haut). Labels OTM Put / ATM / OTM Call sous l'axe, décalés (x=55/147/228) pour rester dans le `viewBox="0 0 280 120"`. Pas de label "Strike K" sur l'axe — il se superposait avec "OTM Call".
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000

@@ -340,44 +340,18 @@ export default function EquationBlackScholesPage() {
       </div>
 
       {/* ── Lien quiz ── */}
-      <div className="mt-12 p-5 bg-gray-50 border border-gray-300 rounded-xl flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium text-gray-800">Prêt à tester tes connaissances ?</p>
-          <p className="text-sm text-gray-500 mt-0.5">Quiz sur le Module 2 — Pricing</p>
-        </div>
-        <Link
-          href="/quiz"
-          className="shrink-0 bg-blue-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          S&apos;entraîner →
-        </Link>
+      <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
+        Un quiz sur le Module 2 sera bientôt disponible.
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}
-      <div className="mt-8 pt-8 border-t border-gray-300 flex items-center justify-between gap-4">
-
-        {/* Précédent */}
-        <Link
-          href="/cours/module-1-calcul-stochastique/girsanov-risque-neutre"
-          className="group w-1/2 flex flex-col items-start p-4 border border-gray-300 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all"
-        >
-          <span className="text-xs text-gray-400 mb-1">← Chapitre précédent</span>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-            Girsanov &amp; Risque-Neutre
-          </span>
-        </Link>
-
-        {/* Suivant */}
-        <Link
-          href="/cours/module-2-pricing/probabilites-d1-d2"
-          className="group w-1/2 flex flex-col items-end p-4 border border-gray-300 rounded-xl hover:border-blue-300 hover:shadow-sm transition-all text-right"
-        >
-          <span className="text-xs text-gray-400 mb-1">Chapitre suivant →</span>
-          <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-            Formule de Black-Scholes
-          </span>
-        </Link>
-
+      <div className="flex justify-between mt-12 pt-6 border-t border-gray-300">
+        <a href="/cours/module-1-calcul-stochastique/girsanov-risque-neutre" className="text-blue-600 hover:underline text-sm">
+          ← Girsanov &amp; Risque-Neutre
+        </a>
+        <a href="/cours/module-2-pricing/probabilites-d1-d2" className="text-blue-600 hover:underline text-sm">
+          Formule de Black-Scholes →
+        </a>
       </div>
 
     </article>

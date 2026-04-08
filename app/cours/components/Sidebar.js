@@ -28,6 +28,7 @@ const modules = [
       { title: 'Équation de Black-Scholes', slug: 'equation-black-scholes' },
       { title: 'Formule de Black-Scholes', slug: 'probabilites-d1-d2' },
       { title: 'Modèles de diffusion', slug: 'modeles-diffusion' },
+      { title: 'Simulation de Monte-Carlo', slug: 'monte-carlo' },
     ],
   },
   {
@@ -65,8 +66,10 @@ const modules = [
     title: 'Volatilité',
     slug: 'module-6-volatilite',
     sousPages: [
-      { title: 'Variance swap', slug: 'variance-swap' },
-      { title: 'Vol locale & stochastique', slug: 'vol-locale-stochastique' },
+      { title: 'Vol implicite et nappes', slug: 'vol-implicite-nappes' },
+      { title: 'Vol stochastique', slug: 'vol-stochastique' },
+      { title: 'Variance Swap & VIX', slug: 'variance-swap-vix' },
+      { title: 'Skew Delta', slug: 'skew-delta' },
     ],
   },
   {

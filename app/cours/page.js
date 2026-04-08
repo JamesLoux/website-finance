@@ -18,7 +18,7 @@ const modules = [
     title: "Pricing",
     description:
       "Équation de Black-Scholes, modèles de diffusion et interprétation probabiliste de d1 et d2. Comment valoriser un dérivé de façon rigoureuse.",
-    sousPages: ["Équation de Black-Scholes", "Formule de Black-Scholes", "Modèles de diffusion"],
+    sousPages: ["Équation de Black-Scholes", "Formule de Black-Scholes", "Modèles de diffusion", "Simulation de Monte-Carlo"],
   },
   {
     number: "03",
@@ -49,8 +49,8 @@ const modules = [
     slug: "module-6-volatilite",
     title: "Volatilité",
     description:
-      "Variance swaps, volatilité locale et stochastique. Un concept central en finance de marché, décrypté en profondeur.",
-    sousPages: ["Variance swap", "Vol locale & stochastique"],
+      "Vol implicite, nappes, modèles stochastiques, variance swaps et skew. Un concept central en finance de marché, décrypté en profondeur.",
+    sousPages: ["Vol implicite et nappes", "Vol stochastique", "Variance Swap & VIX", "Skew Delta"],
   },
   {
     number: "07",
