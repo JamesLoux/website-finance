@@ -40,9 +40,10 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 3 / Arbitrage Theta-Gamma (arbitrage-theta-gamma)
 - [x] **Module 3 — The Greeks : COMPLET (3/3 pages)**
 - [x] Module 6 / Vol implicite et nappes
-- [ ] Module 6 / Vol stochastique
-- [ ] Module 6 / Variance Swap & VIX
-- [ ] Module 6 / Skew Delta
+- [x] Module 6 / Vol stochastique
+- [x] Module 6 / Variance Swap & VIX
+- [x] Module 6 / Skew Delta
+- [x] **Module 6 — Volatilité : COMPLET (4/4 pages)**
 - [ ] Modules 4, 5, 7, 8
 - [ ] Simulateur de stratégies
 - [ ] Quiz Modules 2 à 8
@@ -112,6 +113,11 @@ app/
       MonteCarloChart.js             ← Composant : canvas 2D natif (pas Chart.js), 30 trajectoires GBM bleues, ligne K rouge. Boutons toggle M (1 000/10 000/100 000), slider σ uniquement. S₀=K=100, T=1an, r=5% fixes. 3 cartes : prix MC (bleu), prix BS (gris), écart relatif en %. normCDF corrigée (A&S 7.1.26 → passer x/√2)
       BachelierChart.js              ← Composant : décomposition Bachelier — bruit bleu + tendance orange pointillés + trajectoire complète noire, Box-Muller, N=252 jours, bouton "Nouvelle simulation"
       VolSurfaceChart.js             ← Composant Three.js : nappe de volatilité 3D interactive — skew actions (sigmImpl avec term structure + skew + convexité exponentiels), heatmap vertexColors, wireframe, axes 3D (Line), labels (Sprite+CanvasTexture), rotation souris+touch natives. Three.js = npm dep.
+      SABRCalibrationChart.js        ← Composant Chart.js : calibration interactive du smile SABR — formule Hagan asymptotique, 16 strikes K=70→115 en moneyness, courbe bleue de référence (α=0.25,β=0.50,ρ=−0.90,ν=1.50), courbe rouge ajustable via 4 sliders (α/β/ρ/ν), score RMSE avec barre de progression colorée (rouge→amber→vert→bleu). Axe Y 0→30%, axe X moneyness 0.70→1.15.
+      VannaPutChart.js               ← Composant Chart.js : Prix et Delta d'un Put BS — deux graphiques côte à côte xl, courbe bleue dynamique + grise référence (15%), sliders vol/spot, ligne verticale via spotRef mutable, normCDF série de Taylor, N_POINTS=1000, tension=0.
+      StickyStrikeChart.js           ← Composant Chart.js : smile fixe (skew actions) + point bleu mobile au spot + ligne verticale. Layout graphique xl:w-1/2 + bulle xl:w-1/2. Illustre le régime Sticky Strike (α=0).
+      StickyDeltaChart.js            ← Composant Chart.js : smile fixe bleu + smile rouge qui translate avec le spot. Point bleu (fixe) + point rouge (ATM dynamique). Layout flex-1 + bulle xl:w-56. Illustre le régime Sticky Delta (α=1).
+      StickySkewChart.js             ← Composant Chart.js : smile fixe bleu pointillé + smile rouge qui translate ET monte/baisse selon la courbe fixe. Vol ATM lue sur la courbe fixe au spot. Slope=−0.25, convexity=0.25. Illustre le régime Sticky Skew (vol locale).
     module-1-calcul-stochastique/
       mouvement-brownien/page.js     ← ⭐ TEMPLATE DE RÉFÉRENCE pour toutes les pages de cours
       lemme-ito/page.js              ← ✅ Fait
@@ -128,6 +134,14 @@ app/
     module-6-volatilite/
       vol-implicite-nappes/page.js   ← ✅ Fait
       vol-implicite-nappes/VolSurfaceWrapper.js ← Wrapper 'use client' nécessaire pour next/dynamic {ssr:false} depuis Server Component
+      vol-stochastique/page.js       ← ✅ Fait
+      vol-stochastique/SABRWrapper.js ← Wrapper 'use client' pour SABRCalibrationChart (next/dynamic ssr:false)
+      variance-swap-vix/page.js      ← ✅ Fait
+      skew-delta/page.js             ← ✅ Fait
+      skew-delta/VannaWrapper.js     ← Wrapper 'use client' pour VannaPutChart (next/dynamic ssr:false)
+      skew-delta/StickyStrikeWrapper.js ← Wrapper 'use client' pour StickyStrikeChart (next/dynamic ssr:false)
+      skew-delta/StickyDeltaWrapper.js  ← Wrapper 'use client' pour StickyDeltaChart (next/dynamic ssr:false)
+      skew-delta/StickySkewWrapper.js   ← Wrapper 'use client' pour StickySkewChart (next/dynamic ssr:false)
   quiz/
     page.js                          ← Index des quiz — Module 1 lien actif, autres badges "Bientôt disponible"
     module-1/
@@ -276,6 +290,54 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
   - **Composant VolSurfaceChart** (`app/cours/components/VolSurfaceChart.js`) : composant client Three.js — nappe de volatilité 3D interactive. `sigmImpl(K, T)` = `atmVol(T) + skew(T)×m + convexity(T)×m²` avec term structure, skew et convexité qui s'écrasent exponentiellement avec T (court terme = skew fort + smile prononcé, long terme = quasi-plat). Heatmap bleu→cyan→vert→jaune→rouge via `vertexColors`. Wireframe noir opacité 15% par-dessus. Axes 3D via `THREE.Line` (rouge K, vert T, bleu σ). Labels via `THREE.Sprite` + `CanvasTexture`. Rotation souris + touch natives (pas OrbitControls). Cleanup complet (geo, mat, tex, renderer). Canvas 420px hauteur.
   - **VolSurfaceWrapper** (`app/cours/module-6-volatilite/vol-implicite-nappes/VolSurfaceWrapper.js`) : wrapper client nécessaire pour importer `VolSurfaceChart` dynamiquement avec `next/dynamic { ssr: false }` depuis une page Server Component. ⚠️ `next/dynamic` dans un Server Component ne peut pas utiliser `{ ssr: false }` directement — il faut un wrapper `'use client'` intermédiaire.
   - **SVG skew/smile** : deux SVG inline JSX dans les boîtes bleues de la section 2. Skew : courbe part haut gauche, descend vers ATM, remonte légèrement à droite (`path` cubique). Smile : courbe en U asymétrique (gauche plus haut). Labels OTM Put / ATM / OTM Call sous l'axe, décalés (x=55/147/228) pour rester dans le `viewBox="0 0 280 120"`. Pas de label "Strike K" sur l'axe — il se superposait avec "OTM Call".
+
+- **2026-04-09 (suite)** :
+  - **Page "Vol stochastique"** (`app/cours/module-6-volatilite/vol-stochastique/page.js`) créée et complétée. 5 sections h2.
+    - **Section 1 — Limite de Dupire** : calibration parfaite mais statique, vol future figée sur la surface d'aujourd'hui, insuffisance pour produits complexes long terme.
+    - **Section 2 — Concept** : deux Browniens distincts dW^S et dW^V, corrélation ρ encadrée en BlockMath, introduction de la Vol of Vol.
+    - **Section 3 — Heston (1993)** : deux EDS (GBM pour S_t + CIR pour v_t = σ²_t), tableau 5 paramètres (v₀/θ/κ/ξ/ρ, rôle + effet sur le smile), boîte bleue "Condition de Feller" 2κθ > ξ², boîte amber "Limite" (ξ constant, smile court terme imparfait).
+    - **Section 4 — SABR (2002)** : deux EDS (forward F_t avec exposant β + GBM pour α_t), tableau 4 paramètres (α_t/β/ν/ρ, rôle + effet pratique), 3 boîtes bleues (Formule de Hagan, Calibration par tranche, Paramètre β backbone), boîte amber "Limite" (pas de mean-reversion, explose longue maturité).
+    - **Section 5 — Synthèse** : tableau comparatif 6 lignes × 3 colonnes (Critère / Heston / SABR) — classe d'actifs, variable modélisée, calibration, structure par terme, smile court terme, mean-reversion. Paragraphe de clôture sur la coexistence des deux modèles.
+    - Navigation : ← Vol implicite et nappes / → Variance Swap & VIX.
+  - **Composant SABRCalibrationChart** (`app/cours/components/SABRCalibrationChart.js`) : composant client Chart.js — calibration interactive du smile SABR. Formule Hagan asymptotique complète (FK moyenne géométrique, z/chi, facteurs A/B/C). Courbe bleue de référence fixe (α=0.25, β=0.50, ρ=−0.90, ν=1.50), calculée une seule fois au montage. Courbe rouge ajustable via 4 sliders (α 0.05→0.80, β 0.0→1.0, ρ −0.90→0.90, ν 0.0→2.0 pas 0.05). 16 strikes K=70→115 (pas 3), axe X en moneyness 0.70→1.15, axe Y 0→30%. Score RMSE en pts de vol avec barre de progression colorée : rouge >5 / amber 2-5 / vert 0.5-2 / bleu <0.5. Sliders en grille 2 colonnes, valeur courante en `font-mono text-blue-600`. `useMemo` sur userVols et rmse, update chart sans animation (`'none'`). Valeurs initiales des sliders : α=0.20, β=0.70, ρ=0.0, ν=0.20 (départ neutre délibérément loin du smile de référence).
+  - **SABRWrapper** (`app/cours/module-6-volatilite/vol-stochastique/SABRWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }` pour intégrer SABRCalibrationChart dans le Server Component page.js. Placé dans la section SABR, après le tableau des paramètres, avant les boîtes bleues.
+
+- **2026-04-09 (fin de session)** :
+  - **Page "Variance Swap & VIX"** (`app/cours/module-6-volatilite/variance-swap-vix/page.js`) créée et complétée. 5 sections h2. Aucun composant interactif.
+    - **Section 1 — La volatilité comme classe d'actifs** : opposition vol réalisée vs vol implicite, exposition pure sans delta-hedging actif.
+    - **Section 2 — Le Variance Swap** : payoff `N × (σ²_real − K_var)` encadré en `bg-gray-50`. Formule de la variance réalisée annualisée (252/n × Σ ln²). Rôle du strike K_var (calibré pour valeur nulle à l'initiation, comme tout swap).
+    - **Section 3 — Réplication statique** : démonstration en 5 étapes numérotées. Étape 1 : P&L delta-hedgé `dΠ = ½S²Γ(σ²_real − σ²_impl)dt`, problème path-dependent. Étape 2 : objectif rendre S²Γ constant. Étape 3 : condition `Γ(S) = 1/S²` encadrée. Étape 4 : intégration double `f'' = 1/S² → f' = −1/S → f(S) = −ln S` avec 3 lignes alignées (label / BlockMath), résultat `−ln(S_T/S_0)` encadré. Étape 5 : pondération `w(K) = 1/K²` encadrée, portefeuille Puts OTM + Calls OTM. Boîte amber "Risque de queue" (poids 1/K² amplifie les Puts très OTM lors d'un krach).
+    - **Section 4 — VarSwap vs VolSwap** : tableau 4 lignes × 3 colonnes (sous-jacent, payoff, réplication, statut marché). Phrase de clôture sur la réplication statique comme raison du standard OTC.
+    - **Section 5 — L'indice VIX** : méthodologie CBOE en 4 étapes (panier, pondération ΔK/K², interpolation temporelle, racine carrée × 100). Formule CBOE complète encadrée en BlockMath. Paragraphe intercalé entre étapes 2 et 3 : "Pourquoi ΔK/K² et pas 1/K² ?" — intégrale continue → somme de Riemann, formule `ΔK_i = (K_{i+1} − K_{i-1}) / 2` encadrée. Lien PDF officiel CBOE (`https://cdn.cboe.com/resources/vix/VIX_Methodology.pdf`) inséré juste avant la formule. Boîte bleue "À retenir" (VIX = cotation continue de K_var d'un VarSwap 30j S&P 500). Paragraphe sur les futures VIX (contango, non tradabilité du VIX spot).
+    - Navigation : ← Vol stochastique / → Skew Delta.
+
+- **2026-04-10** :
+  - **LinkedIn dans le Footer** (`app/components/Footer.js`) : le lien LinkedIn pointait vers `"#"` — remplacé par `https://www.linkedin.com/in/james-du-peloux-433473231/`. Ouvre dans un nouvel onglet (`target="_blank"`).
+  - **Suppression du composant Themes** (`app/page.js`) : import et utilisation de `<Themes />` supprimés. La page d'accueil ne rend plus que `<Hero />`.
+  - **Refonte de `/cours` — chemin serpent** (`app/cours/page.js`) : remplacement de la grille de cartes par un "chemin serpent" visuel représentant les 8 modules en 3 rangées. Rangée 1→3 (gauche à droite), virage droite, rangée 4→6 (droite à gauche), virage gauche, rangée 7→8 (gauche à droite). Chaque module est un cercle numéroté cliquable (si la page existe) avec titre et liste des sous-pages. Connecteurs horizontaux `HConn` et virages verticaux `VConn`. Fantômes invisibles pour aligner la rangée 7–8 sur 3 colonnes. Composants internes : `Row`, `Node`, `HConn`, `VConn`. Fichier passé en `'use client'` (nécessaire pour les handlers `onMouseEnter`/`onMouseLeave` sur les cercles). Disclaimer niveau Bac+5 avec bordure gauche bleue.
+  - **Animation canvas Hero** (`app/components/Hero.js`) : réécriture complète en `'use client'`. Canvas `position: absolute` couvrant tout le hero (z-index 1), contenu en z-index 2. Animation `requestAnimationFrame` en boucle (`tick` récursif). Deux couches :
+    - **Grille papier millimétré** : petites lignes toutes les 20px (opacité 0.045, épaisseur 0.5px) + grandes lignes toutes les 100px (opacité 0.10, épaisseur 0.8px), redessinées à chaque frame via `clearRect`.
+    - **3 trajectoires browniennes** : générées via Box-Muller. Chaque frame : nouveau point ajouté à droite (`headX += STEP`, STEP=2.4px), points sortis à gauche pruned. Cycle de vie : fadein (40 frames) → active → fadeout (150 frames) quand `headX >= canvasWidth + 60` → respawn. Sigma 4.5–10, drift ±0.9 par trajectoire. 70% bleu `#2563eb` opacité 0.12–0.18, 30% gris `#94a3b8` opacité 0.20–0.41. Épaisseur 1.2px, `lineJoin/lineCap: round`. Stagger au chargement : pré-remplissage de 0–70% du canvas pour éviter que les 3 trajectoires démarrent ensemble. `cancelAnimationFrame` + `removeEventListener` au unmount.
+  - **Bug trajectoires immobiles corrigé** : première version pré-calculait tous les points avec x fixes — les trajectoires ne bougeaient pas. `allOffRight` ne pouvait jamais être vrai (x=0 ne dépasse jamais w). Corrigé en architecture "flux continu" : headX avance chaque frame, points générés incrémentalement.
+  - **Bug trajectoires trop courtes corrigé** : le `lifetime` en frames (250–600) stoppait les trajectoires avant le bord droit sur grands écrans. Remplacé par un trigger géométrique `headX >= canvasWidth + 60` — toutes les trajectoires traversent désormais l'écran en entier.
+
+- **2026-04-10 (suite)** :
+  - **Page "Skew Delta"** (`app/cours/module-6-volatilite/skew-delta/page.js`) créée et complétée. 6 sections h2 numérotées + tableau synthèse.
+    - **Section 1 — Delta Total** : règle de dérivation totale → formule `Δ_total = Δ_BS + 𝒱 · ∂σ/∂S` encadrée. Boîte bleue "Lien avec le Vanna" (Vanna = ∂Δ/∂σ = ∂𝒱/∂S, lien vers L'essentiel des Greeks).
+    - **Section 2 — Démonstration : la relation Spot-Vol** : hypothèse `σ(S,K) = Σ(K/S^α)`, dérivation en 3 étapes (sensibilité au spot via règle chaîne → sensibilité au strike → substitution) → résultat `Skew Delta = −α · 𝒱 · (K/S) · ∂σ/∂K` encadré. Boîte bleue "Interprétation". Approximation near-ATM K/S ≈ 1.
+    - **Section 3 — Comprendre le Vanna** : Put acheté ATM qui rentre dans la monnaie — deux boîtes bleues (effet Vega = P&L gagnant / effet Vanna = aplatissement du Delta). Paragraphe de synthèse. Composant `VannaPutChart` interactif (deux courbes Prix + Delta). Paragraphe de clôture sur l'utilité du Skew Delta dans le book du trader.
+    - **Sections 4, 5, 6 — Régimes Sticky Strike (α=0), Sticky Delta (α=1), Sticky Skew** : principe, formule pour α=1, utilisation typique, boîte amber Limite. Chaque section précède sa boîte amber d'un composant interactif dédié.
+    - **Tableau synthèse** : 3 lignes × 5 colonnes (Régime / α / Dynamique / Marché typique / Limite principale).
+    - **Style** : aligné sur le template Mouvement Brownien — `<article px-6 py-12>`, `<Link>` dans le fil d'Ariane, h1 `text-4xl`, h2 `font-bold mb-6 scroll-mt-24`, paragraphes `leading-relaxed`, boîtes bleues avec titres `text-blue-600 uppercase tracking-wide`, formules clés en `bg-gray-100 px-8 py-6`, boîtes amber `border-amber-100 p-6`.
+  - **Composant VannaPutChart** (`app/cours/components/VannaPutChart.js`) : composant Chart.js interactif. Deux graphiques côte à côte sur xl (flex-col xl:flex-row) : Prix du Put (haut) et Delta du Put (bas). Courbe bleue dynamique (vol slider) + courbe grise pointillée de référence (15%). Slider vol 10%→80%, slider spot 50→150. Ligne verticale pointillée au spot via plugin `spotRef` (ref mutable partagée, pas de réassignation `config.plugins`). 4 cartes de valeurs (Prix dyn., Prix réf., Delta dyn., Delta réf.). `normCDF` par série de Taylor (précision maximale autour de zéro, évite la "bosse ATM"). N_POINTS=1000, tension=0. Paramètres fixes : K=100, r=0%, T=6 mois.
+  - **VannaWrapper** (`app/cours/module-6-volatilite/skew-delta/VannaWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`.
+  - **Composant StickyStrikeChart** (`app/cours/components/StickyStrikeChart.js`) : courbe de skew S&P stylisée fixe (slope=−0.15, convexity=0.10, ATM=20%), slider spot 50→150. Point bleu qui glisse le long de la courbe immobile + ligne verticale pointillée. Layout : graphique (`xl:w-1/2`) + bulle bleue (`xl:w-1/2`) côte à côte sur xl. Plugin `spotRef` mutable. Légende pédagogique "la nappe reste fixe".
+  - **StickyStrikeWrapper** (`app/cours/module-6-volatilite/skew-delta/StickyStrikeWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`.
+  - **Composant StickyDeltaChart** (`app/cours/components/StickyDeltaChart.js`) : deux courbes — smile fixe bleu + smile dynamique rouge pointillé qui translate avec le spot. Slider spot 50→150. Point bleu (sur smile fixe) + point rouge (ATM smile dynamique) au niveau du spot. Layout : graphique flexible (`flex-1`) + bulle bleue (`xl:w-56`) côte à côte sur xl. skewVol(K, center) : même formule, centre variable.
+  - **StickyDeltaWrapper** (`app/cours/module-6-volatilite/skew-delta/StickyDeltaWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`.
+  - **Composant StickySkewChart** (`app/cours/components/StickySkewChart.js`) : deux courbes — smile fixe bleu pointillé + smile dynamique rouge plein. Slope=−0.25, convexity=0.25 (paramètres plus prononcés que StickyStrike pour mieux montrer l'effet). Vol ATM dynamique lue sur la courbe fixe au niveau du spot (monte quand le spot baisse). Smile rouge translte avec le spot ET monte/baisse verticalement. Layout identique à StickyDelta.
+  - **StickySkewWrapper** (`app/cours/module-6-volatilite/skew-delta/StickySkewWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`.
+  - **Module 6 — Volatilité : COMPLET (4/4 pages)**.
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000

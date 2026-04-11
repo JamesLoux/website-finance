@@ -1,125 +1,182 @@
-// Page /cours — Index des 8 modules de cours
-// Chaque carte renvoie vers le module correspondant (pages à créer)
-
-import Link from "next/link";
-
-const modules = [
-  {
-    number: "01",
-    slug: "module-1-calcul-stochastique",
-    title: "Calcul stochastique",
-    description:
-      "Mouvement brownien, lemme d'Itô et changement de mesure de Girsanov. Les fondations mathématiques du pricing moderne.",
-    sousPages: ["Mouvement brownien", "Lemme d'Itô", "Girsanov & risque-neutre"],
-  },
-  {
-    number: "02",
-    slug: "module-2-pricing",
-    title: "Pricing",
-    description:
-      "Équation de Black-Scholes, modèles de diffusion et interprétation probabiliste de d1 et d2. Comment valoriser un dérivé de façon rigoureuse.",
-    sousPages: ["Équation de Black-Scholes", "Formule de Black-Scholes", "Modèles de diffusion", "Simulation de Monte-Carlo"],
-  },
-  {
-    number: "03",
-    slug: "module-3-grecques",
-    title: "The Greeks",
-    description:
-      "Delta, Gamma, Theta, Vega — les sensibilités d'un portefeuille d'options. Indispensables pour mesurer et gérer le risque en trading.",
-    sousPages: ["L'essentiel des Greeks", "Quelques démonstrations", "Arbitrage Theta-Gamma"],
-  },
-  {
-    number: "04",
-    slug: "module-4-taux-credit",
-    title: "Taux & Crédit",
-    description:
-      "Swaps de taux, produits de courbe et modèles de taux courts. Les instruments fondamentaux des marchés de taux.",
-    sousPages: ["Swaps & flux", "Produits de courbe", "Modèles de taux"],
-  },
-  {
-    number: "05",
-    slug: "module-5-produits-equity",
-    title: "Produits Equity",
-    description:
-      "Options vanilles, stratégies de combinaisons, exotiques et produits structurés. Les briques de base de l'equity dérivé.",
-    sousPages: ["Vanilles & combinaisons", "Options exotiques", "Produits structurés"],
-  },
-  {
-    number: "06",
-    slug: "module-6-volatilite",
-    title: "Volatilité",
-    description:
-      "Vol implicite, nappes, modèles stochastiques, variance swaps et skew. Un concept central en finance de marché, décrypté en profondeur.",
-    sousPages: ["Vol implicite et nappes", "Vol stochastique", "Variance Swap & VIX", "Skew Delta"],
-  },
-  {
-    number: "07",
-    slug: "module-7-quanto-fx",
-    title: "Quanto & FX",
-    description:
-      "Options quanto et options composites. Pricing et couverture en présence d'un risque de change.",
-    sousPages: ["Options quanto", "Options composites"],
-  },
-  {
-    number: "08",
-    slug: "module-8-macro",
-    title: "Macro",
-    description:
-      "Plomberie de la Fed, gestion des réserves et politique monétaire. Comprendre les mécanismes qui pilotent les marchés.",
-    sousPages: ["Plomberie de la Fed", "Gestion des réserves", "Politique monétaire"],
-  },
-];
+'use client'
 
 export default function CoursPage() {
   return (
-    <div className="bg-gray-50 min-h-full py-16 px-6">
-      <div className="max-w-5xl mx-auto">
+    <main className="max-w-3xl mx-auto px-6 py-12">
 
-        {/* En-tête */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">Cours</h1>
-          <p className="text-gray-500 max-w-2xl">
-            8 modules progressifs, du calcul stochastique aux produits exotiques.
-            Chaque module est décomposé en 2 à 3 sous-chapitres.
-          </p>
-        </div>
+      <h1 className="text-3xl font-semibold text-gray-900 mb-3">Cours</h1>
+      <p className="text-gray-600 mb-8">
+        Un parcours progressif en 8 modules, du calcul stochastique aux produits exotiques.
+      </p>
 
-        {/* Grille des modules */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {modules.map((module) => (
-            <div
-              key={module.slug}
-              className="bg-white border border-gray-300 rounded-xl p-6 hover:shadow-md hover:border-blue-300 transition-all flex flex-col"
-            >
-              {/* Numéro + titre */}
-              <div className="flex items-start gap-4 mb-3">
-                <span className="text-2xl font-bold text-blue-100 leading-none select-none">
-                  {module.number}
-                </span>
-                <h2 className="text-lg font-semibold text-gray-900">{module.title}</h2>
-              </div>
+      {/* Disclaimer */}
+      <div style={{
+        borderLeft: '3px solid #378ADD',
+        borderRadius: '0 8px 8px 0',
+        borderTop: '0.5px solid #e5e7eb',
+        borderRight: '0.5px solid #e5e7eb',
+        borderBottom: '0.5px solid #e5e7eb',
+        padding: '0.75rem 1rem',
+        marginBottom: '3rem',
+        fontSize: '13px',
+        color: '#4b5563',
+        lineHeight: '1.6',
+        backgroundColor: '#f9fafb',
+      }}>
+        <strong style={{ color: '#111827', fontWeight: 500 }}>À noter :</strong> ces cours
+        s&apos;adressent à un public de niveau Bac+5 / Master en mathématiques appliquées.
+        Ils mobilisent le calcul stochastique, l&apos;analyse fonctionnelle et les
+        probabilités — une solide base en maths est indispensable pour en tirer
+        pleinement parti.
+      </div>
 
-              {/* Description */}
-              <p className="text-sm text-gray-500 leading-relaxed mb-4">
-                {module.description}
-              </p>
+      {/* Chemin serpent */}
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-              {/* Sous-pages */}
-              <ul className="flex flex-wrap gap-2 mt-auto">
-                {module.sousPages.map((sp) => (
-                  <li
-                    key={sp}
-                    className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full"
-                  >
-                    {sp}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        {/* Rangée 1 → 3 (gauche à droite) */}
+        <Row>
+          <Node num="1" title="Calcul stochastique" subs={['Mouvement brownien', 'Lemme d\'Itô', 'Girsanov & risque-neutre']} href="/cours/module-1-calcul-stochastique/mouvement-brownien" />
+          <HConn />
+          <Node num="2" title="Pricing" subs={['Équation de Black-Scholes', 'Formule de Black-Scholes', 'Modèles de diffusion', 'Monte-Carlo']} href="/cours/module-2-pricing/equation-black-scholes" />
+          <HConn />
+          <Node num="3" title="The Greeks" subs={['L\'essentiel des Greeks', 'Quelques démonstrations', 'Arbitrage Theta-Gamma']} href="/cours/module-3-grecques/grecques-premier-ordre" />
+        </Row>
+
+        {/* Virage droite */}
+        <VConn side="right" cols={3} />
+
+        {/* Rangée 4 → 6 (droite à gauche) */}
+        <Row reverse>
+          <Node num="4" title="Taux & Crédit" subs={['Swaps & flux', 'Produits de courbe', 'Modèles de taux']} />
+          <HConn />
+          <Node num="5" title="Produits equity" subs={['Vanilles & combinaisons', 'Options exotiques', 'Produits structurés']} />
+          <HConn />
+          <Node num="6" title="Volatilité" subs={['Vol implicite & nappes', 'Vol stochastique', 'Variance Swap & VIX', 'Skew Delta']} href="/cours/module-6-volatilite/vol-implicite-nappes" />
+        </Row>
+
+        {/* Virage gauche */}
+        <VConn side="left" cols={3} />
+
+        {/* Rangée 7 → 8 (gauche à droite) */}
+        <Row>
+          <Node num="7" title="Quanto & FX" subs={['Options quanto', 'Options composites']} />
+          <HConn />
+          <Node num="8" title="Macro" subs={['Plomberie Fed', 'Gestion des réserves', 'Politique monétaire']} />
+          {/* Fantômes pour aligner sur 3 colonnes */}
+          <HConn invisible />
+          <Node invisible />
+        </Row>
 
       </div>
+    </main>
+  )
+}
+
+/* ── Composants internes ── */
+
+function Row({ children, reverse = false }) {
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: reverse ? 'row-reverse' : 'row',
+      alignItems: 'flex-start',
+    }}>
+      {children}
     </div>
-  );
+  )
+}
+
+function Node({ num, title, subs = [], href, invisible = false }) {
+  const content = (
+    <div style={{
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '0 4px',
+      visibility: invisible ? 'hidden' : 'visible',
+    }}>
+      <div style={{
+        width: 56,
+        height: 56,
+        borderRadius: '50%',
+        border: '1.5px solid #378ADD',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 18,
+        fontWeight: 500,
+        color: '#185FA5',
+        cursor: href ? 'pointer' : 'default',
+        flexShrink: 0,
+        transition: href ? 'background 0.15s' : undefined,
+      }}
+        onMouseEnter={href ? e => e.currentTarget.style.backgroundColor = '#E6F1FB' : undefined}
+        onMouseLeave={href ? e => e.currentTarget.style.backgroundColor = '#ffffff' : undefined}
+      >
+        {num}
+      </div>
+      <div style={{
+        marginTop: 8,
+        fontSize: 11,
+        fontWeight: 500,
+        color: '#111827',
+        textAlign: 'center',
+        lineHeight: 1.3,
+        maxWidth: 90,
+      }}>
+        {title}
+      </div>
+      <div style={{ marginTop: 5, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center' }}>
+        {subs.map((s, i) => (
+          <div key={i} style={{
+            fontSize: 10,
+            color: '#9ca3af',
+            textAlign: 'center',
+            lineHeight: 1.3,
+            maxWidth: 90,
+          }}>
+            {s}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
+  if (href) {
+    return <a href={href} style={{ flex: 1, textDecoration: 'none', display: 'flex' }}>{content}</a>
+  }
+  return content
+}
+
+function HConn({ invisible = false }) {
+  return (
+    <div style={{
+      flex: 0,
+      width: 24,
+      height: 1.5,
+      backgroundColor: invisible ? 'transparent' : '#d1d5db',
+      alignSelf: 'auto',
+      marginTop: 28,
+      flexShrink: 0,
+    }} />
+  )
+}
+
+function VConn({ side, cols }) {
+  const colWidth = `calc(100% / ${cols})`
+  const offset = `calc(${colWidth} / 2 - 1px)`
+  return (
+    <div style={{
+      display: 'flex',
+      width: '100%',
+      height: 36,
+      justifyContent: side === 'right' ? 'flex-end' : 'flex-start',
+      paddingRight: side === 'right' ? offset : 0,
+      paddingLeft: side === 'left' ? offset : 0,
+    }}>
+      <div style={{ width: 1.5, backgroundColor: '#d1d5db' }} />
+    </div>
+  )
 }

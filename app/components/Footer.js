@@ -14,9 +14,9 @@ export default function Footer() {
         {/* Liens vers profil LinkedIn et CV */}
         <div className="flex gap-6 text-sm font-medium">
 
-          {/* Lien LinkedIn — remplacer "#" par l'URL du profil */}
+          {/* Lien LinkedIn */}
           <a
-            href="#"
+            href="https://www.linkedin.com/in/james-du-peloux-433473231/"
             className="text-blue-600 hover:underline flex items-center gap-1"
             target="_blank"
             rel="noopener noreferrer"
