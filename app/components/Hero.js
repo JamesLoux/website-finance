@@ -37,7 +37,7 @@ function initTrajectory(canvasWidth, canvasHeight, stagger = false) {
 
   // Pre-fill a random portion of the canvas so trajectories don't all start together
   const preCount = stagger
-    ? Math.floor(randomBetween(0, (canvasWidth / STEP) * 0.7))
+    ? Math.floor(randomBetween(0, (canvasWidth / STEP) * 1.3))
     : 0;
 
   const ys = [startY];
@@ -73,7 +73,7 @@ export default function Hero() {
     resize();
     window.addEventListener('resize', resize);
 
-    let trajectories = Array.from({ length: 3 }, () =>
+    let trajectories = Array.from({ length: 5 }, () =>
       initTrajectory(canvas.width, canvas.height, true)
     );
 

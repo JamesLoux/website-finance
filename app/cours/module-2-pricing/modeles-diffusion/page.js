@@ -299,7 +299,6 @@ export default function ModelesDiffusionPage() {
         </p>
         <p className="text-gray-700 text-sm leading-relaxed">
           Si oui (taux bas, spreads), utiliser le <strong>modèle arithmétique de Bachelier</strong>.
-          Si oui (taux bas, spreads), utiliser le <strong>modèle arithmétique de Bachelier</strong>.
           La loi Normale est cohérente avec des valeurs négatives et facilite la gestion des
           produits dont le payoff est linéaire en niveau (et non en pourcentage).
         </p>

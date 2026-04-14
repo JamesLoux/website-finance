@@ -208,9 +208,7 @@ export default function StickySkewChart() {
           <p className="mb-2">
             Quand le spot baisse, la vol ATM monte, et vice-versa. Le smile rouge translate avec le spot ET bouge verticalement dans le sens du skew.
           </p>
-          <p>
-            La convexité reste inchangée, donc si le spot baisse : les options avec un strike sur l&apos;upside (au dessus du spot) voient leur vol augmenter, à l'inverse sur le downside la vol baisse par rapport au smile initial.
-          </p>
+          
           <p className="text-xs text-gray-400 mt-3">Smile stylisé · K<sub>ATM</sub> initial = 100</p>
         </div>
       </div>

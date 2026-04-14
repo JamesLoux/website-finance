@@ -44,7 +44,13 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 6 / Variance Swap & VIX
 - [x] Module 6 / Skew Delta
 - [x] **Module 6 — Volatilité : COMPLET (4/4 pages)**
-- [ ] Modules 4, 5, 7, 8
+- [x] Module 7 / Corrélation Indice et FX (correlation-fx)
+- [x] Module 7 / Options Quanto & Composite (options-quanto)
+- [x] **Module 7 — Quanto & FX : COMPLET (2/2 pages)**
+- [x] Module 8 / Fonctionnement de la Fed (plomberie-fed)
+- [x] Module 8 / Politique monétaire (politique-monetaire)
+- [x] **Module 8 — Macro : COMPLET (2/2 pages)**
+- [ ] Modules 4, 5
 - [ ] Simulateur de stratégies
 - [ ] Quiz Modules 2 à 8
 
@@ -69,8 +75,9 @@ Accueil / Cours / Simulateur / Quiz / À propos
 - `/cours/module-4-taux-credit` — swaps-flux, produits-courbe, modeles-taux
 - `/cours/module-5-produits-equity` — vanilles-combinaisons, options-exotiques, produits-structures
 - `/cours/module-6-volatilite` — vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta
-- `/cours/module-7-quanto-fx` — options-quanto, options-composites
-- `/cours/module-8-macro` — plomberie-fed, gestion-reserves, politique-monetaire
+- `/cours/module-7-quanto-fx` — correlation-fx ("Corrélation Indice et FX"), options-quanto ("Options Quanto & Composite")
+- `/cours/module-8-macro` — plomberie-fed ("Fonctionnement de la Fed"), politique-monetaire
+  - ⚠️ `gestion-reserves` supprimé : contenu abandonné, module réduit à 2 sous-pages.
 
 ### Simulateur
 - Accessible depuis la navbar
@@ -142,6 +149,11 @@ app/
       skew-delta/StickyStrikeWrapper.js ← Wrapper 'use client' pour StickyStrikeChart (next/dynamic ssr:false)
       skew-delta/StickyDeltaWrapper.js  ← Wrapper 'use client' pour StickyDeltaChart (next/dynamic ssr:false)
       skew-delta/StickySkewWrapper.js   ← Wrapper 'use client' pour StickySkewChart (next/dynamic ssr:false)
+    module-7-quanto-fx/
+      correlation-fx/page.js           ← ✅ Fait (titre : "Corrélation Indice et FX")
+      options-quanto/page.js           ← ✅ Fait (titre : "Options Quanto & Composite") — regroupe Quanto + Composite, page finale du module
+    module-8-macro/
+      plomberie-fed/page.js            ← ✅ Fait (titre : "Fonctionnement de la Fed")
   quiz/
     page.js                          ← Index des quiz — Module 1 lien actif, autres badges "Bientôt disponible"
     module-1/
@@ -218,6 +230,28 @@ Actuellement, seul le **Module 1** a un quiz actif (`/quiz/module-1`).
 Si première page (pas de précédent) : `<div />` à la place du lien gauche. Utiliser `<a>` simples, **pas** `<Link>` avec carte.
 
 ## Journal des sessions
+- **2026-04-13** :
+  - **Page "Options Quanto & Composite"** (`app/cours/module-7-quanto-fx/options-quanto/page.js`) créée. Deuxième et dernière sous-page du Module 7. 5 sections h2.
+    - **Section 1 — Les deux processus de base** : trois encadrés séparés `bg-gray-100` pour les EDS de l'action, du FX et la corrélation. Boîte bleue "Convention" sur le sens de cotation EUR/USD.
+    - **Section 2 — L'option Quanto** : 5 sous-sections. Payoff `X_fixe × (S_T − K)_+` encadré. Changement de mesure Girsanov (`dW^{S,Q_USD} = dW^{S,Q_EUR} + ρσ_X dt`) encadré + boîte bleue "D'où vient le terme de correction ?". EDS sous Q_EUR avec drift ajusté `r_USD − q − ρσ_Sσ_X` encadrée. Forward Quanto encadré. Impact de ρ : deux boîtes côte à côte (ρ > 0 forward en baisse / ρ < 0 forward en hausse) + exemple chiffré + boîte bleue "Sensibilité à la corrélation" (Long Call → Short ρ, Long Put → Long ρ).
+    - **Section 3 — L'option Composite** : Payoff `(S_T × X_T − K_EUR)_+` encadré. Volatilité composite `√(σ²_S + σ²_X + 2ρσ_Sσ_X)` encadrée + boîte bleue "Formule du portefeuille". Impact ρ : boîte bleue "Long Call/Put Composite → Long ρ" + boîte amber cas limite ρ=−1.
+    - **Section 4 — Hedging dynamique et Cross-Gamma** : formule `dΠ ∝ (ρ_réal − ρ_impl) × σ_S × σ_X × S × X dt` dans une boîte bleue. Deux boîtes côte à côte (ρ_réal > ρ_impl / ρ_réal < ρ_impl). Citation encadrée de clôture.
+    - **Section 5 — Synthèse** : tableau 4 lignes × 3 colonnes (Drift / Volatilité / Rôle de ρ / Exposition à ρ). Boîte bleue "En résumé".
+    - Navigation : ← Corrélation Indice et FX / pas de suivant (page finale du module).
+  - **Sidebar** : label `'Options quanto'` → `'Options Quanto & Composite'` ; entrée `options-composites` supprimée (contenu fusionné dans `options-quanto`).
+  - **Module 7 — Quanto & FX : COMPLET (2/2 pages)**. La sous-page `options-composites` a été abandonnée — son contenu (payoff, vol composite, impact de ρ) a été intégré directement dans la page `options-quanto`.
+
+- **2026-04-12** :
+  - **Page "Corrélation Indice et FX"** (`app/cours/module-7-quanto-fx/correlation-fx/page.js`) créée. Première sous-page du Module 7. 4 sections h2.
+    - **Section 1 — Corrélation et Bêta** : relation β = ρ × σ_A/σ_B encadrée. Définition de ρ via covariance normalisée (formule longue avec espérances). Boîte bleue "Linéarité de la covariance" : `Cov(aX, bY+Z) = ab·Cov(X,Y) + a·Cov(X,Z)` — propriété fondamentale qui sous-tend toute la suite. Paragraphe sur l'interprétation du Bêta vs la corrélation.
+    - **Section 2 — Démonstration : corrélation indice-FX** : dérivation en 4 étapes (rendement de l'indice comme somme pondérée → covariance avec FX par linéarité → passage aux corrélations via Cov = ρσσ → simplification de σ_FX → résultat `ρ_{I,FX} = Σ w_i · ρ_{i,FX} · σ_i/σ_I` encadré). Boîte bleue "Interprétation" (pondération par σ_i/σ_I, effet de levier sur la corrélation).
+    - **Section 3 — Volatilité d'un indice et corrélation implicite** : développement en 3 lignes alignées dans un `bg-gray-100` (Var(I) = Cov de la somme → bilinéarité → passage aux ρ_ij). Formule `σ_I = √(double somme)` encadrée séparément. Inégalité de Markowitz `σ_I ≤ Σ w_i σ_i` encadrée. Boîte bleue "Corrélation implicite" (extraction depuis les prix d'options indice + actions individuelles).
+    - **Section 4 — Le trading de dispersion** : construction d'un trade short corrélation — deux boîtes bleues côte à côte (Jambe 1 : vendre Straddle indice / Jambe 2 : acheter Straddles actions). Tableau 3 scénarios × 4 colonnes (Actions dispersées → P&L positif / Actions corrélées → P&L négatif / Vol flat → faiblement négatif). Boîte bleue "L'intuition de la dispersion" (Earnings Season comme scénario idéal).
+    - Navigation : ← Skew Delta (`/cours/module-6-volatilite/skew-delta`) / → Options Quanto (`/cours/module-7-quanto-fx/options-quanto`).
+  - **Sidebar** (`app/cours/components/Sidebar.js`) : "Corrélation Indice et FX" (`correlation-fx`) ajoutée en première position dans le module 07, avant "Options quanto".
+  - **Réorganisation** effectuée en cours de session : sections 2 et 3 échangées (la démo indice-FX passe avant la variance d'indice). Développement en 3 lignes de `σ_I²` ajouté dans un bloc aligné.
+
+
 - **2026-03-30** : Construction complète de la page d'accueil (composants Header, Hero, Thématiques, Footer), ajustements du Hero, et mise en place du déploiement (Git, GitHub, Vercel).
 - **2026-03-31** :
   - **Architecture** : Définition de la structure complète du site — navbar 5 entrées (Accueil, Cours, Simulateur, Quiz, À propos), 5 pages principales avec leurs routes, 8 modules de cours avec 2-3 sous-pages chacun.
@@ -338,6 +372,27 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
   - **Composant StickySkewChart** (`app/cours/components/StickySkewChart.js`) : deux courbes — smile fixe bleu pointillé + smile dynamique rouge plein. Slope=−0.25, convexity=0.25 (paramètres plus prononcés que StickyStrike pour mieux montrer l'effet). Vol ATM dynamique lue sur la courbe fixe au niveau du spot (monte quand le spot baisse). Smile rouge translte avec le spot ET monte/baisse verticalement. Layout identique à StickyDelta.
   - **StickySkewWrapper** (`app/cours/module-6-volatilite/skew-delta/StickySkewWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`.
   - **Module 6 — Volatilité : COMPLET (4/4 pages)**.
+
+- **2026-04-14** :
+  - **Page "Fonctionnement de la Fed"** (`app/cours/module-8-macro/plomberie-fed/page.js`) créée. Première page du Module 8. 4 sections h2. Pas de composant interactif — contenu institutionnel (tableaux, T-Account, boîtes bleues/amber).
+    - **Section 1 — La hiérarchie des taux** : deux sous-sections. A) Taux administrés : trois boîtes bleues (IORB plafond, ON RRP plancher, SRF backstop) avec lien CME FedWatch entre ON RRP et SRF. B) Taux de marché : tableau 2 lignes (EFFR non sécurisé / SOFR sécurisé).
+    - **Section 2 — Le bilan de la Fed** : T-Account HTML/Tailwind en deux colonnes (Actif : T-Bills, Treasuries, MBS / Passif : Réserves, TGA, ON RRP, Currency). Boîte amber "Le risque du TGA en avril" (saison des impôts → drainage des réserves → risque de spike).
+    - **Section 3 — Le spread EFFR − IORB** : formule `Signal clé = EFFR − IORB` encadrée. Deux boîtes bleues (situation normale spread négatif / signal d'alerte spread qui se resserre) + boîte amber "Souvenir de septembre 2019" (spike Repo à 10%).
+    - **Section 4 — RMP vs QE** : tableau 5 lignes × 3 colonnes (Intention / Cibles / Communication / Impact taux longs / Réaction marchés). Deux boîtes bleues (exemple janvier 2025 — RMP T-Bills avant saison des impôts / objectif Repo stable).
+    - **Correction factuelle** : `Currency` (billets en circulation = Federal Reserve Notes) déplacé côté Passif dans le T-Account (c'est une dette de la Fed envers le public, pas un actif).
+    - **Navigation** : ← Corrélation Indice et FX (`/cours/module-7-quanto-fx/correlation-fx`) / pas de suivant pour l'instant (`<div />`).
+  - **Sidebar** : `gestion-reserves` retiré du Module 8 — contenu abandonné. Module 8 réduit à 2 sous-pages : `plomberie-fed` + `politique-monetaire`.
+
+- **2026-04-14 (suite)** :
+  - **Page "Politique monétaire"** (`app/cours/module-8-macro/politique-monetaire/page.js`) créée. Deuxième et dernière page du Module 8. 5 sections h2. Pas de composant interactif.
+    - **Section 1 — La décomposition d'un taux long** : formule tripartite encadrée (Taux court anticipé + Anticipation d'inflation + Prime de terme). Deux boîtes bleues côte à côte (Hypothèse des attentes / Prime de terme). Encadré `bg-gray-50` "L'inversion de 2022–2023" (spread 2Y–10Y à −80 bps en octobre 2022).
+    - **Section 2 — Lire la courbe** : tableau 3 lignes × 3 colonnes (Normale / Plate / Inversée — Interprétation marché / Contexte typique).
+    - **Section 3 — La forward guidance** : deux boîtes bleues (Le dot plot / La communication verbale — "transitoire" 2021, "patient" 2019).
+    - **Section 4 — QE et QT** : boîte bleue "Qu'est-ce que la duration ?". Deux boîtes côte à côte (QE bleue — aspirer la duration / QT grise — réinjecter la duration).
+    - **Section 5 — Le lien avec la plomberie** : deux paragraphes de synthèse. Encadré `bg-blue-50` "En résumé — Module 8" en prose (trois leviers + condition de plomberie saine).
+    - **Navigation** : ← Fonctionnement de la Fed / pas de suivant (`<div />`).
+  - **Correction navigation plomberie-fed** : lien Suivant mis à jour de `<div />` vers `/cours/module-8-macro/politique-monetaire`.
+  - **Module 8 — Macro : COMPLET (2/2 pages)**.
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000

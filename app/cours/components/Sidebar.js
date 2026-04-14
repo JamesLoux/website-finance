@@ -77,8 +77,8 @@ const modules = [
     title: 'Quanto & FX',
     slug: 'module-7-quanto-fx',
     sousPages: [
-      { title: 'Options quanto', slug: 'options-quanto' },
-      { title: 'Options composites', slug: 'options-composites' },
+      { title: 'Corrélation Indice et FX', slug: 'correlation-fx' },
+      { title: 'Options Quanto & Composite', slug: 'options-quanto' },
     ],
   },
   {
@@ -87,7 +87,6 @@ const modules = [
     slug: 'module-8-macro',
     sousPages: [
       { title: 'Plomberie de la Fed', slug: 'plomberie-fed' },
-      { title: 'Gestion des réserves', slug: 'gestion-reserves' },
       { title: 'Politique monétaire', slug: 'politique-monetaire' },
     ],
   },
