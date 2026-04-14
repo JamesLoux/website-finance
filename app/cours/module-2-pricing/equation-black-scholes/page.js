@@ -39,7 +39,7 @@ export default function EquationBlackScholesPage() {
           Section 0 — L'intuition : la réplication
       ══════════════════════════════════════════════════════════════ */}
       <h2 id="intuition" className="text-2xl font-bold text-gray-900 mt-12 mb-6 scroll-mt-24">
-        0. L&apos;intuition — la réplication
+        0. L&apos;intuition : la réplication
       </h2>
 
       <p className="text-gray-600 leading-relaxed mb-4">
@@ -91,7 +91,7 @@ export default function EquationBlackScholesPage() {
           <tbody>
             <tr>
               <td className="px-4 py-3 border-b border-gray-300 text-gray-700">
-                <InlineMath>S_t</InlineMath> suit un GBM — volatilité{' '}
+                <InlineMath>S_t</InlineMath> suit un GBM avec volatilité{' '}
                 <InlineMath>{`\\sigma`}</InlineMath> et drift{' '}
                 <InlineMath>{`\\mu`}</InlineMath> constants
               </td>
@@ -99,18 +99,18 @@ export default function EquationBlackScholesPage() {
                 Les rendements sont log-normaux, les queues de distribution sont fines
               </td>
               <td className="px-4 py-3 border-b border-gray-300 text-gray-600">
-                En réalité la volatilité sourit (skew) et les queues sont épaisses — Module 6
+                En réalité la volatilité sourit (smile/skew) et les queues sont épaisses (vu au Module 6)
               </td>
             </tr>
             <tr>
               <td className="px-4 py-3 border-b border-gray-300 text-gray-700">
-                Marché continu — pas de frais, divisibilité parfaite
+                Marché continu, pas de frais, divisibilité parfaite
               </td>
               <td className="px-4 py-3 border-b border-gray-300 text-gray-600">
                 Le delta-hedging est instantané et sans coût
               </td>
               <td className="px-4 py-3 border-b border-gray-300 text-gray-600">
-                En pratique le rebalancement est discret et coûteux — Module 3
+                En pratique le rebalancement est discret et coûteux (Module 3)
               </td>
             </tr>
             <tr>
@@ -121,7 +121,7 @@ export default function EquationBlackScholesPage() {
                 Le taux sans risque est unique et constant
               </td>
               <td className="px-4 py-3 text-gray-600">
-                En réalité les taux varient et les spreads de crédit existent — Module 4
+                En réalité les taux varient et les spreads de crédit existent (Module 4)
               </td>
             </tr>
           </tbody>
@@ -182,7 +182,7 @@ export default function EquationBlackScholesPage() {
           Section 4 — Le Delta-Hedging
       ══════════════════════════════════════════════════════════════ */}
       <h2 id="delta-hedging" className="text-2xl font-bold text-gray-900 mt-14 mb-6 scroll-mt-24">
-        4. L&apos;élimination du risque — le Delta-Hedging
+        4. L&apos;élimination du risque : le Delta-Hedging
       </h2>
 
       <p className="text-gray-600 leading-relaxed mb-4">
@@ -341,7 +341,7 @@ export default function EquationBlackScholesPage() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Un quiz sur le Module 2 sera bientôt disponible.
+        Le quiz du Module 2 est disponible — <a href="/quiz/module-2" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}

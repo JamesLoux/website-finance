@@ -5,104 +5,107 @@ import Link from 'next/link';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 
-function Math({ children, block = false }) {
-  const html = katex.renderToString(children, { throwOnError: false, displayMode: block });
+function Katex({ children, block = false }) {
+  const formula = Array.isArray(children) ? children.join('') : String(children);
+  const html = katex.renderToString(formula, { throwOnError: false, displayMode: block });
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 const questions = [
   {
     id: 1,
-    question: <>Quelle est la distribution de l&apos;incrément <Math>{'W_{t+u} - W_t'}</Math> du Mouvement Brownien standard ?</>,
+    question: <>Quelle est la distribution de l&apos;incrément <Katex>{'W_{t+u} - W_t'}</Katex> du Mouvement Brownien standard ?</>,
     choices: [
-      <><Math>{'\\mathcal{N}(\\mu, \\sigma^2)'}</Math></>,
-      <><Math>{'\\mathcal{N}(0, u)'}</Math></>,
-      <><Math>{'\\mathcal{N}(0, t)'}</Math></>,
-      <><Math>{'\\mathcal{N}(0, 1)'}</Math></>,
+      <><Katex>{'\\mathcal{N}(\\mu, \\sigma^2)'}</Katex></>,
+      <><Katex>{'\\mathcal{N}(0, u)'}</Katex></>,
+      <><Katex>{'\\mathcal{N}(0, t)'}</Katex></>,
+      <><Katex>{'\\mathcal{N}(0, 1)'}</Katex></>,
     ],
     answer: 1,
-    explanation: "Les incréments sont centrés (pas de drift) et de variance égale à la durée de l'intervalle u — pas à l'instant t.",
+    explanation: <>Les incréments sont centrés (pas de drift) et de variance égale à la durée de l&apos;intervalle <Katex>{'u'}</Katex> — pas à l&apos;instant <Katex>{'t'}</Katex>.</>,
   },
   {
     id: 2,
-    question: <>Que vaut <Math>{'(dW_t)^2'}</Math> en calcul stochastique ?</>,
+    question: <>Que vaut <Katex>{'(dW_t)^2'}</Katex> en calcul stochastique ?</>,
     choices: [
       <>0</>,
-      <><Math>{'(dt)^2'}</Math></>,
-      <><Math>{'dt'}</Math></>,
-      <><Math>{'dW_t'}</Math></>,
+      <><Katex>{'(dt)^2'}</Katex></>,
+      <><Katex>{'dt'}</Katex></>,
+      <><Katex>{'dW_t'}</Katex></>,
     ],
     answer: 2,
-    explanation: "C'est la variation quadratique du Mouvement Brownien. Contrairement au calcul classique où (dx)² → 0, ici (dWt)² = dt — un terme du premier ordre qui survit.",
+    explanation: <>C&apos;est la variation quadratique du Mouvement Brownien. Contrairement au calcul classique où <Katex>{'(dx)^2 \\to 0'}</Katex>, ici <Katex>{'(dW_t)^2 = dt'}</Katex> — un terme du premier ordre qui survit.</>,
   },
   {
     id: 3,
-    question: <>Dans le Lemme d&apos;Itô, pourquoi le terme <Math>{'\\frac{1}{2}\\sigma^2 f\'\''}</Math> ne disparaît-il pas, contrairement au calcul classique ?</>,
+    question: <>Dans le Lemme d&apos;Itô, pourquoi le terme <Katex>{'\\tfrac{1}{2}\\sigma^2 f\'\''}</Katex> ne disparaît-il pas, contrairement au calcul classique ?</>,
     choices: [
-      <><Math>{'\\sigma'}</Math> est toujours grand</>,
-      <>Parce que <Math>{'(dW_t)^2 = dt'}</Math>, ce qui est d&apos;ordre 1</>,
-      <><Math>{"f''"}</Math> est négatif pour une option</>,
-      <>Le drift <Math>{'\\mu'}</Math> compense le terme d&apos;ordre 2</>,
+      <><Katex>{'\\sigma'}</Katex> est toujours grand</>,
+      <>Parce que <Katex>{'(dW_t)^2 = dt'}</Katex>, ce qui est d&apos;ordre 1</>,
+      <><Katex>{"f''"}</Katex> est négatif pour une option</>,
+      <>Le drift <Katex>{'\\mu'}</Katex> compense le terme d&apos;ordre 2</>,
     ],
     answer: 1,
-    explanation: "En calcul classique (dx)² → 0. En calcul stochastique (dWt)² = dt — c'est un terme du premier ordre qui survit et génère le terme de convexité d'Itô.",
+    explanation: <>En calcul classique <Katex>{'(dx)^2 \\to 0'}</Katex>. En calcul stochastique <Katex>{'(dW_t)^2 = dt'}</Katex> — c&apos;est un terme du premier ordre qui survit et génère le terme de convexité d&apos;Itô.</>,
   },
   {
     id: 4,
-    question: <>Un actif suit <Math>{'dS_t = \\mu S_t \\, dt + \\sigma S_t \\, dW_t'}</Math>. Quelle est la dynamique de <Math>{'\\ln(S_t)'}</Math> ?</>,
+    question: <>Un actif suit <Katex>{'dS_t = \\mu S_t \\, dt + \\sigma S_t \\, dW_t'}</Katex>. Quelle est la dynamique de <Katex>{'\\ln(S_t)'}</Katex> ?</>,
     choices: [
-      <><Math>{'d(\\ln S_t) = \\mu \\, dt + \\sigma \\, dW_t'}</Math></>,
-      <><Math>{'d(\\ln S_t) = \\left(\\mu + \\tfrac{1}{2}\\sigma^2\\right) dt + \\sigma \\, dW_t'}</Math></>,
-      <><Math>{'d(\\ln S_t) = \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) dt + \\sigma \\, dW_t'}</Math></>,
-      <><Math>{'d(\\ln S_t) = \\tfrac{1}{\\mu} \\, dt + \\sigma \\, dW_t'}</Math></>,
+      <><Katex>{'d(\\ln S_t) = \\mu \\, dt + \\sigma \\, dW_t'}</Katex></>,
+      <><Katex>{'d(\\ln S_t) = \\left(\\mu + \\tfrac{1}{2}\\sigma^2\\right) dt + \\sigma \\, dW_t'}</Katex></>,
+      <><Katex>{'d(\\ln S_t) = \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) dt + \\sigma \\, dW_t'}</Katex></>,
+      <><Katex>{'d(\\ln S_t) = \\tfrac{1}{\\mu} \\, dt + \\sigma \\, dW_t'}</Katex></>,
     ],
     answer: 2,
-    explanation: "Le terme -½σ² est l'ajustement d'Itô dû à la courbure de la fonction logarithme. Oublier ce terme — ou le mettre en + — est l'erreur la plus classique.",
+    explanation: <>Le terme <Katex>{'-\\tfrac{1}{2}\\sigma^2'}</Katex> est l&apos;ajustement d&apos;Itô dû à la courbure de la fonction logarithme. Oublier ce terme — ou le mettre en <Katex>{'+'}</Katex> — est l&apos;erreur la plus classique.</>,
   },
   {
     id: 5,
-    question: <>CALCUL — Si <Math>{'\\mu = 10\\%'}</Math> et <Math>{'\\sigma = 20\\%'}</Math>, quel est le drift effectif des log-prix <Math>{'\\mu - \\tfrac{1}{2}\\sigma^2'}</Math> ?</>,
+    question: <>CALCUL — Si <Katex>{'\\mu = 10\\%'}</Katex> et <Katex>{'\\sigma = 20\\%'}</Katex>, quel est le drift effectif des log-prix <Katex>{'\\mu - \\tfrac{1}{2}\\sigma^2'}</Katex> ?</>,
     choices: [<>10%</>, <>8%</>, <>6%</>, <>12%</>],
     answer: 1,
-    explanation: "μ - ½σ² = 10% - ½ × (20%)² = 10% - ½ × 0.04 = 10% - 2% = 8%. La volatilité réduit mécaniquement le drift effectif des log-prix.",
+    explanation: <><Katex>{'\\mu - \\tfrac{1}{2}\\sigma^2 = 10\\% - \\tfrac{1}{2} \\times (20\\%)^2 = 10\\% - 2\\% = 8\\%'}</Katex>. La volatilité réduit mécaniquement le drift effectif des log-prix.</>,
   },
   {
     id: 6,
-    question: <>Sous la probabilité risque-neutre <Math>{'\\mathbb{Q}'}</Math>, quel est le drift de l&apos;actif <Math>{'S_t'}</Math> ?</>,
+    question: <>Sous la probabilité risque-neutre <Katex>{'\\mathbb{Q}'}</Katex>, quel est le drift de l&apos;actif <Katex>{'S_t'}</Katex> ?</>,
     choices: [
-      <><Math>{'\\mu'}</Math> (le drift historique)</>,
-      <><Math>{'\\mu - \\sigma^2/2'}</Math></>,
+      <><Katex>{'\\mu'}</Katex> (le drift historique)</>,
+      <><Katex>{'\\mu - \\sigma^2/2'}</Katex></>,
       <>0</>,
-      <><Math>{'r'}</Math> (le taux sans risque)</>,
+      <><Katex>{'r'}</Katex> (le taux sans risque)</>,
     ],
     answer: 3,
-    explanation: "Sous ℚ, tous les actifs croissent au taux sans risque r, indépendamment de leur drift historique μ. C'est précisément l'objet du changement de mesure de Girsanov.",
+    explanation: <>Sous <Katex>{'\\mathbb{Q}'}</Katex>, tous les actifs croissent au taux sans risque <Katex>{'r'}</Katex>, indépendamment de leur drift historique <Katex>{'\\mu'}</Katex>. C&apos;est précisément l&apos;objet du changement de mesure de Girsanov.</>,
   },
   {
     id: 7,
-    question: <>Que représente le ratio <Math>{'\\dfrac{\\mu - r}{\\sigma}'}</Math> dans le théorème de Girsanov ?</>,
+    question: <>Que représente le ratio <Katex>{'\\dfrac{\\mu - r}{\\sigma}'}</Katex> dans le théorème de Girsanov ?</>,
     choices: [
-      <>Le drift ajusté sous <Math>{'\\mathbb{Q}'}</Math></>,
+      <>Le drift ajusté sous <Katex>{'\\mathbb{Q}'}</Katex></>,
       <>Le prix du risque (Market Price of Risk)</>,
       <>La volatilité implicite de l&apos;actif</>,
       <>Le facteur d&apos;actualisation</>,
     ],
     answer: 1,
-    explanation: "C'est la prime de rendement exigée par unité de volatilité supportée — le Market Price of Risk. C'est ce terme que Girsanov absorbe dans le nouveau Brownien dWt^ℚ lors du changement de mesure.",
+    explanation: <>C&apos;est la prime de rendement exigée par unité de volatilité supportée — le Market Price of Risk. C&apos;est ce terme que Girsanov absorbe dans le nouveau Brownien <Katex>{'dW_t^{\\mathbb{Q}}'}</Katex> lors du changement de mesure.</>,
   },
   {
     id: 8,
-    question: <>Quelle est la formule de pricing universel sous <Math>{'\\mathbb{Q}'}</Math> ?</>,
+    question: <>Quelle est la formule de pricing universel sous <Katex>{'\\mathbb{Q}'}</Katex> ?</>,
     choices: [
-      <><Math>{'V_0 = \\mathbb{E}^{\\mathbb{P}}[V_T]'}</Math></>,
-      <><Math>{'V_0 = e^{rT} \\, \\mathbb{E}^{\\mathbb{Q}}[V_T]'}</Math></>,
-      <><Math>{'V_0 = e^{-rT} \\, \\mathbb{E}^{\\mathbb{Q}}[V_T]'}</Math></>,
-      <><Math>{'V_0 = e^{-\\mu T} \\, \\mathbb{E}^{\\mathbb{Q}}[V_T]'}</Math></>,
+      <><Katex>{'V_0 = \\mathbb{E}^{\\mathbb{P}}[V_T]'}</Katex></>,
+      <><Katex>{'V_0 = e^{rT} \\, \\mathbb{E}^{\\mathbb{Q}}[V_T]'}</Katex></>,
+      <><Katex>{'V_0 = e^{-rT} \\, \\mathbb{E}^{\\mathbb{Q}}[V_T]'}</Katex></>,
+      <><Katex>{'V_0 = e^{-\\mu T} \\, \\mathbb{E}^{\\mathbb{Q}}[V_T]'}</Katex></>,
     ],
     answer: 2,
-    explanation: "On actualise au taux sans risque r (facteur e^{-rT}, pas e^{rT}), et l'espérance est sous ℚ (pas sous ℙ). Les trois mauvaises réponses contiennent chacune une erreur classique.",
+    explanation: <>On actualise au taux sans risque <Katex>{'r'}</Katex> (facteur <Katex>{'e^{-rT}'}</Katex>, pas <Katex>{'e^{rT}'}</Katex>), et l&apos;espérance est sous <Katex>{'\\mathbb{Q}'}</Katex> (pas sous <Katex>{'\\mathbb{P}'}</Katex>). Les trois mauvaises réponses contiennent chacune une erreur classique.</>,
   },
 ];
+
+const TOTAL = 8;
 
 export default function QuizModule1Page() {
   const [current, setCurrent] = useState(0);
@@ -126,7 +129,7 @@ export default function QuizModule1Page() {
   }
 
   function handleNext() {
-    if (current === 7) {
+    if (current === TOTAL - 1) {
       setFinished(true);
     } else {
       setCurrent((c) => c + 1);
@@ -167,6 +170,8 @@ export default function QuizModule1Page() {
 
         {/* Fil d'Ariane */}
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+          <Link href="/" className="hover:text-blue-600 transition-colors">Accueil</Link>
+          <span>/</span>
           <Link href="/quiz" className="hover:text-blue-600 transition-colors">Quiz</Link>
           <span>/</span>
           <span className="text-gray-800 font-medium">Module 1 — Calcul stochastique</span>
@@ -177,7 +182,7 @@ export default function QuizModule1Page() {
 
         {/* Score */}
         <div className={`border rounded-xl p-6 mb-10 text-center ${scoreBg}`}>
-          <p className={`text-5xl font-bold mb-2 ${scoreColor}`}>{score} / 8</p>
+          <p className={`text-5xl font-bold mb-2 ${scoreColor}`}>{score} / {TOTAL}</p>
           <p className="text-gray-600 text-sm">
             {score >= 6 ? 'Excellent ! Tu maîtrises bien le Module 1.' : score >= 4 ? 'Pas mal — quelques points à revoir.' : 'Il faut retravailler les fondamentaux.'}
           </p>
@@ -200,7 +205,7 @@ export default function QuizModule1Page() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={handleRestart}
             className="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
@@ -212,6 +217,12 @@ export default function QuizModule1Page() {
             className="px-6 py-2.5 rounded-lg text-sm font-semibold border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
           >
             Revoir le Module 1
+          </Link>
+          <Link
+            href="/quiz"
+            className="px-6 py-2.5 rounded-lg text-sm font-semibold border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            ← Tous les quiz
           </Link>
         </div>
 
@@ -225,6 +236,8 @@ export default function QuizModule1Page() {
 
       {/* Fil d'Ariane */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+        <Link href="/" className="hover:text-blue-600 transition-colors">Accueil</Link>
+        <span>/</span>
         <Link href="/quiz" className="hover:text-blue-600 transition-colors">Quiz</Link>
         <span>/</span>
         <span className="text-gray-800 font-medium">Module 1 — Calcul stochastique</span>
@@ -236,11 +249,11 @@ export default function QuizModule1Page() {
 
       {/* Progression */}
       <div className="mb-6">
-        <p className="text-xs text-gray-400 mb-2">Question {current + 1} / 8</p>
+        <p className="text-xs text-gray-400 mb-2">Question {current + 1} / {TOTAL}</p>
         <div className="w-full bg-gray-100 rounded-full h-1">
           <div
             className="bg-blue-600 h-1 rounded-full transition-all duration-300"
-            style={{ width: `${((current) / 8) * 100}%` }}
+            style={{ width: `${(current / TOTAL) * 100}%` }}
           />
         </div>
       </div>
@@ -286,7 +299,7 @@ export default function QuizModule1Page() {
             onClick={handleNext}
             className="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
           >
-            {current === 7 ? 'Voir les résultats' : 'Question suivante'}
+            {current === TOTAL - 1 ? 'Voir les résultats' : 'Question suivante'}
           </button>
         )}
       </div>

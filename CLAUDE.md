@@ -30,6 +30,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 1 / Girsanov & Risque-Neutre
 - [x] **Module 1 — Calcul stochastique : COMPLET (3/3 pages)**
 - [x] Quiz Module 1 — Calcul stochastique (8 questions, KaTeX, corrigé)
+- [x] Quiz Module 2 — Pricing (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages)
 - [x] Module 2 / Équation de Black-Scholes
 - [x] Module 2 / Formule de Black-Scholes
 - [x] Module 2 / Modèles de diffusion
@@ -52,7 +53,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] **Module 8 — Macro : COMPLET (2/2 pages)**
 - [ ] Modules 4, 5
 - [ ] Simulateur de stratégies
-- [ ] Quiz Modules 2 à 8
+- [ ] Quiz Modules 3 à 8
 
 ## Architecture du site
 
@@ -176,12 +177,15 @@ app/
 ## Conventions pour les pages de quiz
 - **Template de référence** : `app/quiz/module-1/page.js`
 - Composant client (`'use client'`) — KaTeX importé directement dans le fichier (pas via `Math.js` qui est server-only)
-- Pattern KaTeX dans les quiz : `import katex from 'katex'` + `import 'katex/dist/katex.min.css'` + composant helper local `function Math({ children, block = false })` avec `dangerouslySetInnerHTML`
+- Pattern KaTeX dans les quiz : `import katex from 'katex'` + `import 'katex/dist/katex.min.css'` + composant helper local `function Katex({ children, block = false })` avec `dangerouslySetInnerHTML`
+- **⚠️ NE PAS nommer le helper `Math`** — cela écrase le global JavaScript `Math` (`Math.random`, `Math.floor`...) et provoque des erreurs au runtime. Toujours utiliser `Katex`.
+- **Robustesse du composant Katex** : normaliser `children` avant de passer à KaTeX : `const formula = Array.isArray(children) ? children.join('') : String(children)` — évite l'erreur "KaTeX can only parse string typed expression" causée par des espaces traînants dans les balises JSX.
 - Le CSS KaTeX est importé dans chaque page quiz (contrairement aux cours où il est dans `cours/layout.js`)
-- Questions et choix sont du JSX (pas des strings) — permet d'imbriquer `<Math>` dans les énoncés et les choix
-- Choix purement textuels : JSX minimal `<>texte</>` suffit, pas besoin de `<Math>`
+- Questions, choix **et explications** sont du JSX (pas des strings) — permet d'imbriquer `<Katex>` dans les énoncés, les choix et le corrigé
+- Choix purement textuels : JSX minimal `<>texte</>` suffit, pas besoin de `<Katex>`
 - Logic standard : `current`, `selected`, `validated`, `results`, `finished` — réutiliser ce pattern pour tous les quiz
-- Page index `/quiz/page.js` : déterminer si un quiz est disponible par `module.number === "01"` → à adapter au fur et à mesure (ajouter "02", "03"…)
+- Page index `/quiz/page.js` : déterminer si un quiz est disponible via `module.number === "01" || module.number === "02"` → étendre à chaque nouveau quiz. Le href est dérivé dynamiquement : `/quiz/module-${number.replace(/^0/, '')}`.
+- **Tirage stratifié (banque de questions)** : pour les quiz avec banque large, diviser les questions en groupes thématiques (ex. 4 groupes de 6 = 24 questions). Tirer N questions aléatoires dans chaque groupe via `useEffect(() => setQuestions(drawSession()), [])` avec `useState(null)` comme état initial. **Ne pas utiliser `useState(() => drawSession())`** — cet initialiseur s'exécute aussi côté serveur (SSR) et produit un tirage différent de celui du client, causant une erreur d'hydration React. `handleRestart` déclenche `window.location.reload()` pour forcer un nouveau tirage. Voir `app/quiz/module-2/page.js` comme template de référence.
 
 ## Conventions pour les pages de cours
 - **Template de référence** : `app/cours/module-1-calcul-stochastique/mouvement-brownien/page.js`
@@ -393,6 +397,19 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
     - **Navigation** : ← Fonctionnement de la Fed / pas de suivant (`<div />`).
   - **Correction navigation plomberie-fed** : lien Suivant mis à jour de `<div />` vers `/cours/module-8-macro/politique-monetaire`.
   - **Module 8 — Macro : COMPLET (2/2 pages)**.
+
+- **2026-04-14 (quiz module 2)** :
+  - **Quiz Module 2 — Pricing** (`app/quiz/module-2/page.js`) créé. Banque de 24 questions réparties en 4 groupes thématiques (A : Équation BS, B : Formule BS, C : Modèles de diffusion, D : Monte-Carlo). Tirage stratifié de 12 questions à chaque session (3 par groupe, mélangées aléatoirement). State initialisé via `useState(() => drawSession())` — le tirage est figé pour toute la session, `handleRestart` recharge la page pour un nouveau tirage.
+  - **Page index `/quiz`** : Module 2 activé — `isAvailable` étendu à `"02"`, href dérivé dynamiquement.
+  - **4 pages du Module 2** : badge "Bientôt disponible" remplacé par le lien actif `→ /quiz/module-2` dans les blocs quiz bas de page.
+  - **CLAUDE.md** : conventions quiz mises à jour avec le pattern tirage stratifié.
+
+- **2026-04-15** :
+  - **Quiz Module 1 mis à niveau** : composant helper renommé `Math` → `Katex` (évite le conflit avec le global JS). Toutes les explications converties de strings en JSX avec `<Katex>` pour le rendu des formules. Bouton "← Tous les quiz" ajouté sur l'écran de résultats (à côté de "Recommencer" et "Revoir le Module 1").
+  - **3 bugs corrigés** :
+    - `Math.random is not a function` (module-2) : nommer le helper `Math` écrasait le global JS — corrigé en renommant en `Katex` dans les deux quiz.
+    - `KaTeX can only parse string typed expression` (module-1) : espaces traînants dans `<Katex>  </Katex>` créaient un tableau de children — corrigé en ajoutant `Array.isArray(children) ? children.join('') : String(children)` dans le composant.
+    - Hydration mismatch (module-2) : `useState(() => drawSession())` s'exécutait côté serveur avec un résultat différent du client — corrigé avec `useState(null)` + `useEffect`.
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000

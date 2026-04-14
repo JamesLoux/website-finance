@@ -340,7 +340,7 @@ export default function Probabilitesd1d2Page() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Un quiz sur le Module 2 sera bientôt disponible.
+        Le quiz du Module 2 est disponible — <a href="/quiz/module-2" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}

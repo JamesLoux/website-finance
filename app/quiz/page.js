@@ -71,7 +71,7 @@ export default function QuizPage() {
         {/* Grille des quiz */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {quizModules.map((module) => {
-            const isAvailable = module.number === "01";
+            const isAvailable = module.number === "01" || module.number === "02";
             const card = (
               <div className={`bg-white border rounded-xl p-6 transition-all flex flex-col h-full ${
                 isAvailable
@@ -107,8 +107,10 @@ export default function QuizPage() {
               </div>
             );
 
+            const href = module.number === "01" ? "/quiz/module-1" : `/quiz/module-${module.number.replace(/^0/, '')}`;
+
             return isAvailable ? (
-              <Link key={module.number} href="/quiz/module-1" className="block">
+              <Link key={module.number} href={href} className="block">
                 {card}
               </Link>
             ) : (
