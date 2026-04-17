@@ -71,7 +71,7 @@ export default function QuizPage() {
         {/* Grille des quiz */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {quizModules.map((module) => {
-            const isAvailable = module.number === "01" || module.number === "02";
+            const isAvailable = module.number === "01" || module.number === "02" || module.number === "03" || module.number === "06";
             const card = (
               <div className={`bg-white border rounded-xl p-6 transition-all flex flex-col h-full ${
                 isAvailable

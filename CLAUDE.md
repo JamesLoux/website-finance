@@ -31,6 +31,8 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] **Module 1 — Calcul stochastique : COMPLET (3/3 pages)**
 - [x] Quiz Module 1 — Calcul stochastique (8 questions, KaTeX, corrigé)
 - [x] Quiz Module 2 — Pricing (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages)
+- [x] Quiz Module 3 — The Greeks (banque 20 questions, tirage stratifié 10/session, 3 groupes : A×8 B×6 C×6, tirage 4+3+3)
+- [x] Quiz Module 6 — Volatilité (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages)
 - [x] Module 2 / Équation de Black-Scholes
 - [x] Module 2 / Formule de Black-Scholes
 - [x] Module 2 / Modèles de diffusion
@@ -51,9 +53,9 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 8 / Fonctionnement de la Fed (plomberie-fed)
 - [x] Module 8 / Politique monétaire (politique-monetaire)
 - [x] **Module 8 — Macro : COMPLET (2/2 pages)**
+- [x] Simulateur de positions (book de trades, modale, 4 graphiques Greeks interactifs)
 - [ ] Modules 4, 5
-- [ ] Simulateur de stratégies
-- [ ] Quiz Modules 3 à 8
+- [ ] Quiz Modules 4, 5, 7, 8
 
 ## Architecture du site
 
@@ -63,7 +65,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
 ### Pages principales
 - `/` → Home (faite)
 - `/cours` → Index des modules
-- `/simulateur` → Simulateur de stratégies
+- `/simulateur` → Simulateur de positions (book de trades + Greeks interactifs)
 - `/quiz` → Quiz par thématique
 - `/a-propos` → Présentation personnelle
 
@@ -156,9 +158,15 @@ app/
     module-8-macro/
       plomberie-fed/page.js            ← ✅ Fait (titre : "Fonctionnement de la Fed")
   quiz/
-    page.js                          ← Index des quiz — Module 1 lien actif, autres badges "Bientôt disponible"
+    page.js                          ← Index des quiz — Modules 1, 2, 3, 6 actifs ; autres badges "Bientôt disponible"
     module-1/
       page.js                        ← ✅ Quiz Module 1 : 8 questions interactives avec KaTeX
+    module-2/
+      page.js                        ← ✅ Quiz Module 2 : banque 24q, tirage stratifié 12/session (4 groupes × 3)
+    module-3/
+      page.js                        ← ✅ Quiz Module 3 : banque 20q, tirage stratifié 10/session (4+3+3)
+    module-6/
+      page.js                        ← ✅ Quiz Module 6 : banque 24q, tirage stratifié 12/session (4 groupes × 3)
   simulateur/page.js                 ← Placeholder
   a-propos/page.js                   ← Placeholder
 ```
@@ -184,7 +192,7 @@ app/
 - Questions, choix **et explications** sont du JSX (pas des strings) — permet d'imbriquer `<Katex>` dans les énoncés, les choix et le corrigé
 - Choix purement textuels : JSX minimal `<>texte</>` suffit, pas besoin de `<Katex>`
 - Logic standard : `current`, `selected`, `validated`, `results`, `finished` — réutiliser ce pattern pour tous les quiz
-- Page index `/quiz/page.js` : déterminer si un quiz est disponible via `module.number === "01" || module.number === "02"` → étendre à chaque nouveau quiz. Le href est dérivé dynamiquement : `/quiz/module-${number.replace(/^0/, '')}`.
+- Page index `/quiz/page.js` : déterminer si un quiz est disponible via `module.number === "01" || module.number === "02" || module.number === "03" || module.number === "06"` → étendre à chaque nouveau quiz. Le href est dérivé dynamiquement : `/quiz/module-${number.replace(/^0/, '')}`.
 - **Tirage stratifié (banque de questions)** : pour les quiz avec banque large, diviser les questions en groupes thématiques (ex. 4 groupes de 6 = 24 questions). Tirer N questions aléatoires dans chaque groupe via `useEffect(() => setQuestions(drawSession()), [])` avec `useState(null)` comme état initial. **Ne pas utiliser `useState(() => drawSession())`** — cet initialiseur s'exécute aussi côté serveur (SSR) et produit un tirage différent de celui du client, causant une erreur d'hydration React. `handleRestart` déclenche `window.location.reload()` pour forcer un nouveau tirage. Voir `app/quiz/module-2/page.js` comme template de référence.
 
 ## Conventions pour les pages de cours
@@ -217,7 +225,7 @@ Exception : si le quiz du module existe, remplacer par un lien actif :
   Le quiz du Module 1 est disponible — <a href="/quiz/module-1" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
 </div>
 ```
-Actuellement, seul le **Module 1** a un quiz actif (`/quiz/module-1`).
+Actuellement, les **Modules 1, 2, 3 et 6** ont un quiz actif.
 
 **2. Navigation Précédent/Suivant** :
 ```jsx
@@ -410,6 +418,31 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
     - `Math.random is not a function` (module-2) : nommer le helper `Math` écrasait le global JS — corrigé en renommant en `Katex` dans les deux quiz.
     - `KaTeX can only parse string typed expression` (module-1) : espaces traînants dans `<Katex>  </Katex>` créaient un tableau de children — corrigé en ajoutant `Array.isArray(children) ? children.join('') : String(children)` dans le composant.
     - Hydration mismatch (module-2) : `useState(() => drawSession())` s'exécutait côté serveur avec un résultat différent du client — corrigé avec `useState(null)` + `useEffect`.
+
+- **2026-04-16** :
+  - **Quiz Module 3 — The Greeks** (`app/quiz/module-3/page.js`) créé. Banque de 20 questions réparties en 3 groupes thématiques (A : Greek formulas & propriétés — 8q, B : démonstrations Delta/Gamma/Vega — 6q, C : arbitrage Theta-Gamma — 6q). Tirage stratifié 10 questions/session (4 de A, 3 de B, 3 de C), mélangées. Pattern `useState(null)` + `useEffect`. Bouton "← Tous les quiz" sur l'écran de résultats. Seuils de score : ≥8 vert, ≥5 amber, <5 rouge.
+  - **Quiz Module 6 — Volatilité** (`app/quiz/module-6/page.js`) créé. Banque de 24 questions réparties en 4 groupes thématiques (A : vol implicite et nappes — 6q, B : vol stochastique / Heston / SABR — 6q, C : variance swap et VIX — 6q, D : skew delta — 6q). Tirage stratifié 12 questions/session (3 par groupe), mélangées. Même pattern que module-2.
+  - **Équilibrage des positions de réponse** : dans les deux quiz, les bonnes réponses ont été redistribuées pour obtenir exactement 5 occurrences par position (0, 1, 2, 3) sur les 20 et 24 questions respectivement. Principe : réordonner les choix de chaque question (sans changer le contenu), mettre à jour `answer` en conséquence. À appliquer systématiquement à chaque nouveau quiz pour éviter que la bonne réponse soit toujours à la même position.
+  - **`quiz/page.js`** : `isAvailable` étendu à `"03"` et `"06"`.
+  - **3 pages Module 3** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-3` (grecques-premier-ordre, grecques-second-ordre, arbitrage-theta-gamma).
+  - **4 pages Module 6** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-6` (vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta).
+
+- **2026-04-17** :
+  - **Simulateur de positions — COMPLET** (`app/simulateur/page.js`) : composant client complet en un seul fichier — remplace le placeholder. Architecture finale documentée ci-dessous.
+
+  - **Architecture du simulateur**
+    - **Book de trades** : max 2 trades simultanés. Chaque trade = carte compacte `bg-white border-l-4` (bandeau bleu Trade 1, rouge Trade 2). Champs affichés : type/sens (badges), S/K/σ/T en grille 4 colonnes, prime, contrats, montant. Bouton × pour fermer.
+    - **Modale d'ajout de trade** : panneau latéral droit, slide-in depuis la droite (transition CSS `translate-x`), fond semi-transparent. Toggle Call/Put et Long/Short (boutons bleus). 7 champs numériques : S, K, σ (%), T, q (%), r (%), montant (€). `r` grisé et pré-rempli depuis trade 1 si déjà ouvert (cohérence pricing). Aperçu temps réel : prime BS recalculée à chaque frappe + nombre de contrats = `montant ÷ (prime × 100)`. Bouton "Lancer mon trade →" désactivé si inputs invalides.
+    - **4 graphiques Greeks** (Delta, Gamma, Vega, Theta) en grille 2×2 (`grid-cols-1 md:grid-cols-2`). Axe X = moneyness S/K de 0.5 à 1.5 (200 points). Axe Y labellisé en euros : "Delta (€)", "Gamma (€)", "Vega (€)", "Theta (€/j)". Checkboxes pour masquer/afficher chaque graphique entier. Avec 1 trade : courbe bleue pleine. Avec 2 trades : courbes bleue/rouge en pointillés + courbe agrégée noire (somme simple). Légende filtre les datasets `_spot` (via label commençant par `_`).
+    - **Plugin `beforeDraw`** (Chart.js inline, un par graphique) : ligne horizontale y=0 (`rgba(100,100,100,0.35)`, 1px, aucun tiret) + lignes verticales pointillées au spot réel de chaque trade (couleur par trade, opacité 0.45). `tradesRef` (ref mutable) partagée avec le plugin pour lecture synchrone sans re-créer le chart.
+    - **Zones colorées** (Filler plugin) : deux datasets helper `_fill_pos` (données = `max(y,0)`, fond vert 12%) et `_fill_neg` (données = `min(y,0)`, fond rouge 10%), basés sur la courbe de référence (bleue si 1 trade, noire agrégée si 2 trades). Placés en tête du tableau de datasets pour rendu en arrière-plan.
+    - **Point au spot** : dataset `_spot` avec un seul point, `pointRadius: 6`, même couleur que la courbe du trade concerné, sans ligne.
+    - **Scaling trading floor — convention euros** : `scaleEur(gName, t)` calcule `N = montant / S` (nombre d'unités fixe par trade), puis : `Delta_€ = Δ_BS × N`, `Gamma_€ = Γ_BS × N × S × 1%`, `Vega_€ = 𝒱_BS × N × 1%`, `Theta_€ = Θ_BS × N / 365`. Short = signe −1. Agrégation = somme simple des Greeks en euros (pas de pondération).
+    - **Valeurs numériques au spot** (ligne des checkboxes) : pour chaque Greek, mini-colonne `font-mono text-xs` à droite du label. 1 trade : point bleu + valeur. 2 trades : point bleu, point rouge, séparateur `border-t`, somme en noir. Couleurs : vert si > 0, rouge si < 0, gris si ≈ 0. Format : `+1234.5678` (4 décimales, signe explicite).
+    - **Modale ⓘ** : bouton circulaire gris `ⓘ` à droite de "Afficher :", ouvre une modale centrée (`max-w-lg`, overlay `bg-black/40`). Contenu : explication de la convention euros (N = montant/S, 4 formules en `font-mono bg-gray-100 rounded`), agrégation en somme, lecture des courbes moneyness. Bouton "Fermer" en bas.
+    - **Formules BS** : `ncdf` copiée exactement depuis `GreeksChart.js` (A&S 26.2.17, erreur < 7.5e-8). `greekBS(name, type, S, K, r, q, sigma, T)` : Delta, Gamma, Vega, Theta avec dividende `q`. Protection T≤0 / σ≤0 / S≤0 → retourne 0 ou valeur intrinsèque.
+    - **État vide** : message d'invitation centré avec bouton "Ouvrir un trade".
+    - **Style** : `bg-gray-50 min-h-full py-12 px-6`, `max-w-7xl mx-auto`, cards `bg-white border border-gray-300 rounded-xl`. Respecte toutes les règles de style du projet (pas de dark mode, accent blue-600, bordures gray-300).
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000
