@@ -55,7 +55,9 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] **Module 8 — Macro : COMPLET (2/2 pages)**
 - [x] Simulateur de positions (book de trades, modale, 4 graphiques Greeks interactifs)
 - [ ] Modules 4, 5
-- [ ] Quiz Modules 4, 5, 7, 8
+- [x] Quiz Module 7 — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5)
+- [x] Quiz Module 8 — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5)
+- [ ] Quiz Modules 4, 5
 
 ## Architecture du site
 
@@ -225,7 +227,7 @@ Exception : si le quiz du module existe, remplacer par un lien actif :
   Le quiz du Module 1 est disponible — <a href="/quiz/module-1" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
 </div>
 ```
-Actuellement, les **Modules 1, 2, 3 et 6** ont un quiz actif.
+Actuellement, les **Modules 1, 2, 3, 6, 7 et 8** ont un quiz actif.
 
 **2. Navigation Précédent/Suivant** :
 ```jsx
@@ -426,6 +428,26 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
   - **`quiz/page.js`** : `isAvailable` étendu à `"03"` et `"06"`.
   - **3 pages Module 3** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-3` (grecques-premier-ordre, grecques-second-ordre, arbitrage-theta-gamma).
   - **4 pages Module 6** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-6` (vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta).
+
+- **2026-04-18** :
+  - **Quiz Module 7 — Quanto & FX** (`app/quiz/module-7/page.js`) créé. Banque de 20 questions réparties en 2 groupes thématiques (A : Corrélation Indice et FX — 10q, B : Options Quanto & Composite — 10q). Tirage stratifié 10 questions/session (5 de A + 5 de B), mélangées aléatoirement. Pattern `useState(null)` + `useEffect`. Seuils de score : ≥8 vert, ≥5 amber, <5 rouge. Bouton "← Tous les quiz" sur l'écran de résultats.
+  - **Équilibrage des positions de réponse** : redistribution pour obtenir exactement 5 occurrences par position (0, 1, 2, 3) sur les 20 questions. A2 : bonne réponse déplacée de la position 0 à la position 1 (choix réordonnés). B3 : bonne réponse déplacée de la position 3 à la position 2 (choix réordonnés).
+  - **`quiz/page.js`** : `isAvailable` étendu à `"07"`.
+  - **2 pages Module 7** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-7` (correlation-fx, options-quanto).
+  - **Quiz Module 8 — Macro** (`app/quiz/module-8/page.js`) créé. Banque de 20 questions réparties en 2 groupes thématiques (A : Fonctionnement de la Fed — 10q, B : Politique monétaire — 10q). Tirage stratifié 10 questions/session (5 de A + 5 de B), mélangées aléatoirement. Pattern `useState(null)` + `useEffect`. Seuils de score : ≥8 vert, ≥5 amber, <5 rouge. Bouton "← Tous les quiz" sur l'écran de résultats. Contenu entièrement textuel (pas de LaTeX).
+  - **Équilibrage des positions de réponse (Module 8)** : redistribution pour obtenir exactement 5 occurrences par position (0, 1, 2, 3) sur les 20 questions. Questions réordonnées : A2 (IORB → pos 0), A4 (25 bps → pos 0), B1 (taux 2 ans → pos 0), B2 (prime de terme → pos 0), B4 (courbe inversée → pos 1), B5 (dot plot → pos 1).
+  - **`quiz/page.js`** : `isAvailable` étendu à `"08"`.
+  - **2 pages Module 8** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-8` (plomberie-fed, politique-monetaire).
+
+- **2026-04-19** :
+  - **`quiz/page.js` — refonte des cartes** : champ `description` remplacé par `pages` (liste des sous-pages du module, séparées par `·`). Nombre de questions corrigé pour afficher le tirage réel par session (pas la taille de la banque) : M1=8, M2=12, M3=10, M6=12, M7=10, M8=10. Les modules 4 et 5 (non disponibles) affichent 10 par défaut.
+  - **`cours/page.js` — refonte visuelle du chemin serpent** : remplacement des cercles numérotés par des cartes rectangulaires. Architecture finale :
+    - **Constantes de layout** : `CARD_W = 208px`, `CONN_W = 64px`, `ROW_W = CARD_W*3 + CONN_W*2 = 752px`. Conteneur serpent centré via `width: ROW_W; margin: 0 auto`.
+    - **Cartes `Node`** : deux parties séparées par un filet. Haut (`padding: 10px 14px`) : numéro `fontSize 22 fontWeight 700` + titre `fontSize 13 fontWeight 600`, flex row. Bas (`padding: 8px 14px`) : liste des sous-pages. Modules actifs (1,2,3,6,7,8) : bordure `#2563eb`, numéro `#2563eb`, fond bas `#eff6ff`, liens `<a>` bleus hover underline. Modules inactifs (4,5) : bordure `#bfdbfe`, numéro `#bfdbfe`, titre `#9ca3af`, fond bas `#f9fafb`, texte gris non cliquable.
+    - **`HConn`** : `width: CONN_W (64px)`, `height: 2px`, `flexShrink: 0`, `marginTop: 22px` (aligné avec le centre de la partie haute des cartes). Pas de `flex` sur la div (évite le bug `flex-basis: 0%` qui écrasait la largeur).
+    - **`VConn`** : `width: ROW_W`, `height: 32px`, ligne verticale `width: 2px`. Offset calculé en px : `paddingRight/Left = CARD_W/2 - 1 = 103px` — aligne le centre de la ligne avec le centre de la carte d'extrémité.
+    - **Rangée 3** (7→8) : fantôme `<div style={{ width: CARD_W }}>` + `<HConn invisible>` pour maintenir l'alignement sur 3 colonnes.
+    - **Correction bug HConn** : l'ancienne version utilisait `flex: 0` qui génère `flex-basis: 0%` en CSS et écrase `width` → la div collapsait à 0px et la ligne disparaissait. Corrigé en supprimant `flex: 0` et en gardant uniquement `flexShrink: 0`.
 
 - **2026-04-17** :
   - **Simulateur de positions — COMPLET** (`app/simulateur/page.js`) : composant client complet en un seul fichier — remplace le placeholder. Architecture finale documentée ci-dessous.

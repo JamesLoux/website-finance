@@ -72,7 +72,7 @@ export default function GirsanovRisqueNeutrePage() {
           Section 2 — Théorème de Girsanov
       ══════════════════════════════════════════════════════════════ */}
       <h2 id="theoreme-girsanov" className="text-2xl font-bold text-gray-900 mt-14 mb-6 scroll-mt-24">
-        2. Le changement de mesure — Théorème de Girsanov
+        2. Le changement de mesure via le Théorème de Girsanov
       </h2>
 
       <p className="text-gray-600 leading-relaxed mb-4">

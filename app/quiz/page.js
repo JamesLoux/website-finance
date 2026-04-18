@@ -7,49 +7,49 @@ const quizModules = [
   {
     number: "01",
     title: "Calcul stochastique",
-    description: "Teste ta compréhension du mouvement brownien, du lemme d'Itô et du changement de mesure.",
-    questions: 12,
+    pages: "Mouvement Brownien · Lemme d'Itô · Girsanov & Risque-Neutre",
+    questions: 8,
   },
   {
     number: "02",
     title: "Pricing",
-    description: "Black-Scholes, modèles de diffusion, interprétation de d1 et d2 : es-tu capable de pricer une option ?",
-    questions: 15,
+    pages: "Équation de Black-Scholes · Formule de Black-Scholes · Modèles de diffusion · Monte-Carlo",
+    questions: 12,
   },
   {
     number: "03",
     title: "The Greeks",
-    description: "Delta hedging, Gamma scalping, arbitrage Theta-Gamma — maîtrises-tu les sensibilités ?",
-    questions: 14,
+    pages: "L'essentiel des Greeks · Quelques démonstrations · Arbitrage Theta-Gamma",
+    questions: 10,
   },
   {
     number: "04",
     title: "Taux & Crédit",
-    description: "Swaps de taux, courbe des taux, modèles de taux courts. Quiz orienté produits de taux.",
+    pages: "Swaps & Flux · Produits de courbe · Modèles de taux",
     questions: 10,
   },
   {
     number: "05",
     title: "Produits Equity",
-    description: "Options vanilles, exotiques, produits structurés — connais-tu les briques de l'equity dérivé ?",
-    questions: 13,
+    pages: "Vanilles & Combinaisons · Options exotiques · Produits structurés",
+    questions: 10,
   },
   {
     number: "06",
     title: "Volatilité",
-    description: "Variance swap, vol locale vs stochastique, smile de volatilité. Un sujet redoutable.",
-    questions: 10,
+    pages: "Vol implicite & Nappes · Vol stochastique · Variance Swap & VIX · Skew Delta",
+    questions: 12,
   },
   {
     number: "07",
     title: "Quanto & FX",
-    description: "Options quanto, options composites et gestion du risque de change.",
-    questions: 8,
+    pages: "Corrélation Indice & FX · Options Quanto & Composite",
+    questions: 10,
   },
   {
     number: "08",
     title: "Macro",
-    description: "Fed, réserves, politique monétaire — comprends-tu les forces qui meuvent les marchés ?",
+    pages: "Fonctionnement de la Fed · Politique monétaire",
     questions: 10,
   },
 ];
@@ -64,14 +64,14 @@ export default function QuizPage() {
           <h1 className="text-4xl font-bold text-gray-900 mb-3">Quiz</h1>
           <p className="text-gray-500 max-w-2xl">
             Un quiz par module pour tester et consolider tes connaissances.
-            Les questions sont progressives, du fondamental au technique.
+            
           </p>
         </div>
 
         {/* Grille des quiz */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {quizModules.map((module) => {
-            const isAvailable = module.number === "01" || module.number === "02" || module.number === "03" || module.number === "06";
+            const isAvailable = module.number === "01" || module.number === "02" || module.number === "03" || module.number === "06" || module.number === "07" || module.number === "08";
             const card = (
               <div className={`bg-white border rounded-xl p-6 transition-all flex flex-col h-full ${
                 isAvailable
@@ -86,9 +86,9 @@ export default function QuizPage() {
                   <h2 className="text-lg font-semibold text-gray-900">{module.title}</h2>
                 </div>
 
-                {/* Description */}
+                {/* Sous-pages */}
                 <p className="text-sm text-gray-500 leading-relaxed mb-4">
-                  {module.description}
+                  {module.pages}
                 </p>
 
                 {/* Nombre de questions + badge */}

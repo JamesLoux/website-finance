@@ -1,12 +1,16 @@
 'use client'
 
+const CARD_W = 208
+const CONN_W = 64
+const ROW_W = CARD_W * 3 + CONN_W * 2  // 752
+
 export default function CoursPage() {
   return (
-    <main className="max-w-3xl mx-auto px-6 py-12">
+    <main className="max-w-4xl mx-auto px-6 py-12">
 
       <h1 className="text-3xl font-semibold text-gray-900 mb-3">Cours</h1>
       <p className="text-gray-600 mb-8">
-        Un parcours progressif en 8 modules, du calcul stochastique aux produits exotiques.
+        Un parcours progressif en 8 modules qui suit un chemin narratif (plutôt qu&apos;une progression dans la difficulté).
       </p>
 
       {/* Disclaimer */}
@@ -26,45 +30,77 @@ export default function CoursPage() {
         <strong style={{ color: '#111827', fontWeight: 500 }}>À noter :</strong> ces cours
         s&apos;adressent à un public de niveau Bac+5 / Master en mathématiques appliquées.
         Ils mobilisent le calcul stochastique, l&apos;analyse fonctionnelle et les
-        probabilités — une solide base en maths est indispensable pour en tirer
+        probabilités. Une solide base en maths est indispensable pour en tirer
         pleinement parti.
       </div>
 
       {/* Chemin serpent */}
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: ROW_W, margin: '0 auto' }}>
 
         {/* Rangée 1 → 3 (gauche à droite) */}
         <Row>
-          <Node num="1" title="Calcul stochastique" subs={['Mouvement brownien', 'Lemme d\'Itô', 'Girsanov & risque-neutre']} href="/cours/module-1-calcul-stochastique/mouvement-brownien" />
+          <Node num="1" title="Calcul stochastique" active subs={[
+            { label: 'Mouvement brownien', href: '/cours/module-1-calcul-stochastique/mouvement-brownien' },
+            { label: "Lemme d'Itô", href: '/cours/module-1-calcul-stochastique/lemme-ito' },
+            { label: 'Girsanov & Risque-Neutre', href: '/cours/module-1-calcul-stochastique/girsanov-risque-neutre' },
+          ]} />
           <HConn />
-          <Node num="2" title="Pricing" subs={['Équation de Black-Scholes', 'Formule de Black-Scholes', 'Modèles de diffusion', 'Monte-Carlo']} href="/cours/module-2-pricing/equation-black-scholes" />
+          <Node num="2" title="Pricing" active subs={[
+            { label: 'Équation de Black-Scholes', href: '/cours/module-2-pricing/equation-black-scholes' },
+            { label: 'Formule de Black-Scholes', href: '/cours/module-2-pricing/probabilites-d1-d2' },
+            { label: 'Modèles de diffusion', href: '/cours/module-2-pricing/modeles-diffusion' },
+            { label: 'Monte-Carlo', href: '/cours/module-2-pricing/monte-carlo' },
+          ]} />
           <HConn />
-          <Node num="3" title="The Greeks" subs={['L\'essentiel des Greeks', 'Quelques démonstrations', 'Arbitrage Theta-Gamma']} href="/cours/module-3-grecques/grecques-premier-ordre" />
+          <Node num="3" title="The Greeks" active subs={[
+            { label: "L'essentiel des Greeks", href: '/cours/module-3-grecques/grecques-premier-ordre' },
+            { label: 'Quelques démonstrations', href: '/cours/module-3-grecques/grecques-second-ordre' },
+            { label: 'Arbitrage Theta-Gamma', href: '/cours/module-3-grecques/arbitrage-theta-gamma' },
+          ]} />
         </Row>
 
         {/* Virage droite */}
-        <VConn side="right" cols={3} />
+        <VConn side="right" />
 
         {/* Rangée 4 → 6 (droite à gauche) */}
         <Row reverse>
-          <Node num="4" title="Taux & Crédit" subs={['Swaps & flux', 'Produits de courbe', 'Modèles de taux']} />
+          <Node num="4" title="Taux & Crédit" subs={[
+            { label: 'Swaps & Flux' },
+            { label: 'Produits de courbe' },
+            { label: 'Modèles de taux' },
+          ]} />
           <HConn />
-          <Node num="5" title="Produits equity" subs={['Vanilles & combinaisons', 'Options exotiques', 'Produits structurés']} />
+          <Node num="5" title="Produits equity" subs={[
+            { label: 'Vanilles & Combinaisons' },
+            { label: 'Options exotiques' },
+            { label: 'Produits structurés' },
+          ]} />
           <HConn />
-          <Node num="6" title="Volatilité" subs={['Vol implicite & nappes', 'Vol stochastique', 'Variance Swap & VIX', 'Skew Delta']} href="/cours/module-6-volatilite/vol-implicite-nappes" />
+          <Node num="6" title="Volatilité" active subs={[
+            { label: 'Vol implicite & Nappes', href: '/cours/module-6-volatilite/vol-implicite-nappes' },
+            { label: 'Vol stochastique', href: '/cours/module-6-volatilite/vol-stochastique' },
+            { label: 'Variance Swap & VIX', href: '/cours/module-6-volatilite/variance-swap-vix' },
+            { label: 'Skew Delta', href: '/cours/module-6-volatilite/skew-delta' },
+          ]} />
         </Row>
 
         {/* Virage gauche */}
-        <VConn side="left" cols={3} />
+        <VConn side="left" />
 
         {/* Rangée 7 → 8 (gauche à droite) */}
         <Row>
-          <Node num="7" title="Quanto & FX" subs={['Options quanto', 'Options composites']} />
+          <Node num="7" title="Quanto & FX" active subs={[
+            { label: 'Corrélation Indice & FX', href: '/cours/module-7-quanto-fx/correlation-fx' },
+            { label: 'Options Quanto & Composite', href: '/cours/module-7-quanto-fx/options-quanto' },
+          ]} />
           <HConn />
-          <Node num="8" title="Macro" subs={['Plomberie Fed', 'Gestion des réserves', 'Politique monétaire']} />
+          <Node num="8" title="Macro" active subs={[
+            { label: 'Fonctionnement de la Fed', href: '/cours/module-8-macro/plomberie-fed' },
+            { label: 'Politique monétaire', href: '/cours/module-8-macro/politique-monetaire' },
+          ]} />
           {/* Fantômes pour aligner sur 3 colonnes */}
           <HConn invisible />
-          <Node invisible />
+          <div style={{ width: CARD_W, flexShrink: 0 }} />
         </Row>
 
       </div>
@@ -86,97 +122,76 @@ function Row({ children, reverse = false }) {
   )
 }
 
-function Node({ num, title, subs = [], href, invisible = false }) {
-  const content = (
+function Node({ num, title, subs = [], active = false }) {
+  const borderColor = active ? '#2563eb' : '#bfdbfe'
+  const numColor    = active ? '#2563eb' : '#bfdbfe'
+  const titleColor  = active ? '#111827' : '#9ca3af'
+  const bgBottom    = active ? '#eff6ff' : '#f9fafb'
+  const sepColor    = active ? '#bfdbfe' : '#e0eeff'
+
+  return (
     <div style={{
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '0 4px',
-      visibility: invisible ? 'hidden' : 'visible',
+      width: CARD_W,
+      border: `1.5px solid ${borderColor}`,
+      borderRadius: 12,
+      backgroundColor: '#ffffff',
+      overflow: 'hidden',
+      flexShrink: 0,
     }}>
-      <div style={{
-        width: 56,
-        height: 56,
-        borderRadius: '50%',
-        border: '1.5px solid #378ADD',
-        backgroundColor: '#ffffff',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 18,
-        fontWeight: 500,
-        color: '#185FA5',
-        cursor: href ? 'pointer' : 'default',
-        flexShrink: 0,
-        transition: href ? 'background 0.15s' : undefined,
-      }}
-        onMouseEnter={href ? e => e.currentTarget.style.backgroundColor = '#E6F1FB' : undefined}
-        onMouseLeave={href ? e => e.currentTarget.style.backgroundColor = '#ffffff' : undefined}
-      >
-        {num}
+      {/* Partie haute : numéro + titre */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px' }}>
+        <span style={{ fontSize: 22, fontWeight: 700, color: numColor, flexShrink: 0, lineHeight: 1 }}>
+          {num}
+        </span>
+        <span style={{ fontSize: 13, fontWeight: 600, color: titleColor, lineHeight: 1.3 }}>
+          {title}
+        </span>
       </div>
-      <div style={{
-        marginTop: 8,
-        fontSize: 11,
-        fontWeight: 500,
-        color: '#111827',
-        textAlign: 'center',
-        lineHeight: 1.3,
-        maxWidth: 90,
-      }}>
-        {title}
-      </div>
-      <div style={{ marginTop: 5, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center' }}>
-        {subs.map((s, i) => (
-          <div key={i} style={{
-            fontSize: 10,
-            color: '#9ca3af',
-            textAlign: 'center',
-            lineHeight: 1.3,
-            maxWidth: 90,
-          }}>
-            {s}
-          </div>
-        ))}
+      {/* Séparateur */}
+      <div style={{ height: 1, backgroundColor: sepColor }} />
+      {/* Partie basse : sous-pages */}
+      <div style={{ backgroundColor: bgBottom, padding: '8px 14px', display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {subs.map((s, i) =>
+          s.href ? (
+            <a key={i} href={s.href} style={{ fontSize: 12, color: '#2563eb', textDecoration: 'none', lineHeight: 1.4 }}
+              onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+              onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+            >
+              {s.label}
+            </a>
+          ) : (
+            <span key={i} style={{ fontSize: 12, color: '#9ca3af', lineHeight: 1.4 }}>{s.label}</span>
+          )
+        )}
       </div>
     </div>
   )
-
-  if (href) {
-    return <a href={href} style={{ flex: 1, textDecoration: 'none', display: 'flex' }}>{content}</a>
-  }
-  return content
 }
 
 function HConn({ invisible = false }) {
   return (
     <div style={{
-      flex: 0,
-      width: 24,
-      height: 1.5,
+      width: CONN_W,
+      height: 2,
       backgroundColor: invisible ? 'transparent' : '#d1d5db',
-      alignSelf: 'auto',
-      marginTop: 28,
       flexShrink: 0,
+      alignSelf: 'flex-start',
+      marginTop: 22,
     }} />
   )
 }
 
-function VConn({ side, cols }) {
-  const colWidth = `calc(100% / ${cols})`
-  const offset = `calc(${colWidth} / 2 - 1px)`
+function VConn({ side }) {
   return (
     <div style={{
       display: 'flex',
-      width: '100%',
-      height: 36,
+      width: ROW_W,
+      height: 32,
       justifyContent: side === 'right' ? 'flex-end' : 'flex-start',
-      paddingRight: side === 'right' ? offset : 0,
-      paddingLeft: side === 'left' ? offset : 0,
+      paddingRight: side === 'right' ? CARD_W / 2 - 1 : 0,
+      paddingLeft:  side === 'left'  ? CARD_W / 2 - 1 : 0,
     }}>
-      <div style={{ width: 1.5, backgroundColor: '#d1d5db' }} />
+      <div style={{ width: 2, backgroundColor: '#d1d5db' }} />
     </div>
   )
 }
