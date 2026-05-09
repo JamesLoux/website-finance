@@ -10,7 +10,7 @@ export default function CoursPage() {
 
       <h1 className="text-3xl font-semibold text-gray-900 mb-3">Cours</h1>
       <p className="text-gray-600 mb-8">
-        Un parcours progressif en 8 modules qui suit un chemin narratif (plutôt qu&apos;une progression dans la difficulté).
+        Un parcours progressif en 10 modules qui suit un chemin narratif (plutôt qu&apos;une progression dans la difficulté).
       </p>
 
       {/* Disclaimer */}
@@ -64,41 +64,65 @@ export default function CoursPage() {
 
         {/* Rangée 4 → 6 (droite à gauche) */}
         <Row reverse>
-          <Node num="4" title="Taux & Crédit" subs={[
-            { label: 'Swaps & Flux' },
-            { label: 'Produits de courbe' },
-            { label: 'Modèles de taux' },
+          <Node num="4" title="Fixed Income I" active subs={[
+            { label: 'Obligations & Bases', href: '/cours/module-4-taux-credit/obligations-bases' },
+            { label: 'Duration & Convexité', href: '/cours/module-4-taux-credit/duration-convexite' },
+            { label: 'Fwd Rate Agreement', href: '/cours/module-4-taux-credit/fwd-rate-agreement' },
+            { label: 'Interest Rate Swap', href: '/cours/module-4-taux-credit/interest-rate-swap' },
           ]} />
           <HConn />
-          <Node num="5" title="Produits equity" subs={[
-            { label: 'Vanilles & Combinaisons' },
-            { label: 'Options exotiques' },
-            { label: 'Produits structurés' },
+          <Node num="5" title="Fixed Income II" active subs={[
+            { label: 'Cap & Floor', href: '/cours/module-5-fixed-income-2/cap-floor' },
+            { label: 'Bond Options & Swaptions', href: '/cours/module-5-fixed-income-2/bond-options-swaptions' },
+            { label: 'CMS', href: '/cours/module-5-fixed-income-2/cms' },
+            { label: 'Convertible Bond', href: '/cours/module-5-fixed-income-2/convertible-bond' },
+            { label: 'Range Accrual', href: '/cours/module-5-fixed-income-2/range-accrual' },
+            { label: 'Modèle de taux', href: '/cours/module-5-fixed-income-2/modele-taux' },
           ]} />
           <HConn />
-          <Node num="6" title="Volatilité" active subs={[
-            { label: 'Vol implicite & Nappes', href: '/cours/module-6-volatilite/vol-implicite-nappes' },
-            { label: 'Vol stochastique', href: '/cours/module-6-volatilite/vol-stochastique' },
-            { label: 'Variance Swap & VIX', href: '/cours/module-6-volatilite/variance-swap-vix' },
-            { label: 'Skew Delta', href: '/cours/module-6-volatilite/skew-delta' },
+          <Node num="6" title="Fixed Income III" subs={[
+            { label: 'FX Swap' },
+            { label: 'CDS' },
+            { label: 'Inflation Swap' },
+            { label: 'TRS' },
           ]} />
         </Row>
 
         {/* Virage gauche */}
         <VConn side="left" />
 
-        {/* Rangée 7 → 8 (gauche à droite) */}
+        {/* Rangée 7 → 9 (gauche à droite) */}
         <Row>
-          <Node num="7" title="Quanto & FX" active subs={[
+          <Node num="7" title="Produits Equity" subs={[
+            { label: 'Vanilles & Combinaisons' },
+            { label: 'Options exotiques' },
+            { label: 'Produits structurés' },
+          ]} />
+          <HConn />
+          <Node num="8" title="Volatilité" active subs={[
+            { label: 'Vol implicite & Nappes', href: '/cours/module-6-volatilite/vol-implicite-nappes' },
+            { label: 'Vol stochastique', href: '/cours/module-6-volatilite/vol-stochastique' },
+            { label: 'Variance Swap & VIX', href: '/cours/module-6-volatilite/variance-swap-vix' },
+            { label: 'Skew Delta', href: '/cours/module-6-volatilite/skew-delta' },
+          ]} />
+          <HConn />
+          <Node num="9" title="Quanto & FX" active subs={[
             { label: 'Corrélation Indice & FX', href: '/cours/module-7-quanto-fx/correlation-fx' },
             { label: 'Options Quanto & Composite', href: '/cours/module-7-quanto-fx/options-quanto' },
           ]} />
-          <HConn />
-          <Node num="8" title="Macro" active subs={[
+        </Row>
+
+        {/* Virage droite */}
+        <VConn side="right" />
+
+        {/* Rangée 10 (droite à gauche, module 10 seul + 2 fantômes) */}
+        <Row reverse>
+          <Node num="10" title="Macro" active subs={[
             { label: 'Fonctionnement de la Fed', href: '/cours/module-8-macro/plomberie-fed' },
             { label: 'Politique monétaire', href: '/cours/module-8-macro/politique-monetaire' },
           ]} />
-          {/* Fantômes pour aligner sur 3 colonnes */}
+          <HConn invisible />
+          <div style={{ width: CARD_W, flexShrink: 0 }} />
           <HConn invisible />
           <div style={{ width: CARD_W, flexShrink: 0 }} />
         </Row>

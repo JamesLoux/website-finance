@@ -185,7 +185,8 @@ export default function CorrelationFX() {
           la <strong>corrélation implicite</strong> en regardant simultanément le prix des options sur
           l'indice (<InlineMath>{'\\sigma_I'}</InlineMath>) et sur les actions individuelles (<InlineMath>{'\\sigma_i'}</InlineMath>).
           Le niveau de corrélation <InlineMath>{'\\rho'}</InlineMath> que le marché anticipe pour le futur
-          est ainsi coté en permanence, et peut être tradé.
+          est ainsi coté en permanence, et peut être tradé. On trouvera de la même manière un skew de corrélation (sur différents strikes) et même une structure par terme de corrélation (sur différentes maturités).
+          J'ajouterai qu'il existe des modèles de skew de corrélation, qui doivent d'abord être introduits par la théorie des copules. 
         </p>
       </div>
 

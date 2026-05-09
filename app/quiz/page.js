@@ -3,6 +3,8 @@
 
 import Link from 'next/link';
 
+// quizEndpoint : endpoint réel du quiz quand il diffère du numéro affiché
+// (les slugs /quiz/module-X ne changent pas malgré le renumérotage des modules)
 const quizModules = [
   {
     number: "01",
@@ -24,33 +26,48 @@ const quizModules = [
   },
   {
     number: "04",
-    title: "Taux & Crédit",
-    pages: "Swaps & Flux · Produits de courbe · Modèles de taux",
+    title: "Fixed Income I",
+    pages: "Obligations & Bases · Duration & Convexité · Fwd Rate Agreement · Interest Rate Swap",
     questions: 10,
   },
   {
     number: "05",
+    title: "Fixed Income II",
+    pages: "Cap & Floor · Bond Options & Swaptions · CMS · Convertible Bond · Range Accrual · Modèle de taux",
+    questions: 10,
+  },
+  {
+    number: "06",
+    title: "Fixed Income III",
+    pages: "FX Swap · CDS · Inflation Swap · TRS",
+    questions: 10,
+  },
+  {
+    number: "07",
     title: "Produits Equity",
     pages: "Vanilles & Combinaisons · Options exotiques · Produits structurés",
     questions: 10,
   },
   {
-    number: "06",
+    number: "08",
     title: "Volatilité",
     pages: "Vol implicite & Nappes · Vol stochastique · Variance Swap & VIX · Skew Delta",
     questions: 12,
+    quizEndpoint: "/quiz/module-6",
   },
   {
-    number: "07",
+    number: "09",
     title: "Quanto & FX",
     pages: "Corrélation Indice & FX · Options Quanto & Composite",
     questions: 10,
+    quizEndpoint: "/quiz/module-7",
   },
   {
-    number: "08",
+    number: "10",
     title: "Macro",
     pages: "Fonctionnement de la Fed · Politique monétaire",
     questions: 10,
+    quizEndpoint: "/quiz/module-8",
   },
 ];
 
@@ -71,7 +88,7 @@ export default function QuizPage() {
         {/* Grille des quiz */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {quizModules.map((module) => {
-            const isAvailable = module.number === "01" || module.number === "02" || module.number === "03" || module.number === "06" || module.number === "07" || module.number === "08";
+            const isAvailable = ["01", "02", "03", "08", "09", "10"].includes(module.number);
             const card = (
               <div className={`bg-white border rounded-xl p-6 transition-all flex flex-col h-full ${
                 isAvailable
@@ -107,7 +124,7 @@ export default function QuizPage() {
               </div>
             );
 
-            const href = module.number === "01" ? "/quiz/module-1" : `/quiz/module-${module.number.replace(/^0/, '')}`;
+            const href = module.quizEndpoint || (module.number === "01" ? "/quiz/module-1" : `/quiz/module-${parseInt(module.number)}`);
 
             return isAvailable ? (
               <Link key={module.number} href={href} className="block">

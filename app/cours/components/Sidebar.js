@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 // Navigation complète des cours — à mettre à jour si les slugs changent
+// Les sous-pages sans `slug` sont non cliquables (modules grisés)
 const modules = [
   {
     number: '01',
@@ -43,26 +44,51 @@ const modules = [
   },
   {
     number: '04',
-    title: 'Taux & Crédit',
+    title: 'Fixed Income I',
     slug: 'module-4-taux-credit',
     sousPages: [
-      { title: 'Swaps & flux', slug: 'swaps-flux' },
-      { title: 'Produits de courbe', slug: 'produits-courbe' },
-      { title: 'Modèles de taux', slug: 'modeles-taux' },
+      { title: 'Obligations & Bases', slug: 'obligations-bases' },
+      { title: 'Duration & Convexité', slug: 'duration-convexite' },
+      { title: 'Fwd Rate Agreement', slug: 'fwd-rate-agreement' },
+      { title: 'Interest Rate Swap', slug: 'interest-rate-swap' },
     ],
   },
   {
     number: '05',
-    title: 'Produits Equity',
-    slug: 'module-5-produits-equity',
+    title: 'Fixed Income II',
+    slug: 'module-5-fixed-income-2',
     sousPages: [
-      { title: 'Vanilles & combinaisons', slug: 'vanilles-combinaisons' },
-      { title: 'Options exotiques', slug: 'options-exotiques' },
-      { title: 'Produits structurés', slug: 'produits-structures' },
+      { title: 'Cap & Floor', slug: 'cap-floor' },
+      { title: 'Bond Options & Swaptions', slug: 'bond-options-swaptions' },
+      { title: 'CMS', slug: 'cms' },
+      { title: 'Convertible Bond', slug: 'convertible-bond' },
+      { title: 'Range Accrual', slug: 'range-accrual' },
+      { title: 'Modèle de taux', slug: 'modele-taux' },
     ],
   },
   {
     number: '06',
+    title: 'Fixed Income III',
+    slug: 'module-6-fixed-income-3',
+    sousPages: [
+      { title: 'FX Swap' },
+      { title: 'CDS' },
+      { title: 'Inflation Swap' },
+      { title: 'TRS' },
+    ],
+  },
+  {
+    number: '07',
+    title: 'Produits Equity',
+    slug: 'module-5-produits-equity',
+    sousPages: [
+      { title: 'Vanilles & combinaisons' },
+      { title: 'Options exotiques' },
+      { title: 'Produits structurés' },
+    ],
+  },
+  {
+    number: '08',
     title: 'Volatilité',
     slug: 'module-6-volatilite',
     sousPages: [
@@ -73,7 +99,7 @@ const modules = [
     ],
   },
   {
-    number: '07',
+    number: '09',
     title: 'Quanto & FX',
     slug: 'module-7-quanto-fx',
     sousPages: [
@@ -82,7 +108,7 @@ const modules = [
     ],
   },
   {
-    number: '08',
+    number: '10',
     title: 'Macro',
     slug: 'module-8-macro',
     sousPages: [
@@ -184,22 +210,28 @@ export default function Sidebar({ isOpen, onClose }) {
                   }`}
                 >
                   <ul className="ml-7 mt-0.5 space-y-0.5">
-                    {module.sousPages.map((sp) => {
-                      const href = `${moduleBase}/${sp.slug}`;
-                      const isActive = pathname === href;
+                    {module.sousPages.map((sp, idx) => {
+                      const href = sp.slug ? `${moduleBase}/${sp.slug}` : null;
+                      const isActive = href && pathname === href;
                       return (
-                        <li key={sp.slug}>
-                          <Link
-                            href={href}
-                            onClick={onClose}
-                            className={`block px-2 py-1 text-sm rounded-md transition-colors ${
-                              isActive
-                                ? 'text-blue-600 bg-blue-50 font-medium'
-                                : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
-                            }`}
-                          >
-                            {sp.title}
-                          </Link>
+                        <li key={sp.slug || idx}>
+                          {href ? (
+                            <Link
+                              href={href}
+                              onClick={onClose}
+                              className={`block px-2 py-1 text-sm rounded-md transition-colors ${
+                                isActive
+                                  ? 'text-blue-600 bg-blue-50 font-medium'
+                                  : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
+                              }`}
+                            >
+                              {sp.title}
+                            </Link>
+                          ) : (
+                            <span className="block px-2 py-1 text-sm text-gray-400 cursor-default">
+                              {sp.title}
+                            </span>
+                          )}
                         </li>
                       );
                     })}

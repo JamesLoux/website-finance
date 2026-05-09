@@ -20,7 +20,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Projet Next.js initialisé dans /website_finance
 - [x] Page d'accueil (v1 — modifiable)
 - [x] Navbar (Accueil / Cours / Simulateur / Quiz / À propos)
-- [x] Page /cours — index des 8 modules
+- [x] Page /cours — index des 10 modules (chemin serpent 4 rangées × 3 colonnes)
 - [x] Page /quiz — index des quiz par module
 - [x] Page /simulateur — placeholder
 - [x] Page /a-propos — placeholder
@@ -32,7 +32,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Quiz Module 1 — Calcul stochastique (8 questions, KaTeX, corrigé)
 - [x] Quiz Module 2 — Pricing (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages)
 - [x] Quiz Module 3 — The Greeks (banque 20 questions, tirage stratifié 10/session, 3 groupes : A×8 B×6 C×6, tirage 4+3+3)
-- [x] Quiz Module 6 — Volatilité (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages)
+- [x] Quiz Module 8 (affiché) — Volatilité (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages) → endpoint réel /quiz/module-6
 - [x] Module 2 / Équation de Black-Scholes
 - [x] Module 2 / Formule de Black-Scholes
 - [x] Module 2 / Modèles de diffusion
@@ -42,22 +42,34 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 3 / Quelques démonstrations (grecques-second-ordre)
 - [x] Module 3 / Arbitrage Theta-Gamma (arbitrage-theta-gamma)
 - [x] **Module 3 — The Greeks : COMPLET (3/3 pages)**
-- [x] Module 6 / Vol implicite et nappes
-- [x] Module 6 / Vol stochastique
-- [x] Module 6 / Variance Swap & VIX
-- [x] Module 6 / Skew Delta
-- [x] **Module 6 — Volatilité : COMPLET (4/4 pages)**
-- [x] Module 7 / Corrélation Indice et FX (correlation-fx)
-- [x] Module 7 / Options Quanto & Composite (options-quanto)
-- [x] **Module 7 — Quanto & FX : COMPLET (2/2 pages)**
-- [x] Module 8 / Fonctionnement de la Fed (plomberie-fed)
-- [x] Module 8 / Politique monétaire (politique-monetaire)
-- [x] **Module 8 — Macro : COMPLET (2/2 pages)**
+- [x] Module 8 / Vol implicite et nappes (slug : module-6-volatilite)
+- [x] Module 8 / Vol stochastique
+- [x] Module 8 / Variance Swap & VIX
+- [x] Module 8 / Skew Delta
+- [x] **Module 8 — Volatilité : COMPLET (4/4 pages)**
+- [x] Module 9 / Corrélation Indice et FX (slug : module-7-quanto-fx/correlation-fx)
+- [x] Module 9 / Options Quanto & Composite (options-quanto)
+- [x] **Module 9 — Quanto & FX : COMPLET (2/2 pages)**
+- [x] Module 10 / Fonctionnement de la Fed (slug : module-8-macro/plomberie-fed)
+- [x] Module 10 / Politique monétaire
+- [x] **Module 10 — Macro : COMPLET (2/2 pages)**
 - [x] Simulateur de positions (book de trades, modale, 4 graphiques Greeks interactifs)
-- [ ] Modules 4, 5
-- [x] Quiz Module 7 — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5)
-- [x] Quiz Module 8 — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5)
-- [ ] Quiz Modules 4, 5
+- [x] Module 4 / Obligations & Bases (obligations-bases) — avec composant ZeroCouponChart interactif
+- [x] Module 4 / Duration & Convexité (duration-convexite) — avec composant ConvexityChart interactif
+- [x] Module 4 / Courbe des taux & instruments (fwd-rate-agreement) — taux forward, FRA, futures, bootstrapping
+- [x] Module 4 / Interest Rate Swap (interest-rate-swap) — single-curve, multi-curve post-2008, DV01, swap spread
+- [x] **Module 4 — Fixed Income I : COMPLET (4/4 pages)**
+- [x] Module 5 / Cap & Floor (cap-floor) — Caplets/Floorlets, parité Cap-Floor-Swap, Collar, Flat Vol vs Spot Vol, conflits Delta/Rho
+- [x] Module 5 / Bond Options & Swaptions (bond-options-swaptions) — 4 sections, composant CallableBondChart interactif
+- [x] Module 5 / CMS & Ajustement de Convexité (cms) — 5 sections : mécanique CMS, intuition convexité, ajustement, Carr-Madan, SABR
+- [x] Module 5 / Convertible Bond (convertible-bond) — 5 sections : décomposition/vocabulaire, trois zones, premium, arbitrage CB, pièges du desk
+- [x] Module 5 / Range Accrual (range-accrual) — 5 sections : mécanique + MinGtee, cross-asset, callable, somme de digitales, réplication Call Spread + composant DigitalReplicationChart
+- [x] Module 5 / Modèles de taux (modele-taux) — 5 sections + tableau synthèse : Vasicek ancêtre, HW1F (θ(t)/σ(t)/arbre), limite corrélation parfaite, HW2F (2 EDS), HJM et LMM
+- [x] **Module 5 — Fixed Income II : COMPLET (6/6 pages)**
+- [ ] Modules 6, 7 (Fixed Income III + Produits Equity)
+- [x] Quiz Module 9 (affiché) — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-7
+- [x] Quiz Module 10 (affiché) — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-8
+- [ ] Quiz Modules 4, 5, 6, 7
 
 ## Architecture du site
 
@@ -71,14 +83,31 @@ Accueil / Cours / Simulateur / Quiz / À propos
 - `/quiz` → Quiz par thématique
 - `/a-propos` → Présentation personnelle
 
-### Structure des cours (8 modules)
+### Structure des cours (10 modules)
+⚠️ **Mapping affiché → slug réel** : les dossiers physiques ne changent pas, seul le numéro d'affichage a changé.
+
+| Affiché | Titre | Slug réel |
+|---------|-------|-----------|
+| Module 1 | Calcul stochastique | module-1-calcul-stochastique |
+| Module 2 | Pricing | module-2-pricing |
+| Module 3 | The Greeks | module-3-grecques |
+| Module 4 | Fixed Income I | module-4-taux-credit |
+| Module 5 | Fixed Income II | module-5-fixed-income-2 |
+| Module 6 | Fixed Income III | module-6-fixed-income-3 (nouveau, vide) |
+| Module 7 | Produits Equity | module-5-produits-equity |
+| Module 8 | Volatilité | module-6-volatilite |
+| Module 9 | Quanto & FX | module-7-quanto-fx |
+| Module 10 | Macro | module-8-macro |
+
 - `/cours/module-1-calcul-stochastique` — mouvement-brownien, lemme-ito, girsanov-risque-neutre
 - `/cours/module-2-pricing` — equation-black-scholes, probabilites-d1-d2, modeles-diffusion, monte-carlo (ordre de navigation)
   - ⚠️ Le slug `probabilites-d1-d2` est conservé tel quel mais la page s'intitule **"Formule de Black-Scholes"** — le nom affiché et le slug divergent intentionnellement (renommage sans migration d'URL).
 - `/cours/module-3-grecques` — grecques-premier-ordre ("L'essentiel des Greeks"), grecques-second-ordre ("Quelques démonstrations"), arbitrage-theta-gamma
   - ⚠️ Même divergence slug/titre que pour module-2 : les slugs sont conservés, les titres affichés diffèrent.
-- `/cours/module-4-taux-credit` — swaps-flux, produits-courbe, modeles-taux
-- `/cours/module-5-produits-equity` — vanilles-combinaisons, options-exotiques, produits-structures
+- `/cours/module-4-taux-credit` — `obligations-bases` ✅, `duration-convexite` ✅, `fwd-rate-agreement` ✅ (pages actives, sidebar cliquables) ; grisée : Interest Rate Swap
+- `/cours/module-5-fixed-income-2` — `cap-floor` ✅, `bond-options-swaptions` ✅, `cms` ✅, `convertible-bond` ✅, `range-accrual` ✅, `modele-taux` ✅ — module complet
+- `/cours/module-6-fixed-income-3` — nouveau dossier vide (.gitkeep) ; sous-pages grisées : FX Swap, CDS, Inflation Swap, TRS
+- `/cours/module-5-produits-equity` — vanilles-combinaisons, options-exotiques, produits-structures (grisé, pas de pages créées)
 - `/cours/module-6-volatilite` — vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta
 - `/cours/module-7-quanto-fx` — correlation-fx ("Corrélation Indice et FX"), options-quanto ("Options Quanto & Composite")
 - `/cours/module-8-macro` — plomberie-fed ("Fonctionnement de la Fed"), politique-monetaire
@@ -89,7 +118,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
 - Lien contextuel depuis les pages de cours concernées
 
 ## Fonctionnalités prévues
-1. Pages de cours (8 modules, 2-3 sous-pages chacun, contenu MDX rédigé par le propriétaire)
+1. Pages de cours (10 modules, 2-6 sous-pages chacun, contenu MDX rédigé par le propriétaire)
 2. Composants interactifs : payoffs avec curseurs (strike, maturité, vol)
 3. Simulateur de stratégies : prix, Greeks, surfaces de vol
 4. Quiz par thématique
@@ -113,10 +142,10 @@ app/
     Math.js                          ← <InlineMath> et <BlockMath> via KaTeX (server component)
   cours/
     layout.js                        ← Layout deux colonnes pour /cours/** (importe KaTeX CSS)
-    page.js                          ← Index des 8 modules
+    page.js                          ← Index des 10 modules (chemin serpent 4 rangées)
     components/
       CoursClientLayout.js           ← Wrapper client : état sidebar + hamburger mobile + TOC
-      Sidebar.js                     ← Sidebar : navigation 8 modules uniquement (TOC déplacée)
+      Sidebar.js                     ← Sidebar : navigation 10 modules, sous-pages sans slug rendues comme <span> non cliquable
       TableOfContents.js             ← TOC flottante sticky à droite (visible xl+), scan h2[id] + délai 100ms
       BrownianMotionChart.js         ← Composant interactif : simulation MB avec slider σ
       DiffusionComparisonChart.js    ← Composant interactif : densités Normale (bleue) vs Log-Normale (verte), slider σ 0.1→1.0, ligne rouge frontière zéro, parsing:false + LinearScale
@@ -130,6 +159,10 @@ app/
       StickyStrikeChart.js           ← Composant Chart.js : smile fixe (skew actions) + point bleu mobile au spot + ligne verticale. Layout graphique xl:w-1/2 + bulle xl:w-1/2. Illustre le régime Sticky Strike (α=0).
       StickyDeltaChart.js            ← Composant Chart.js : smile fixe bleu + smile rouge qui translate avec le spot. Point bleu (fixe) + point rouge (ATM dynamique). Layout flex-1 + bulle xl:w-56. Illustre le régime Sticky Delta (α=1).
       StickySkewChart.js             ← Composant Chart.js : smile fixe bleu pointillé + smile rouge qui translate ET monte/baisse selon la courbe fixe. Vol ATM lue sur la courbe fixe au spot. Slope=−0.25, convexity=0.25. Illustre le régime Sticky Skew (vol locale).
+      ZeroCouponChart.js             ← Composant Chart.js : trajectoire de valorisation d'un ZC P(t)=100×e^{−y(T−t)}, courbe orange, point vert au pair en T. Axe Y fixé 0→105. Deux sliders : rendement 0→20% + durée 6mois→10ans. Tick Y le plus proche du prix d'entrée mis en évidence (orange gras). Carte "Prix aujourd'hui". Pattern destroy/recréation du chart dans useEffect([y, T]).
+      ConvexityChart.js              ← Composant Chart.js : prix réel P(y) (noir épais) vs approximation ordre 1 (orange pointillés) vs ordre 2 (bleu pointillés). Obligation couponnée 10 ans, nominal 100, coupons annuels. X fixes 0.1%→23% (N_POINTS=200, calculés une seule fois). Axes figés X:0→23, Y:0→200. Ligne verticale au taux y₀ via plugin beforeDraw + y0Ref. 2 sliders (taux central y₀ + coupon). 3 cartes (Sensibilité, Convexité, Erreur Δ-hedging à +200bps). Pattern : init useEffect([]) + update useEffect([y0, couponPct]) → chart.update('none') sans recréation.
+      CallableBondChart.js           ← Composant Chart.js : Bond classique (noir, dataset 2) vs Callable Bond (bleu, dataset 0) + helper fill vert (dataset 1, fill:'+1'). Seuil de rappel = coupon (y < couponPct → min(prix, 100.5)). Axe X 0.5%→10%, Y 60→140. Ligne verticale pointillée bleue au taux de marché actuel via marketRateRef mutable. 2 sliders (coupon 1→10% / taux marché 0.5→10%). 2 cartes (valeur de l'option au taux actuel en vert / gain si rappel en bps, texte rouge si négatif). Pattern deux useEffect anti-vibration.
+      DigitalReplicationChart.js     ← Composant Chart.js : réplication d'une option digitale par Call Spread. K=100, S 80→120 (201 points). Courbe noire pointillée "Digital idéale" (step function via deux points 99.999/100.001) + courbe bleue pleine "Call Spread". Slider ε 0.5→10 (pas 0.5, défaut 4). Axe Y fixé 0→1.2. Mise à jour directement dans le handler onChange (pas dans useEffect) — contournement du bug chart.update('none') avec animation:false.
     module-1-calcul-stochastique/
       mouvement-brownien/page.js     ← ⭐ TEMPLATE DE RÉFÉRENCE pour toutes les pages de cours
       lemme-ito/page.js              ← ✅ Fait
@@ -154,13 +187,30 @@ app/
       skew-delta/StickyStrikeWrapper.js ← Wrapper 'use client' pour StickyStrikeChart (next/dynamic ssr:false)
       skew-delta/StickyDeltaWrapper.js  ← Wrapper 'use client' pour StickyDeltaChart (next/dynamic ssr:false)
       skew-delta/StickySkewWrapper.js   ← Wrapper 'use client' pour StickySkewChart (next/dynamic ssr:false)
+    module-4-taux-credit/
+      obligations-bases/page.js        ← ✅ Fait (5 sections : vecteur de flux, Rho des taux, ZC & T-Bills, FRN, Repo)
+      duration-convexite/page.js       ← ✅ Fait (6 sections : Taylor, ordre 1, monde continu, convexité, convexité négative, DV01)
+      duration-convexite/ConvexityWrapper.js ← Wrapper 'use client' pour ConvexityChart (next/dynamic ssr:false)
+      fwd-rate-agreement/page.js             ← ✅ Fait (4 sections : taux forward, FRA + pricing, futures vs FRA, bootstrapping)
+      interest-rate-swap/page.js             ← ✅ Fait (5 sections : définition, single-curve, multi-curve post-2008, DV01, swap spread)
+    module-5-fixed-income-2/
+      cap-floor/page.js                ← ✅ Fait (5 sections : Caplets/Floorlets, parité Cap-Floor-Swap, Collar/option cachée, Flat Vol vs Spot Vol, Grecques Delta/Rho)
+      bond-options-swaptions/page.js   ← ✅ Fait (4 sections : définition/équivalence Payer-Receiver, pricing Bachelier + cube de vol, Bermudéennes/Callable Bonds, Greeks du cube)
+      bond-options-swaptions/CallableBondWrapper.js ← Wrapper 'use client' pour CallableBondChart (next/dynamic ssr:false)
+      cms/page.js                      ← ✅ Fait (5 sections : mécanique CMS + Steepener, intuition convexité swap vs CMS, ajustement de convexité, réplication Carr-Madan, modélisation SABR)
+      convertible-bond/page.js         ← ✅ Fait (5 sections : décomposition Bond+Call, trois zones Busted/Hybride/Equity-Bound, premium + break-even, arbitrage delta-hedging, pièges desk)
+      range-accrual/page.js            ← ✅ Fait (5 sections : mécanique + MinGtee, cross-asset, callable, somme de digitales, réplication Call Spread)
+      range-accrual/DigitalReplicationWrapper.js ← Wrapper 'use client' pour DigitalReplicationChart (next/dynamic ssr:false)
+      modele-taux/page.js              ← ✅ Fait (5 sections : Vasicek, HW1F, limite corrélation parfaite, HW2F, HJM/LMM + tableau synthèse 4×4)
+    module-6-fixed-income-3/
+      .gitkeep                         ← Dossier placeholder (pas de page.js)
     module-7-quanto-fx/
-      correlation-fx/page.js           ← ✅ Fait (titre : "Corrélation Indice et FX")
+      correlation-fx/page.js           ← ✅ Fait (titre : "Corrélation Indice et FX") — affiché Module 9
       options-quanto/page.js           ← ✅ Fait (titre : "Options Quanto & Composite") — regroupe Quanto + Composite, page finale du module
     module-8-macro/
-      plomberie-fed/page.js            ← ✅ Fait (titre : "Fonctionnement de la Fed")
+      plomberie-fed/page.js            ← ✅ Fait (titre : "Fonctionnement de la Fed") — affiché Module 10
   quiz/
-    page.js                          ← Index des quiz — Modules 1, 2, 3, 6 actifs ; autres badges "Bientôt disponible"
+    page.js                          ← Index des quiz — 10 entrées, disponibles : 01/02/03/08/09/10 (affiché) ; quizEndpoint sur 08/09/10 pour pointer vers les slugs réels /quiz/module-6/7/8
     module-1/
       page.js                        ← ✅ Quiz Module 1 : 8 questions interactives avec KaTeX
     module-2/
@@ -168,7 +218,7 @@ app/
     module-3/
       page.js                        ← ✅ Quiz Module 3 : banque 20q, tirage stratifié 10/session (4+3+3)
     module-6/
-      page.js                        ← ✅ Quiz Module 6 : banque 24q, tirage stratifié 12/session (4 groupes × 3)
+      page.js                        ← ✅ Quiz Volatilité (affiché Module 8) : banque 24q, tirage stratifié 12/session (4 groupes × 3)
   simulateur/page.js                 ← Placeholder
   a-propos/page.js                   ← Placeholder
 ```
@@ -194,7 +244,7 @@ app/
 - Questions, choix **et explications** sont du JSX (pas des strings) — permet d'imbriquer `<Katex>` dans les énoncés, les choix et le corrigé
 - Choix purement textuels : JSX minimal `<>texte</>` suffit, pas besoin de `<Katex>`
 - Logic standard : `current`, `selected`, `validated`, `results`, `finished` — réutiliser ce pattern pour tous les quiz
-- Page index `/quiz/page.js` : déterminer si un quiz est disponible via `module.number === "01" || module.number === "02" || module.number === "03" || module.number === "06"` → étendre à chaque nouveau quiz. Le href est dérivé dynamiquement : `/quiz/module-${number.replace(/^0/, '')}`.
+- Page index `/quiz/page.js` : disponibilité via `["01","02","03","08","09","10"].includes(module.number)` (numéros affichés). Les modules 08/09/10 ont un champ `quizEndpoint` qui pointe vers l'endpoint réel (`/quiz/module-6`, `/quiz/module-7`, `/quiz/module-8`). Le href utilise `module.quizEndpoint || \`/quiz/module-${parseInt(module.number)}\``. Pour tout nouveau quiz, ajouter son numéro affiché à l'array et un `quizEndpoint` si le numéro affiché diffère du numéro réel.
 - **Tirage stratifié (banque de questions)** : pour les quiz avec banque large, diviser les questions en groupes thématiques (ex. 4 groupes de 6 = 24 questions). Tirer N questions aléatoires dans chaque groupe via `useEffect(() => setQuestions(drawSession()), [])` avec `useState(null)` comme état initial. **Ne pas utiliser `useState(() => drawSession())`** — cet initialiseur s'exécute aussi côté serveur (SSR) et produit un tirage différent de celui du client, causant une erreur d'hydration React. `handleRestart` déclenche `window.location.reload()` pour forcer un nouveau tirage. Voir `app/quiz/module-2/page.js` comme template de référence.
 
 ## Conventions pour les pages de cours
@@ -210,6 +260,10 @@ app/
 - La TOC se met à jour automatiquement dès qu'on modifie le texte ou l'`id` d'un `h2` — pas besoin de toucher à `TableOfContents.js` ni à la sidebar
 - Contenu rédigé par le propriétaire, composants interactifs créés par Claude Code
 - Sessions courtes et thématiques, CLAUDE.md mis à jour à chaque fin de session
+- **⚠️ Chart.js — callbacks tooltip** : `title(tooltipItems)` reçoit un **tableau** → `items[0].parsed.x`. `label(tooltipItem)` reçoit un **seul** TooltipItem → `item.parsed.y` directement. Ne jamais écrire `item[0].parsed` dans un `label` callback — `item[0]` est `undefined` et le site crashe.
+- **⚠️ Chart.js — ticks.color/font callbacks** : `context.chart.scales.y.ticks` peut être `null` lors du premier rendu. Toujours garder : `const allTicks = context.chart.scales.y?.ticks; if (!allTicks?.length) return valeurParDéfaut;` avant toute itération.
+- **Pattern destroy/recréation Chart.js** : quand plusieurs états (ex. `y` et `T`) pilotent le graphique, mettre tous les états en dépendance du `useEffect` (`[y, T]`) — le chart est détruit puis recréé à chaque changement. Plus simple que les mises à jour partielles pour les cas avec changements d'échelle ou de dataset.
+- **⚠️ Anti-pattern : vibration des sliders** : si les sliders bougent et que le graphique "vibre" ou clignote, c'est que le chart est recréé à chaque frame. Solution : pattern à deux effets — `useEffect([], [])` pour l'initialisation (une seule fois), `useEffect([slider1, slider2])` pour mettre à jour uniquement les données via `chart.data.datasets[i].data = ...` puis `chart.update('none')`. Pour les plugins qui lisent des valeurs de sliders (ex. ligne verticale), utiliser une `ref` mutable (`const xRef = useRef(valInit); xRef.current = x` dans le corps du composant) — le plugin lit `xRef.current` et reste correct sans recréer le chart. Voir `ConvexityChart.js` comme template de référence pour ce pattern.
 
 ### Pattern standardisé du bas de page (appliqué à toutes les pages depuis 2026-04-08)
 Toutes les pages de cours doivent terminer avec exactement ce pattern, dans cet ordre :
@@ -465,6 +519,149 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
     - **Formules BS** : `ncdf` copiée exactement depuis `GreeksChart.js` (A&S 26.2.17, erreur < 7.5e-8). `greekBS(name, type, S, K, r, q, sigma, T)` : Delta, Gamma, Vega, Theta avec dividende `q`. Protection T≤0 / σ≤0 / S≤0 → retourne 0 ou valeur intrinsèque.
     - **État vide** : message d'invitation centré avec bouton "Ouvrir un trade".
     - **Style** : `bg-gray-50 min-h-full py-12 px-6`, `max-w-7xl mx-auto`, cards `bg-white border border-gray-300 rounded-xl`. Respecte toutes les règles de style du projet (pas de dark mode, accent blue-600, bordures gray-300).
+
+- **2026-04-29** :
+  - **Passage de 8 à 10 modules** : restructuration purement affichage — aucun slug physique modifié, aucune page de cours touchée.
+  - **Deux nouveaux modules insérés en positions 5 et 6** : Fixed Income II (`module-5-fixed-income-2`) et Fixed Income III (`module-6-fixed-income-3`). Dossiers créés avec `.gitkeep`. Pas de `page.js` pour l'instant.
+  - **Décalage des anciens modules 5→8 en 7→10** (affichage uniquement) :
+    - Produits Equity : affiché 5 → 7, slug `module-5-produits-equity` inchangé
+    - Volatilité : affiché 6 → 8, slug `module-6-volatilite` inchangé
+    - Quanto & FX : affiché 7 → 9, slug `module-7-quanto-fx` inchangé
+    - Macro : affiché 8 → 10, slug `module-8-macro` inchangé
+  - **Module 4 renommé** : "Taux & Crédit" → "Fixed Income I". Sous-pages redessinées : Obligations & Bases / Duration & Convexité / Fwd Rate Agreement / Interest Rate Swap (non cliquables, pas de pages créées). Slug `module-4-taux-credit` inchangé.
+  - **`app/cours/page.js`** : chemin serpent adapté à 4 rangées (1→3, 4→6, 7→9, 10 seul à droite + 2 fantômes). Constantes ROW_W inchangées (3 colonnes × 208px). 3e VConn `side="right"` ajouté après la rangée 7→9.
+  - **`app/cours/components/Sidebar.js`** : 10 modules dans l'ordre affiché. Sous-pages sans `slug` rendues en `<span className="text-gray-400 cursor-default">` non cliquable (modules 4/5/6/7). Rendu conditionnel `sp.slug ? <Link> : <span>`.
+  - **`app/quiz/page.js`** : 10 entrées. `isAvailable` = `["01","02","03","08","09","10"]`. Champ `quizEndpoint` sur modules 08/09/10 (`/quiz/module-6`, `/quiz/module-7`, `/quiz/module-8`) pour dissocier numéro affiché et endpoint réel. `href` = `module.quizEndpoint || \`/quiz/module-${parseInt(module.number)}\``.
+
+- **2026-04-29 (suite)** :
+  - **Page "Obligations & Bases"** (`app/cours/module-4-taux-credit/obligations-bases/page.js`) créée. Première sous-page du Module 4. 5 sections h2. Dossier `module-4-taux-credit/` créé de zéro.
+    - **Section 1 — Un vecteur de flux** : formule de pricing `P(y) = Σ CF_i · e^{−y t_i}` encadrée. Boîte bleue "Le yield to maturity" (taux implicite = convention de cotation, pas un taux de marché direct).
+    - **Section 2 — Le Rho des taux** : intuition inverse prix/taux, dérivée formelle `∂P/∂y = −Σ t_i · CF_i · e^{−y t_i} < 0` encadrée. Boîte bleue "Différence avec les actions". Composant `ZeroCouponChart` interactif inséré après.
+    - **Section 3 — ZC et T-Bills** : formule `P_ZC = N · e^{−yT}` encadrée, lien facteur d'escompte/bootstrapping. Formule de cotation T-Bill Actual/360 encadrée. Boîtes bleues dédiées.
+    - **Section 4 — Le FRN** : mécanisme de reset, démonstration du retour au pair `N(1 + rδ)/(1 + rδ) = N` encadrée. Boîte bleue risque de taux vs risque de crédit.
+    - **Section 5 — Le Repo** : mécanisme prêt collatéralisé, formule `Cash remis = Cash initial × (1 + R × dt/360)` encadrée. Boîte bleue "clé de voûte de l'arbitrage". Boîte amber "Special Repo".
+    - Navigation : ← Arbitrage Theta-Gamma / → Duration & Convexité.
+  - **Sidebar** : `obligations-bases` rendu cliquable (slug ajouté) — les 3 autres sous-pages du module 4 restent en `<span>` non cliquable.
+  - **Composant ZeroCouponChart** (`app/cours/components/ZeroCouponChart.js`) créé. Deux bugs corrigés en cours de session :
+    - **Bug 1** — `Cannot read properties of null (reading 'forEach')` : `context.chart.scales.y.ticks` est `null` lors du premier rendu. Corrigé par garde `?.ticks` + `?.length`.
+    - **Bug 2** — `Cannot read properties of undefined (reading 'parsed')` : callback `label` de Chart.js reçoit un seul `TooltipItem` (pas un tableau) — `ctx[0]` est `undefined`. Corrigé en `label: (item) => item.parsed.y`.
+  - **Évolutions du composant** : ajout d'un axe Y fixé 0→105 (chute visible), ajout d'un deuxième slider durée (6 mois → 10 ans), formule actualisée `P(t) = 100 × e^{−y(T−t)}` avec axe X dynamique 0→T.
+
+- **2026-04-30** :
+  - **Page "Duration & Convexité"** (`app/cours/module-4-taux-credit/duration-convexite/page.js`) créée. Deuxième sous-page du Module 4. 6 sections h2.
+    - **Section 1 — Taylor** : formule P(y) encadrée en `bg-gray-50`. Développement d'ordre 2 encadré. Variation relative dP/P encadrée. Phrase de transition vers Sensibilité et Convexité.
+    - **Section 2 — Ordre 1** : trois sous-parties (A) Duration Macaulay — formule `D_mac = Σ t_i·CF_i·(1+y)^{−t_i}/P` encadrée + boîte bleue intuition "7 ans sur 10 ans" ; (B) Sensibilité — formule `S = −(1/P)·∂P/∂y` encadrée + lien `S = D_mac/(1+y)` encadré + note Duration Modifiée ; (C) Exemple chiffré avec bloc "À retenir" `dP/P ≈ −S·dy`.
+    - **Section 3 — Monde continu** : disparition du (1+y), coïncidence Duration/Sensibilité, formule `dP/P ≈ −D·dy` encadrée, boîte bleue quants / temps continu.
+    - **Section 4 — Convexité** : droite tangente vs courbe convexe, définition `C = (1/P)·∂²P/∂y² = Σ t_i²·CF_i·e^{−yt_i}/P` encadrée. Formule P&L complète `dP/P ≈ −S·dy + ½C(dy)²` encadrée. Composant `ConvexityChart` interactif + phrase de transition. Boîte bleue convexité strictement positive.
+    - **Section 5 — Convexité négative** : boîte amber "Attention". Deux boîtes bleues côte à côte Callable Bond / MBS. Phrase sur la prime optionnelle.
+    - **Section 6 — DV01** : formule `DV01 = S × P × N × 0.0001` encadrée. Couverture Delta-Neutre, formule `N_contrats = −DV01_position / DV01_couverture` encadrée. Boîte amber "Risque de base" (twist, butterfly).
+    - Navigation : ← Obligations & Bases / → Fwd Rate Agreement.
+  - **Sidebar** : `duration-convexite` rendu cliquable (slug ajouté) — les 2 autres sous-pages du module 4 restent en `<span>` non cliquable.
+  - **Composant ConvexityChart** (`app/cours/components/ConvexityChart.js`) créé. Voir architecture des fichiers clés pour le détail.
+  - **ConvexityWrapper** (`app/cours/module-4-taux-credit/duration-convexite/ConvexityWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`.
+  - **Bug vibration Chart.js corrigé** : le pattern destroy/recréation du chart dans `useEffect([sliders...])` provoque un flickering visible à chaque mouvement de slider. Corrigé avec le pattern à deux effets :
+    1. `useEffect([], [])` — crée le chart une seule fois au montage, avec le plugin `beforeDraw` qui lit une `ref` mutable pour la ligne verticale.
+    2. `useEffect([slider1, slider2])` — met à jour uniquement `chart.data.datasets[i].data` puis appelle `chart.update('none')`. Zéro recréation, zéro vibration.
+    - La ref `y0Ref.current = y0` est mise à jour synchroniquement dans le corps du composant (avant les effets) — le plugin lit toujours la valeur courante sans jamais recréer le chart.
+    - ⚠️ À appliquer à tout nouveau composant Chart.js avec sliders. Ne jamais mettre des dépendances de sliders dans le `useEffect` d'initialisation du chart.
+
+- **2026-05-03** :
+  - **Page "Courbe des taux & instruments"** (`app/cours/module-4-taux-credit/fwd-rate-agreement/page.js`) créée. Troisième sous-page du Module 4. 4 sections h2.
+    - **Section 1 — Du taux spot au taux forward** : égalité des facteurs d'escompte encadrée → formule `F(T₁,T₂) = (y₂T₂ − y₁T₁)/(T₂−T₁)` encadrée. Boîte bleue exemple chiffré (y₁=2%, y₂=3%, F(1,2)=4%).
+    - **Section 2 — Le Forward Rate Agreement** : payoff actualisé en T₁ `N×(L−K)×δ×e^{−Lδ}` encadré. Boîte bleue exemple chiffré (FRA 1an→1,5an, K=3%, L=4%, gain 4 901 €). Boîte bleue pricing en cours de vie : `V_FRA = N×δ×(F(T₁,T₂)−K)×DF(0,T₂)`.
+    - **Section 3 — Futures sur taux vs FRA** : boîte amber "ajustement de convexité" — biais de mark-to-market quotidien, formule `F_forward = F_future − ½σ²T₁T₂` (modèle Vasicek simplifié).
+    - **Section 4 — Bootstrapping** : 3 étapes numérotées (point de départ taux monétaire → itération FRA/futures → interpolation log-linéaire). Formules encadrées pour chaque étape. Boîte bleue avec lien FRED courbe US Treasury.
+    - Navigation : ← Duration & Convexité / → Interest Rate Swap.
+  - **Sidebar** : `fwd-rate-agreement` rendu cliquable (slug ajouté) — `Interest Rate Swap` reste en `<span>` grisé.
+
+- **2026-05-04** :
+  - **Page "Interest Rate Swap"** (`app/cours/module-4-taux-credit/interest-rate-swap/page.js`) créée. Quatrième et dernière sous-page du Module 4. 5 sections h2.
+    - **Section 1 — Définition et conventions** : deux boîtes bleues côte à côte (Payer Swap = long taux / short obligation / Receiver Swap = short taux / long obligation). Paragraphe sur le netting. Tableau 2 lignes × 3 colonnes (Fixe 30/360 / Variable Exact/360).
+    - **Section 2 — Pricing classique : le monde single-curve** : valeur de la jambe variable par structure télescopique `DF(t_{i-1}) − DF(t_i)` encadrée → somme `PV_variable = 1 − DF(T)` encadrée. Par swap rate `S = (1 − DF(T)) / Annuité` encadré. Boîte bleue "L'Annuité comme mesure de risque" (PVBP → DV01).
+    - **Section 3 — Le paradigme multi-curve (post-2008)** : boîte amber "Pourquoi 2008 a tout changé" (basis spread Euribor 3M/OIS à 350 bps). Deux boîtes bleues côte à côte (Courbe de projection Euribor / Courbe d'actualisation OIS). Formule par swap rate multi-curve encadrée (moyenne pondérée des forwards Euribor actualisés en OIS). Boîte bleue "Le contrat CSA" (Credit Support Annex, choix de la courbe d'actualisation selon le collatéral).
+    - **Section 4 — Risques et sensibilités** : DV01 = `PV(r) − PV(r+0.0001)` encadré + approximation `N × D × 0.0001` encadrée (exemple swap 10 ans 10M€ = 10 000 €). Deux boîtes bleues côte à côte (Receiver Swap convexité positive / Payer Swap convexité négative).
+    - **Section 5 — Hedging et Swap Spread** : couverture via Bund/OAT Future, `N_contrats = DV01_position / DV01_future` encadré. Swap Spread = Taux Swap − Taux OAT encadré. Risque d'écartement en cas de stress bancaire. Tableau de synthèse 5 lignes × 3 colonnes (Convention fixe/variable, Actualisation OIS, Projection Euribor, Basis Swap).
+    - Navigation : ← Courbe des taux & instruments / pas de suivant (`<div />`).
+  - **Sidebar** (`app/cours/components/Sidebar.js`) : `slug: 'interest-rate-swap'` ajouté — la sous-page est désormais cliquable.
+  - **`app/cours/page.js`** : Module 4 passe en `active` avec les 4 `href` renseignés — la carte est désormais en bleu avec les sous-pages cliquables.
+  - **Module 4 — Fixed Income I : COMPLET (4/4 pages)**.
+
+- **2026-05-04 (suite)** :
+  - **Page "Cap & Floor"** (`app/cours/module-5-fixed-income-2/cap-floor/page.js`) créée. Première sous-page du Module 5. 5 sections h2.
+    - **Section 1 — Anatomie d'un Cap : Caplets** : Cap = somme de Caplets, Floor = somme de Floorlets. Deux payoffs encadrés en `bg-gray-100` (Caplet : `(L-K)_+ × N × δ_i` / Floorlet : `(K-L)_+ × N × δ_i`). Boîte bleue "Deux pièges structurels" : (A) Fixing in advance, payment in arrears — taux observé en `t_i` mais payé en `t_{i+1}`, actualiser avec `DF(0, t_{i+1})` ; (B) Le Caplet manquant — Cap 5 ans Euribor 3M = 19 Caplets (pas 20), le premier taux est déjà fixé.
+    - **Section 2 — Parité Cap-Floor-Swap** : démonstration en 2 étapes : `(L-K)_+ - (K-L)_+ = L-K` → agrégation = IRS Payer. Résultat encadré en `bg-gray-100` : Achat Cap − Vente Floor = Swap Payer (IRS). Analogie avec la parité Call-Put en actions.
+    - **Section 3 — Stratégies : Collar et option cachée** : Zero Cost Collar — achat Cap + vente Floor jusqu'à prime nette nulle, rôle du quant pour ajuster les strikes. Boîte bleue "L'option cachée du Livret A" — taux jamais négatif = Floor strike 0% vendu implicitement par la banque, risque porté par l'ALM.
+    - **Section 4 — Flat Vol, Spot Vol et bootstrapping** : deux boîtes bleues côte à côte (Flat Vol = chiffre Bloomberg unique / Spot Vol = volatilité intrinsèque par Caplet). Bootstrapping en 3 étapes numérotées (Cap 1 an → Cap 2 ans → répétition → Term Structure of Volatility). Boîte bleue "Pourquoi ça compte" (Flat Vol inutilisable pour les exotiques, seule la Spot Vol permet de pricer des produits path-dependent).
+    - **Section 5 — Grecques : le conflit Delta/Rho** : boîte bleue "Intuition économique" (Long Cap = Long taux = Short obligations). Deux boîtes bleues côte à côte : Effet Delta (Forward monte → valeur intrinsèque augmente → Cap gagne) / Effet Rho (Discounting baisse → valeur actuelle diminue → Cap perd). Conclusion encadrée : l'effet Delta domine en pratique, mais le quant calcule précisément le ratio Forward/OIS pour delta-hedger.
+    - Navigation : ← Interest Rate Swap / → Bond Options & Swaptions (lien ajouté en fin de session).
+  - **Sidebar** : `slug: 'cap-floor'` ajouté sur la première sous-page du Module 5 — les 5 autres restent en `<span>` grisé.
+
+- **2026-05-04 (fin de session)** :
+  - **Page "Bond Options & Swaptions"** (`app/cours/module-5-fixed-income-2/bond-options-swaptions/page.js`) créée. Deuxième sous-page du Module 5. 4 sections h2.
+    - **Section 1 — Définition, Typologie et Équivalence** : Payer Swaption = Put sur Bond (Long Rates) / Receiver Swaption = Call sur Bond (Short Rates). Notation standard `1y10y` : Expiry 1 an, Tenor 10 ans, sous-jacent = taux swap forward 10 ans dans 1 an.
+    - **Section 2 — Pricing et Modélisation** : passage Black lognormal → Bachelier normal (taux négatifs). EDS arithmétique `dS = σ_N dW`. Payoff `N × Annuité × max(S_Fwd − K, 0)`. Formule fermée Bachelier : `V_Payer = N × Annuité × [(F−K)N(d) + σ_N√T n(d)]`. Boîte amber "Le problème des taux négatifs". Boîte bleue "Le Cube de Volatilité" (3D : Strike × Expiry × Tenor).
+    - **Section 3 — Swaptions Bermudéennes et Callable Bonds** : notation `10nc1`, décomposition `Callable Bond = Bond Fixe + Vente d'une Receiver Swaption Bermudéenne`. Boîte bleue "L'analogie du Covered Call" (convexité négative). Composant `CallableBondChart` interactif. Boîte bleue "La complexité du pricing — Optimal Stopping Time" (Longstaff-Schwartz).
+    - **Section 4 — Trading de Volatilité : les Greeks du Cube** : Long Vega / Long Gamma / Short Theta (3 boîtes). Stratégie de déformation du cube `Long Vega_5y5y + Short Vega_1y10y`.
+    - Navigation : ← Cap & Floor / → CMS.
+  - **Composant CallableBondChart** (`app/cours/components/CallableBondChart.js`) créé. Voir architecture des fichiers clés pour le détail.
+    - **Logique du callable** : seuil de rappel = coupon (y < couponPct → min(prix, 100.5)). Pas de paramètre externe.
+    - **Datasets** : 0 = Callable Bond (bleu, dessiné en premier), 1 = helper fill vert (données Callable, fill:'+1' → Bond), 2 = Bond classique (noir, dessiné en dernier sur le bleu).
+    - **Sliders** : coupon (1→10%, défaut 5%) + taux de marché actuel (0.5→10%, défaut 4%). La ligne verticale suit `marketRateRef.current` via plugin `beforeDraw`.
+    - **Cartes** : "Valeur de l'option au taux actuel" = pBond − pCallable (vert si > 0) / "Gain si rappel" = (coupon − tauxMarché) × 100 bps (vert si positif, texte rouge "L'émetteur ne rappelle pas" si négatif).
+    - **Bugs résolus en session** : (1) discontinuité à droite du strike avec l'ancienne condition `yPct < callRatePct` — corrigé en supprimant la condition et en utilisant `Math.min(priceBond, 100.5)` pour toute la plage ; (2) slider "Taux de rappel" redondant remplacé par "Taux de marché actuel".
+  - **CallableBondWrapper** (`app/cours/module-5-fixed-income-2/bond-options-swaptions/CallableBondWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`. Inséré dans page.js entre "L'analogie du Covered Call" et "La complexité du pricing".
+  - **Sidebar** : `slug: 'bond-options-swaptions'` ajouté — les 4 autres sous-pages du Module 5 restent en `<span>` grisé.
+  - **Navigation cap-floor** : lien Suivant mis à jour de `<div />` vers `/cours/module-5-fixed-income-2/bond-options-swaptions`.
+
+- **2026-05-05** :
+  - **Page "CMS & Ajustement de Convexité"** (`app/cours/module-5-fixed-income-2/cms/page.js`) créée. Troisième sous-page du Module 5. 5 sections h2. Pas de composant interactif.
+    - **Section 1 — Mécanique du CMS** : payoff `N × S_{10y}(Fixing) × δ` encadré. Boîte bleue "Le Steepener (CMS Spread)" — receiver CMS 10 ans + payer CMS 2 ans, pari sur la pentification de la courbe.
+    - **Section 2 — L'intuition de la convexité** : comparaison Vrai Swap 10 ans vs CMS en deux scénarios (taux à 10% / taux à 1%) via deux boîtes `bg-gray-50` côte à côte. Conclusion : le CMS donne la performance brute sans l'effet d'actualisation multi-périodes — profil asymétrique avantageux. Boîte bleue "Bilan".
+    - **Section 3 — L'ajustement de convexité** : formule `Taux CMS = Taux Forward + Ajustement de Convexité` encadrée. Boîte bleue exemple chiffré (forward 3,00% → CMS 3,40%, +40 bps). Deux facteurs amplificateurs : volatilité et temps.
+    - **Section 4 — La réplication statique : Carr-Madan** : intuition FRA linéaire insuffisant → Swaptions pour créer la convexité. Intégrale de Carr-Madan encadrée (Receiver de 0 à S_Fwd + Payer de S_Fwd à ∞, pondérés par w(K) = dérivée seconde du payoff). Boîte bleue "En pratique sur le desk" (somme discrète des Swaptions cotées tous les 25-50 bps).
+    - **Section 5 — Modélisation et limites : SABR** : deux boîtes `bg-gray-50` (illiquidité des strikes extrêmes / insuffisance du modèle flat). Recours à SABR pour extrapoler le smile et valoriser les Swaptions périphériques. Boîte bleue "Le CMS en une phrase".
+    - Navigation : ← Bond Options & Swaptions / → Convertible Bond (lien mis à jour en fin de session).
+  - **Sidebar** : `slug: 'cms'` ajouté — les 3 autres sous-pages du Module 5 restent en `<span>` grisé.
+
+- **2026-05-05 (suite)** :
+  - **Page "Convertible Bond"** (`app/cours/module-5-fixed-income-2/convertible-bond/page.js`) créée. Quatrième sous-page du Module 5. 5 sections h2. Pas de composant interactif.
+    - **Section 1 — Décomposition et vocabulaire** : formule `Prix_CB = Bond Floor + Call(K, T)` encadrée. Bloc `bg-gray-50` avec 4 définitions (Ratio de Conversion CR, Prix de Conversion K = Nominal/CR encadré, Bond Floor, Valeur de Parité = CR × S encadrée).
+    - **Section 2 — Les trois zones** : trois boîtes (Busted — action très basse, CB colle au Bond Floor, Delta ≈ 0, trade comme HY / Hybride ATM — Gamma et Vega max, zone de volatilité / Equity-Bound — option deep-ITM, Delta → 1, CB colle à la Parité).
+    - **Section 3 — Le premium** : formule `Premium = (Prix_CB − Parity) / Parity` encadrée. Deux boîtes côte à côte (Premium élevé 30–50% : protection, profil lent / Premium faible 5–15% : fort Delta/Gamma, vol implicite bon marché). Boîte bleue "Le Break-even" (années pour amortir le premium via le surcroît de coupon).
+    - **Section 4 — Arbitrage convertible** : construction en 2 étapes (Achat CB = Long Gamma/Vega/Delta + Short action = `N_short = CR × Δ_Call`). Deux boîtes (action monte → vend haut / action baisse → rachète bas). Paragraphe de clôture reliant au gamma scalping (Theta-Gamma).
+    - **Section 5 — Les pièges réels du desk** : 3 boîtes (Borrow Rate — coût d'emprunt 10–15% an si Hard-to-Borrow / Risque dividende — clause Dividend Protection ajuste CR / Corrélation crédit-action amber — Bond Floor et spread de crédit se dégradent simultanément en cas de chute de l'action). Boîte bleue "Pourquoi il n'existe pas de formule fermée" (exercice américain/bermudéen → arbres binomiaux hybrides / différences finies).
+    - Navigation : ← CMS & Ajustement de Convexité / pas de suivant (`<div />`).
+  - **Sidebar** : `slug: 'convertible-bond'` ajouté — `Range Accrual` et `Modèle de taux` restent en `<span>` grisé.
+  - **cms/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-5-fixed-income-2/convertible-bond`.
+
+- **2026-05-08** :
+  - **Page "Range Accrual"** (`app/cours/module-5-fixed-income-2/range-accrual/page.js`) créée. Cinquième sous-page du Module 5. 5 sections h2. Composant interactif `DigitalReplicationChart`.
+    - **Section 1 — Mécanique et structuration commerciale** (`id="mecanique"`) : formule centrale `Coupon_total = C_bonifié × N_jours/N_total` encadrée. Biais directionnel (tunnel désaxé bearish/bullish). Formule MinGtee `max(MinGtee, C × ratio)` encadrée. Boîte bleue "Pourquoi une MinGtee ?".
+    - **Section 2 — L'ingénierie cross-asset** (`id="cross-asset"`) : deux exemples en `bg-gray-50` côte à côte (Actions US + Devises / Pétrole + Actions). Boîte bleue "Pourquoi short corrélation ?" avec formule `P(A ∩ B) = P(A) × P(B)` — l'investisseur est short corrélation et long dispersion.
+    - **Section 3 — La clause callable** (`id="callable"`) : deux boîtes bleues côte à côte (Pour l'investisseur : subventionne son coupon en cédant l'option de rappel / Pour la banque : exerce si volatilité s'effondre, ne rappelle pas si volatilité explose).
+    - **Section 4 — La décomposition quant : somme de digitales** (`id="decomposition-quant"`) : deux formules encadrées séparément (indicatrice journalière produit sur M actifs / coupon total comme somme temporelle). Boîte bleue sur l'enjeu du skew aux barrières (modèles SABR).
+    - **Section 5 — Gestion des risques : Gamma et Call Spread** (`id="gestion-risques"`) : pin risk, formule approximation Call Spread `Digital(K) ≈ [Call(K-ε) - Call(K+ε)] / (2ε)` encadrée. Composant `DigitalReplicationWrapper`. Boîte bleue "L'overhedge". Boîte amber "Limite" (biais de pricing).
+    - Navigation : ← Bond Options & Swaptions / pas de suivant (`<div />`).
+  - **Sidebar** : `slug: 'range-accrual'` ajouté — `Modèle de taux` reste en `<span>` grisé.
+  - **convertible-bond/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-5-fixed-income-2/range-accrual`.
+  - **Composant DigitalReplicationChart** (`app/cours/components/DigitalReplicationChart.js`) : composant client Chart.js. K=100, S de 80 à 120 (201 points). Deux datasets : courbe noire pointillée "Digital idéale" (step function avec deux points proches 99.999/100.001 pour simuler le saut, `parsing: false`, `tension: 0`) + courbe bleue pleine "Call Spread (réplication)". Slider ε 0.5→10 (pas 0.5, défaut 4). Axe Y fixé 0→1.2. Tooltip filtré sur le Call Spread uniquement. Carte dynamique : N = Math.round(1000000 / (1000 × 2 × ε)), strikes K±ε affichés.
+    - **⚠️ Payoff, pas prix BS** : le Call Spread est calculé comme le **payoff normalisé** (rampe linéaire 0→1 entre K-ε et K+ε), pas comme un prix Black-Scholes. Un prix BS plafonne à ~0.53 (valeur actualisée) et ne montre pas la convergence vers la digitale — le payoff, lui, converge visuellement vers le step function quand ε → 0.
+    - **⚠️ Pattern de mise à jour Chart.js** : l'anti-vibration à deux `useEffect` (`useEffect([], [])` + `useEffect([epsilon])`) ne fonctionne pas ici — avec `animation: false` dans les options, `chart.update('none')` ne déclenche pas de repaint. Solution : **mettre à jour le chart directement dans le handler `onChange`** (pas dans un `useEffect`). `setEpsilon` gère l'affichage React, `chartInstance.current.update('none')` gère le canvas — synchrone, sans vibration.
+  - **DigitalReplicationWrapper** (`app/cours/module-5-fixed-income-2/range-accrual/DigitalReplicationWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`, chemin `'../../components/DigitalReplicationChart'`.
+
+- **2026-05-09** :
+  - **Page "Modèles de taux"** (`app/cours/module-5-fixed-income-2/modele-taux/page.js`) créée. Sixième et dernière sous-page du Module 5. 5 sections h2 + tableau synthèse. Pas de composant interactif.
+    - **Section 1 — Fondamentaux** (`id="pourquoi"`) : motivation (Bachelier/Black suffisent pour Swaption européen, insuffisants pour Bermudéenne/Range Accrual). Vasicek (1977) comme ancêtre — EDS `dr_t = a(b-r_t)dt + σdW_t` encadrée, 3 paramètres (b niveau cible, a vitesse de retour, σdW_t choc). Boîte amber "La limite de Vasicek" (modèle d'équilibre, paramètres constants, ne colle pas à la courbe Bloomberg).
+    - **Section 2 — Hull-White 1-Facteur** (`id="hw1f"`) : EDS `dr_t = [θ(t) - a(t)r_t]dt + σ(t)dW_t` encadrée. Trois boîtes bleues : (1) θ(t) — calibration no-arbitrage, redonne exactement la courbe spot ; (2) σ(t) — calibration de la structure par terme de vol sur Swaptions ; (3) Arbres trinomiaux + backward induction, avec lien vers bond-options-swaptions pour l'optimal stopping.
+    - **Section 3 — Limite fatale : corrélation parfaite** (`id="limite"`) : boîte amber unique — un seul Brownien = tous les taux parfaitement corrélés, courbe peut monter/descendre mais pas se tordre. Conséquence : incapable de pricer les CMS Spread Options (lien vers cms).
+    - **Section 4 — Hull-White 2-Facteurs** (`id="hw2f"`) : deux EDS encadrées séparément (`dr_t = [θ(t)+u_t-a(t)r_t]dt + σ_1(t)dW_1` et `du_t = -bu_t dt + σ_2(t)dW_2`). Rôle du second facteur u_t (perturbation lente, découple court/long terme). Boîte amber : over-fit et instabilité numérique de σ(t). Boîte bleue : formules fermées ZC pour calibration rapide.
+    - **Section 5 — HJM et LMM** (`id="hjm-lmm"`) : HJM en boîte grise `bg-gray-50` (cadre général, HW = cas particulier, Monte Carlo obligatoire → inadapté aux arbres). LMM en boîte grise (taux de marché directement, calibration naturelle Caps/Swaptions, dimensionnalité explosive, complexité post-LIBOR). Citation encadrée "règle pratique HW vs LMM". Boîte bleue "Pour aller plus loin" : Brigo & Mercurio + Andersen & Piterbarg.
+    - **Tableau synthèse** 4 lignes × 4 colonnes (HW1F, HW2F, HJM, LMM / Philosophie / Usage principal / Point de vigilance). Note sous le tableau : SABR exclu car catégorie différente (modèle de vol, pas de taux court).
+    - Navigation : ← Range Accrual / pas de suivant (`<div />`).
+  - **Sidebar** : `slug: 'modele-taux'` ajouté — "Modèle de taux" est désormais cliquable.
+  - **range-accrual/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-5-fixed-income-2/modele-taux`.
+  - **`app/cours/page.js`** : Module 5 passe en `active` avec les 6 `href` renseignés — la carte est désormais en bleu avec toutes les sous-pages cliquables.
+  - **Module 5 — Fixed Income II : COMPLET (6/6 pages)**.
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000
