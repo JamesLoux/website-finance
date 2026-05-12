@@ -80,11 +80,11 @@ export default function CoursPage() {
             { label: 'Modèle de taux', href: '/cours/module-5-fixed-income-2/modele-taux' },
           ]} />
           <HConn />
-          <Node num="6" title="Fixed Income III" subs={[
-            { label: 'FX Swap' },
-            { label: 'CDS' },
-            { label: 'Inflation Swap' },
-            { label: 'TRS' },
+          <Node num="6" title="Fixed Income III" active subs={[
+            { label: 'FX Swap', href: '/cours/module-6-fixed-income-3/fx-swap' },
+            { label: 'CDS', href: '/cours/module-6-fixed-income-3/cds' },
+            { label: 'Inflation Swap', href: '/cours/module-6-fixed-income-3/inflation-swap' },
+            { label: 'TRS', href: '/cours/module-6-fixed-income-3/trs' },
           ]} />
         </Row>
 

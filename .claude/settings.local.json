@@ -5,7 +5,12 @@
       "Bash(npm install:*)",
       "Bash(xargs sed:*)",
       "Bash(npx next:*)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(New-Item -ItemType Directory -Force \"d:\\\\Documents\\\\Travail\\\\website_finance\\\\app\\\\cours\\\\module-6-fixed-income-3\\\\fx-swap\")",
+      "Bash(mkdir -p \"d:/Documents/Travail/website_finance/app/cours/module-6-fixed-income-3/fx-swap\")"
+    ],
+    "additionalDirectories": [
+      "d:\\Documents\\Travail\\website_finance\\app\\cours\\module-6-fixed-income-3"
     ]
   }
 }

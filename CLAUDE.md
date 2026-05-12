@@ -66,7 +66,12 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 5 / Range Accrual (range-accrual) — 5 sections : mécanique + MinGtee, cross-asset, callable, somme de digitales, réplication Call Spread + composant DigitalReplicationChart
 - [x] Module 5 / Modèles de taux (modele-taux) — 5 sections + tableau synthèse : Vasicek ancêtre, HW1F (θ(t)/σ(t)/arbre), limite corrélation parfaite, HW2F (2 EDS), HJM et LMM
 - [x] **Module 5 — Fixed Income II : COMPLET (6/6 pages)**
-- [ ] Modules 6, 7 (Fixed Income III + Produits Equity)
+- [x] Module 6 / FX Swap et Cross-Currency Swap (fx-swap) — parité des taux couverte, CIRS/XCS, Basis Spread Float/Float, matrice des risques (Basis/Spot/Rate)
+- [x] Module 6 / Credit Default Swaps (cds) — mécanique acheteur/vendeur/Recovery Rate, pricing PD×(1-R)/upfront, indices iTraxx/CDX, CS01 & convexité négative, CDS-Bond Basis & tail risk
+- [x] Module 6 / Swaps d'Inflation (inflation-swap) — ZCIS & indices (HICPxT/CPI-U/RPI), Fisher/breakeven, réalité desk (lag/gap risk/saisonnalité), arbitrage Bond vs Swap, Deflation Floor
+- [x] Module 6 / Total Return Swap (trs) — mécanique (Equity Leg / Floating Leg), raison d'être HF (levier/bilan/anonymat), cas Archegos, couverture Delta One + lien cash and carry, matrice des risques (Tax/Funding/Repo), synthèse TRS vs Prime Brokerage
+- [x] **Module 6 — Fixed Income III : COMPLET (4/4 pages)**
+- [ ] Module 7 (Produits Equity)
 - [x] Quiz Module 9 (affiché) — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-7
 - [x] Quiz Module 10 (affiché) — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-8
 - [ ] Quiz Modules 4, 5, 6, 7
@@ -93,7 +98,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
 | Module 3 | The Greeks | module-3-grecques |
 | Module 4 | Fixed Income I | module-4-taux-credit |
 | Module 5 | Fixed Income II | module-5-fixed-income-2 |
-| Module 6 | Fixed Income III | module-6-fixed-income-3 (nouveau, vide) |
+| Module 6 | Fixed Income III | module-6-fixed-income-3 |
 | Module 7 | Produits Equity | module-5-produits-equity |
 | Module 8 | Volatilité | module-6-volatilite |
 | Module 9 | Quanto & FX | module-7-quanto-fx |
@@ -106,7 +111,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
   - ⚠️ Même divergence slug/titre que pour module-2 : les slugs sont conservés, les titres affichés diffèrent.
 - `/cours/module-4-taux-credit` — `obligations-bases` ✅, `duration-convexite` ✅, `fwd-rate-agreement` ✅ (pages actives, sidebar cliquables) ; grisée : Interest Rate Swap
 - `/cours/module-5-fixed-income-2` — `cap-floor` ✅, `bond-options-swaptions` ✅, `cms` ✅, `convertible-bond` ✅, `range-accrual` ✅, `modele-taux` ✅ — module complet
-- `/cours/module-6-fixed-income-3` — nouveau dossier vide (.gitkeep) ; sous-pages grisées : FX Swap, CDS, Inflation Swap, TRS
+- `/cours/module-6-fixed-income-3` — `fx-swap` ✅, `cds` ✅, `inflation-swap` ✅, `trs` ✅ — module complet
 - `/cours/module-5-produits-equity` — vanilles-combinaisons, options-exotiques, produits-structures (grisé, pas de pages créées)
 - `/cours/module-6-volatilite` — vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta
 - `/cours/module-7-quanto-fx` — correlation-fx ("Corrélation Indice et FX"), options-quanto ("Options Quanto & Composite")
@@ -162,6 +167,7 @@ app/
       ZeroCouponChart.js             ← Composant Chart.js : trajectoire de valorisation d'un ZC P(t)=100×e^{−y(T−t)}, courbe orange, point vert au pair en T. Axe Y fixé 0→105. Deux sliders : rendement 0→20% + durée 6mois→10ans. Tick Y le plus proche du prix d'entrée mis en évidence (orange gras). Carte "Prix aujourd'hui". Pattern destroy/recréation du chart dans useEffect([y, T]).
       ConvexityChart.js              ← Composant Chart.js : prix réel P(y) (noir épais) vs approximation ordre 1 (orange pointillés) vs ordre 2 (bleu pointillés). Obligation couponnée 10 ans, nominal 100, coupons annuels. X fixes 0.1%→23% (N_POINTS=200, calculés une seule fois). Axes figés X:0→23, Y:0→200. Ligne verticale au taux y₀ via plugin beforeDraw + y0Ref. 2 sliders (taux central y₀ + coupon). 3 cartes (Sensibilité, Convexité, Erreur Δ-hedging à +200bps). Pattern : init useEffect([]) + update useEffect([y0, couponPct]) → chart.update('none') sans recréation.
       CallableBondChart.js           ← Composant Chart.js : Bond classique (noir, dataset 2) vs Callable Bond (bleu, dataset 0) + helper fill vert (dataset 1, fill:'+1'). Seuil de rappel = coupon (y < couponPct → min(prix, 100.5)). Axe X 0.5%→10%, Y 60→140. Ligne verticale pointillée bleue au taux de marché actuel via marketRateRef mutable. 2 sliders (coupon 1→10% / taux marché 0.5→10%). 2 cartes (valeur de l'option au taux actuel en vert / gain si rappel en bps, texte rouge si négatif). Pattern deux useEffect anti-vibration.
+      CDS01Chart.js                  ← Composant Chart.js : CS01 en fonction du spread (10→3000 bps), scale linéaire, ticks explicites [50/500/1000/2000/3000], ligne verticale "HY typique" à 300 bps via plugin beforeDraw.
       DigitalReplicationChart.js     ← Composant Chart.js : réplication d'une option digitale par Call Spread. K=100, S 80→120 (201 points). Courbe noire pointillée "Digital idéale" (step function via deux points 99.999/100.001) + courbe bleue pleine "Call Spread". Slider ε 0.5→10 (pas 0.5, défaut 4). Axe Y fixé 0→1.2. Mise à jour directement dans le handler onChange (pas dans useEffect) — contournement du bug chart.update('none') avec animation:false.
     module-1-calcul-stochastique/
       mouvement-brownien/page.js     ← ⭐ TEMPLATE DE RÉFÉRENCE pour toutes les pages de cours
@@ -203,7 +209,11 @@ app/
       range-accrual/DigitalReplicationWrapper.js ← Wrapper 'use client' pour DigitalReplicationChart (next/dynamic ssr:false)
       modele-taux/page.js              ← ✅ Fait (5 sections : Vasicek, HW1F, limite corrélation parfaite, HW2F, HJM/LMM + tableau synthèse 4×4)
     module-6-fixed-income-3/
-      .gitkeep                         ← Dossier placeholder (pas de page.js)
+      fx-swap/page.js                  ← ✅ Fait (4 sections : FX Swap + parité des taux couverte, CIRS/XCS + avantage comparatif, Basis Spread Float/Float, matrice des risques Basis/Spot/Rate)
+      cds/page.js                      ← ✅ Fait (5 sections : mécanique acheteur/vendeur/Recovery Rate, pricing PD×(1-R)/standardisation/upfront, indices iTraxx/CDX, CS01 & convexité négative, CDS-Bond Basis & Negative Basis Trade & tail risk VaR)
+      cds/CDS01Wrapper.js              ← Wrapper 'use client' pour CDS01Chart (next/dynamic ssr:false)
+      inflation-swap/page.js           ← ✅ Fait (5 sections : ZCIS & indices HICPxT/CPI-U/RPI + YoY Swap, Fisher/breakeven Treasury-TIPS, lag/gap risk/saisonnalité, arbitrage Bond vs Swap + Basis, Deflation Floor)
+      trs/page.js                      ← ✅ Fait (5 sections : mécanique Equity/Floating Leg, raison d'être HF, couverture Delta One, matrice des risques Tax/Funding/Repo, synthèse TRS vs Prime Brokerage)
     module-7-quanto-fx/
       correlation-fx/page.js           ← ✅ Fait (titre : "Corrélation Indice et FX") — affiché Module 9
       options-quanto/page.js           ← ✅ Fait (titre : "Options Quanto & Composite") — regroupe Quanto + Composite, page finale du module
@@ -662,6 +672,53 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
   - **range-accrual/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-5-fixed-income-2/modele-taux`.
   - **`app/cours/page.js`** : Module 5 passe en `active` avec les 6 `href` renseignés — la carte est désormais en bleu avec toutes les sous-pages cliquables.
   - **Module 5 — Fixed Income II : COMPLET (6/6 pages)**.
+
+- **2026-05-10** :
+  - **Page "FX Swap et Cross-Currency Swap"** (`app/cours/module-6-fixed-income-3/fx-swap/page.js`) créée. Première sous-page du Module 6. 4 sections h2. Pas de composant interactif.
+    - **Section 1 — FX Swap** (`id="fx-swap"`) : définition (échange simultané Nearleg + Farleg, sans flux intermédiaires). Points de swap = cotation en pips (F − S). Parité des taux couverte encadrée en notations r_c (devise de cotation) / r_b (devise de base) : `F = S × e^{(r_c − r_b)×T}` avec exemple EUR/USD explicite. Boîte bleue "Interprétation" (prime si r_c > r_b, décote sinon). Tom/Next comme mécanisme de roulement quotidien.
+    - **Section 2 — Cross-Currency Swap (CIRS / XCS)** (`id="cirs"`) : tableau 3 phases (échange initial au Spot / paiements intermédiaires sans netting / ré-échange final au Spot initial). Logique d'avantage comparatif. Exemple chiffré en deux colonnes (taux disponibles US/UK / résultat après CIRS) + déroulé en 3 étapes dans un encadré `bg-gray-50`.
+    - **Section 3 — Basis Spread et Float/Float** (`id="basis"`) : 95% du volume interbancaire en Variable/Variable (SOFR vs Euribor). Cross-Currency Basis Spread = friction de rareté du dollar. Encadré gris "Mécanisme du Basis EUR/USD" (jambe EUR reçoit Euribor − Basis, jambe USD paie SOFR complet). Boîte bleue "Convention de signe" (Basis négatif = dollar plus rare, exemples mars 2020 / septembre 2008).
+    - **Section 4 — Matrice des risques d'un CIRS** (`id="risques"`) : trois encadrés `bg-gray-50` (Basis Risk — creusement en période de stress / Spot Risk — appréciation de la devise empruntée → appels de marge + XVA / Rate Risk — quasi-neutre Float/Float, DV01 sur Fixe/Variable). Boîte amber "Interaction entre les risques" (corrélation Basis Risk + Spot Risk en crise).
+    - Navigation : ← Modèles de taux / pas de suivant (`<div />`).
+  - **Sidebar** : `slug: 'fx-swap'` ajouté dans le module 06 — "FX Swap" est désormais cliquable. CDS, Inflation Swap, TRS restent en `<span>` grisé.
+
+- **2026-05-11** :
+  - **Page "Credit Default Swaps"** (`app/cours/module-6-fixed-income-3/cds/page.js`) créée. Deuxième sous-page du Module 6. 5 sections h2. Pas de composant interactif.
+    - **Section 1 — Mécanique** (`id="mecanique"`) : définition CDS comme assurance contre événement de crédit. Deux boîtes côte à côte `bg-gray-50` : acheteur (short crédit, `text-red-600`) vs vendeur (long crédit, `text-green-700`). Cash Settlement — formule `N × (1 - R)` encadrée. Boîte bleue "Recovery Rate en pratique" (40% convention IG, Lehman ~8% en 2008).
+    - **Section 2 — Pricing** (`id="pricing"`) : relation `Spread_CDS ≈ PD × (1-R)` encadrée. Boîte bleue "Probabilité de défaut implicite" (exemple 200 bps / R=40% → PD=3,3%). Note italique sur la formule exacte avec Annuité au dénominateur. Standardisation Big Bang ISDA 2009 : coupons fixes 100 bps IG / 500 bps HY en deux boîtes côte à côte. Formule `Upfront = (Spread_CDS - Coupon) × Annuité × N` encadrée. Boîte bleue "Lecture de l'upfront" (upfront positif si spread > coupon, négatif si spread < coupon).
+    - **Section 3 — Indices** (`id="indices"`) : iTraxx et CDX. Tableau 4 lignes × 3 colonnes (iTraxx Main / Crossover / CDX IG / CDX HY — Univers / Composition). Reconstruction semestrielle. Boîte bleue "Mécanique du défaut dans un indice" (retrait de l'entité, notionnel réduit, contrat continue sur 124 entités).
+    - **Section 4 — CS01 et convexité négative** (`id="cs01"`) : formule `CS01 ≈ N × T × 0,0001` encadrée. Boîte bleue "Comprendre la convexité négative" (spread s'écarte → probabilité de survie diminue → flux futurs s'effacent → CS01 fond). Deux boîtes chiffrées (spread 100 bps : CS01 ≈ 4 500 € / spread 1 000 bps : CS01 ≈ 2 800 €). Boîte amber "Conséquence pour la couverture" (recalibration permanente du ratio de hedge).
+    - **Section 5 — CDS-Bond Basis et tail risk** (`id="basis"`) : formule `Basis = Spread_CDS - Spread_Bond` encadrée. Negative Basis Trade en 3 étapes numérotées dans `bg-gray-50` (acheter bond / acheter protection CDS / financer via Repo), résultat en `font-mono` centré. Boîte amber "La VaR et le piège du tail risk" (VaR = 0 pour un book CDS vendeur, masque le risque — phénomène 2007-2008).
+    - Navigation : ← FX Swap et Cross-Currency Swap / → Swaps d'Inflation.
+  - **Sidebar** : `slug: 'cds'` ajouté dans le module 06 — "CDS" est désormais cliquable. Inflation Swap, TRS restent grisés.
+  - **fx-swap/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-6-fixed-income-3/cds` ("Credit Default Swaps →").
+  - **Composant CDS01Chart** (`app/cours/components/CDS01Chart.js`) : composant client Chart.js — courbe du CS01 en fonction du spread. `computeCS01(spreadBps)` : intensité de défaut `λ = spread/(1-R)`, annuité trimestrielle sur 20 pas (5 ans), `CS01 = N × annuité × 0.0001`. 300 points de 10 à 3 000 bps (pas 10 bps). Scale linéaire (`parsing: false`). Ticks X explicites via `afterBuildTicks` : [50, 500, 1000, 2000, 3000] bps. Plugin inline `beforeDraw` : ligne verticale pointillée grise à 300 bps + label "HY typique" sous l'axe X (`chartArea.bottom + 14`). Courbe bleue `#2563eb`, épaisseur 2.5px, tension 0.3, pas de points. Tooltips : `title` → tableau (items[0].parsed.x), `label` → item unique (item.parsed.y).
+  - **CDS01Wrapper** (`app/cours/module-6-fixed-income-3/cds/CDS01Wrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }`. Chemin `'../../components/CDS01Chart'`.
+  - **Intégration dans cds/page.js** : composant inséré dans la section 4 (CS01), après la boîte bleue "Convexité négative", avec phrase de transition "La courbe ci-dessous illustre cette décroissance…".
+
+- **2026-05-12** :
+  - **Page "Swaps d'Inflation"** (`app/cours/module-6-fixed-income-3/inflation-swap/page.js`) créée. Troisième sous-page du Module 6. 5 sections h2. Pas de composant interactif.
+    - **Section 1 — ZCIS et indices** (`id="zcis"`) : définition ZCIS (unique flux à l'échéance). Payoff `N × [(1+K)^T − I_T/I_0]` encadré. Trois boîtes bleues (HICPxT zone euro / CPI-U États-Unis / RPI Royaume-Uni). Boîte bleue "Variante YoY Swap" (flux annuels `I_{t_i}/I_{t_{i-1}} − 1`, moins liquide, courant au UK et retail).
+    - **Section 2 — Équation de Fisher** (`id="breakeven"`) : formule exacte `(1+r_nom) = (1+r_réel)(1+π)` encadrée + approximation additive. Trois boîtes (Treasury → r_nominal / TIPS → r_réel / écart Treasury−TIPS = Breakeven). Deux boîtes côte à côte (Breakeven Bond / Breakeven Swap) avec lien vers section 4 pour le Basis.
+    - **Section 3 — Réalité du desk** (`id="desk"`) : trois boîtes bleues (Lag 3 mois / Gap risk à la publication CPI / Saisonnalité carry janvier négatif vs juillet-septembre positif).
+    - **Section 4 — Arbitrage Bond vs Swap** (`id="arbitrage"`) : boîte bleue "Pourquoi le Basis existe" (liquidité du dérivé sans cash). Construction en 2 étapes dans `bg-gray-50` (achat TIPS + vente ZCIS). Formule `Gain net = r_réel + (K_swap − π_bond)` encadrée. Boîte bleue "Ce que le Basis mesure vraiment" (lien vers section 5 pour l'option implicite).
+    - **Section 5 — Deflation Floor** (`id="deflation-floor"`) : formule `Remboursement = N × max(I_T/I_0, 1)` encadrée. Deux boîtes côte à côte (TIPS profil convexe avec floor / ZCIS profil linéaire sans floor). Boîte amber "Conséquence pour l'arbitrage" (le trader détient le Deflation Floor gratuitement — une partie du Basis apparent est en réalité la prime de cette option).
+    - Navigation : ← Credit Default Swaps / pas de suivant (`<div />`).
+  - **Sidebar** : `slug: 'inflation-swap'` ajouté dans le module 06 — "Inflation Swap" est désormais cliquable. TRS reste en `<span>` grisé.
+  - **cds/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-6-fixed-income-3/inflation-swap` ("Swaps d'Inflation →").
+
+- **2026-05-12 (suite)** :
+  - **Page "Total Return Swap"** (`app/cours/module-6-fixed-income-3/trs/page.js`) créée. Quatrième et dernière sous-page du Module 6. 5 sections h2. Pas de composant interactif.
+    - **Section 1 — Mécanique** (`id="mecanique"`) : tableau deux jambes (Equity Leg reçoit performance + dividendes / Floating Leg paie Euribor + spread). SVG inline trois acteurs (Hedge Fund bleu / Banque vert / Marché gris) avec quatre flèches annotées. Payoff Long encadré `P&L = (S_T-S_0)/S_0 + d − (Euribor+s)δ`. Paragraphe Equity Swap (mécanique identique si sous-jacent = action).
+    - **Section 2 — Raison d'être** (`id="rationnel"`) : trois boîtes bleues (levier — collatéral 10% pour 100% de performance / efficacité du bilan off-balance sheet + nuance IFRS 10 / anonymat — pas de déclaration de franchissement de seuil). Boîte amber "Cas réel — Archegos Capital (2021)" : accumulation via TRS sur ViacomCBS/Discovery/ADR chinois, levier 5–8x, liquidation forcée en bloc, ~10 Mds de pertes dont ~4,7 Mds Credit Suisse.
+    - **Section 3 — La couverture de la banque** (`id="couverture"`) : encadré gris 4 étapes numérotées (emprunt cash Euribor → achat physique → compensation Equity Leg → compensation Floating Leg). Formule `P&L_banque = s·δ·N` encadrée. Boîte bleue "Lien avec le Cash and Carry" (couverture structurellement identique à un cash and carry, le spread = base du futures, devient insuffisant quand le portage coûte cher).
+    - **Section 4 — Matrice des risques du desk Delta One** (`id="risques"`) : trois encadrés gris (Tax Risk — dividende brut dû vs dividende net reçu, asymétrie fiscale / Funding Risk — refinancement interbancaire en crise → negative carry si coût > spread / Repo Risk — emprunt Hard to Borrow pour client Short → surcoût répercuté sur le client).
+    - **Section 5 — Synthèse : TRS et Prime Brokerage** (`id="synthese"`) : tableau 2 lignes × 3 colonnes (Desk Delta One : structure/price/couvre les TRS / Prime Brokerage : custody/financing/securities lending). Boîte bleue "En résumé" (transfert de performance sans transfert de propriété, levier + anonymat pour le HF, risques structurels rappelés par Archegos).
+    - Navigation : ← Swaps d'Inflation / pas de suivant (`<div />`).
+  - **Sidebar** : `slug: 'trs'` ajouté dans le module 06 — "TRS" est désormais cliquable. Module 6 entièrement cliquable.
+  - **inflation-swap/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-6-fixed-income-3/trs` ("Total Return Swap →").
+  - **`app/cours/page.js`** : Module 6 passe en `active` avec les 4 `href` renseignés (fx-swap, cds, inflation-swap, trs) — la carte est désormais en bleu avec toutes les sous-pages cliquables.
+  - **Module 6 — Fixed Income III : COMPLET (4/4 pages)**.
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000

@@ -71,10 +71,10 @@ const modules = [
     title: 'Fixed Income III',
     slug: 'module-6-fixed-income-3',
     sousPages: [
-      { title: 'FX Swap' },
-      { title: 'CDS' },
-      { title: 'Inflation Swap' },
-      { title: 'TRS' },
+      { title: 'FX Swap', slug: 'fx-swap' },
+      { title: 'CDS', slug: 'cds' },
+      { title: 'Inflation Swap', slug: 'inflation-swap' },
+      { title: 'TRS', slug: 'trs' },
     ],
   },
   {
