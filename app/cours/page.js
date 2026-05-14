@@ -6,6 +6,21 @@ const ROW_W = CARD_W * 3 + CONN_W * 2  // 752
 
 export default function CoursPage() {
   return (
+    <>
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      zIndex: -1,
+      backgroundColor: '#ffffff',
+      backgroundImage: [
+        'linear-gradient(rgba(37,99,235,0.10) 1px, transparent 1px)',
+        'linear-gradient(90deg, rgba(37,99,235,0.10) 1px, transparent 1px)',
+        'linear-gradient(rgba(37,99,235,0.045) 1px, transparent 1px)',
+        'linear-gradient(90deg, rgba(37,99,235,0.045) 1px, transparent 1px)',
+      ].join(', '),
+      backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+      pointerEvents: 'none',
+    }} />
     <main className="max-w-4xl mx-auto px-6 py-12">
 
       <h1 className="text-3xl font-semibold text-gray-900 mb-3">Cours</h1>
@@ -70,7 +85,7 @@ export default function CoursPage() {
             { label: 'Fwd Rate Agreement', href: '/cours/module-4-taux-credit/fwd-rate-agreement' },
             { label: 'Interest Rate Swap', href: '/cours/module-4-taux-credit/interest-rate-swap' },
           ]} />
-          <HConn />
+          <HConn reverse />
           <Node num="5" title="Fixed Income II" active subs={[
             { label: 'Cap & Floor', href: '/cours/module-5-fixed-income-2/cap-floor' },
             { label: 'Bond Options & Swaptions', href: '/cours/module-5-fixed-income-2/bond-options-swaptions' },
@@ -79,7 +94,7 @@ export default function CoursPage() {
             { label: 'Range Accrual', href: '/cours/module-5-fixed-income-2/range-accrual' },
             { label: 'Modèle de taux', href: '/cours/module-5-fixed-income-2/modele-taux' },
           ]} />
-          <HConn />
+          <HConn reverse />
           <Node num="6" title="Fixed Income III" active subs={[
             { label: 'FX Swap', href: '/cours/module-6-fixed-income-3/fx-swap' },
             { label: 'CDS', href: '/cours/module-6-fixed-income-3/cds' },
@@ -129,6 +144,7 @@ export default function CoursPage() {
 
       </div>
     </main>
+    </>
   )
 }
 
@@ -139,7 +155,7 @@ function Row({ children, reverse = false }) {
     <div style={{
       display: 'flex',
       flexDirection: reverse ? 'row-reverse' : 'row',
-      alignItems: 'flex-start',
+      alignItems: 'stretch',
     }}>
       {children}
     </div>
@@ -147,7 +163,7 @@ function Row({ children, reverse = false }) {
 }
 
 function Node({ num, title, subs = [], active = false }) {
-  const borderColor = active ? '#2563eb' : '#bfdbfe'
+  const borderColor = active ? '#1d4ed8' : '#bfdbfe'
   const numColor    = active ? '#2563eb' : '#bfdbfe'
   const titleColor  = active ? '#111827' : '#9ca3af'
   const bgBottom    = active ? '#eff6ff' : '#f9fafb'
@@ -156,11 +172,13 @@ function Node({ num, title, subs = [], active = false }) {
   return (
     <div style={{
       width: CARD_W,
-      border: `1.5px solid ${borderColor}`,
+      border: `${active ? 2 : 1.5}px solid ${borderColor}`,
       borderRadius: 12,
       backgroundColor: '#ffffff',
       overflow: 'hidden',
       flexShrink: 0,
+      display: 'flex',
+      flexDirection: 'column',
     }}>
       {/* Partie haute : numéro + titre */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px' }}>
@@ -174,7 +192,7 @@ function Node({ num, title, subs = [], active = false }) {
       {/* Séparateur */}
       <div style={{ height: 1, backgroundColor: sepColor }} />
       {/* Partie basse : sous-pages */}
-      <div style={{ backgroundColor: bgBottom, padding: '8px 14px', display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <div style={{ backgroundColor: bgBottom, padding: '8px 14px', display: 'flex', flexDirection: 'column', gap: 5, flex: 1 }}>
         {subs.map((s, i) =>
           s.href ? (
             <a key={i} href={s.href} style={{ fontSize: 12, color: '#2563eb', textDecoration: 'none', lineHeight: 1.4 }}
@@ -192,30 +210,54 @@ function Node({ num, title, subs = [], active = false }) {
   )
 }
 
-function HConn({ invisible = false }) {
+function HConn({ invisible = false, reverse = false }) {
+  const ARROW = 8
+  const color = '#9ca3af'
+  const sw = 6
+  const svgH = 20
+  const cy = svgH / 2
+
+  if (invisible) {
+    return <div style={{ width: CONN_W, height: svgH, flexShrink: 0, alignSelf: 'flex-start', marginTop: 12 }} />
+  }
+
   return (
-    <div style={{
-      width: CONN_W,
-      height: 2,
-      backgroundColor: invisible ? 'transparent' : '#d1d5db',
-      flexShrink: 0,
-      alignSelf: 'flex-start',
-      marginTop: 22,
-    }} />
+    <svg
+      width={CONN_W}
+      height={svgH}
+      viewBox={`0 0 ${CONN_W} ${svgH}`}
+      style={{ flexShrink: 0, alignSelf: 'flex-start', marginTop: 12 }}
+    >
+      {reverse ? (
+        <>
+          <line x1={CONN_W} y1={cy} x2={ARROW + 1} y2={cy} stroke={color} strokeWidth={sw} />
+          <polygon points={`0,${cy} ${ARROW},${cy - ARROW} ${ARROW},${cy + ARROW}`} fill={color} />
+        </>
+      ) : (
+        <>
+          <line x1={0} y1={cy} x2={CONN_W - ARROW - 1} y2={cy} stroke={color} strokeWidth={sw} />
+          <polygon points={`${CONN_W},${cy} ${CONN_W - ARROW},${cy - ARROW} ${CONN_W - ARROW},${cy + ARROW}`} fill={color} />
+        </>
+      )}
+    </svg>
   )
 }
 
 function VConn({ side }) {
+  const isRight = side === 'right'
+  const lineX = isRight ? ROW_W - CARD_W / 2 : CARD_W / 2
+  const ARROW = 8
+  const color = '#9ca3af'
+  const sw = 6
+  const svgH = 40
+
   return (
-    <div style={{
-      display: 'flex',
-      width: ROW_W,
-      height: 32,
-      justifyContent: side === 'right' ? 'flex-end' : 'flex-start',
-      paddingRight: side === 'right' ? CARD_W / 2 - 1 : 0,
-      paddingLeft:  side === 'left'  ? CARD_W / 2 - 1 : 0,
-    }}>
-      <div style={{ width: 2, backgroundColor: '#d1d5db' }} />
-    </div>
+    <svg width={ROW_W} height={svgH} viewBox={`0 0 ${ROW_W} ${svgH}`}>
+      <line x1={lineX} y1={0} x2={lineX} y2={svgH - ARROW} stroke={color} strokeWidth={sw} />
+      <polygon
+        points={`${lineX},${svgH} ${lineX - ARROW},${svgH - ARROW} ${lineX + ARROW},${svgH - ARROW}`}
+        fill={color}
+      />
+    </svg>
   )
 }

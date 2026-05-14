@@ -28,7 +28,7 @@ const quizModules = [
     number: "04",
     title: "Fixed Income I",
     pages: "Obligations & Bases · Duration & Convexité · Fwd Rate Agreement · Interest Rate Swap",
-    questions: 10,
+    questions: 8,
   },
   {
     number: "05",
@@ -74,54 +74,72 @@ const quizModules = [
 
 export default function QuizPage() {
   return (
-    <div className="bg-gray-50 min-h-full py-16 px-6">
-      <div className="max-w-5xl mx-auto">
+    <>
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      zIndex: -1,
+      backgroundColor: '#ffffff',
+      backgroundImage: [
+        'linear-gradient(rgba(37,99,235,0.10) 1px, transparent 1px)',
+        'linear-gradient(90deg, rgba(37,99,235,0.10) 1px, transparent 1px)',
+        'linear-gradient(rgba(37,99,235,0.045) 1px, transparent 1px)',
+        'linear-gradient(90deg, rgba(37,99,235,0.045) 1px, transparent 1px)',
+      ].join(', '),
+      backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+      pointerEvents: 'none',
+    }} />
+    <div className="min-h-full py-12 px-6">
+      <div className="max-w-3xl mx-auto">
 
         {/* En-tête */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">Quiz</h1>
-          <p className="text-gray-500 max-w-2xl">
-            Un quiz par module pour tester et consolider tes connaissances.
-            
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Quiz</h1>
+          <p className="text-sm text-gray-500">
+            Un quiz par module pour tester et consolider ses connaissances.
           </p>
         </div>
 
-        {/* Grille des quiz */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Liste des quiz — 1 par ligne, format compact */}
+        <div className="flex flex-col gap-2">
           {quizModules.map((module) => {
             const isAvailable = ["01", "02", "03", "04", "05", "06", "08", "09", "10"].includes(module.number);
             const card = (
-              <div className={`bg-white border rounded-xl p-6 transition-all flex flex-col h-full ${
+              <div className={`bg-white border rounded-lg px-5 h-[52px] flex items-center gap-4 transition-all overflow-hidden ${
                 isAvailable
-                  ? 'border-gray-300 hover:shadow-md hover:border-blue-300 cursor-pointer'
-                  : 'border-gray-300'
+                  ? 'border-gray-300 hover:border-blue-300 hover:shadow-sm cursor-pointer'
+                  : 'border-gray-200'
               }`}>
-                {/* Numéro + titre */}
-                <div className="flex items-start gap-4 mb-3">
-                  <span className="text-2xl font-bold text-blue-100 leading-none select-none">
-                    {module.number}
-                  </span>
-                  <h2 className="text-lg font-semibold text-gray-900">{module.title}</h2>
-                </div>
+                {/* Numéro */}
+                <span className="text-sm font-bold text-blue-200 w-7 flex-shrink-0 select-none">
+                  {module.number}
+                </span>
+
+                {/* Titre */}
+                <span className={`text-sm font-semibold flex-shrink-0 w-40 ${isAvailable ? 'text-gray-900' : 'text-gray-400'}`}>
+                  {module.title}
+                </span>
 
                 {/* Sous-pages */}
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">
+                <span className="text-xs text-gray-400 flex-1 hidden sm:block line-clamp-2">
                   {module.pages}
-                </p>
+                </span>
 
-                {/* Nombre de questions + badge */}
-                <div className="mt-auto flex items-center justify-between">
-                  <span className="text-xs text-gray-400">{module.questions} questions</span>
-                  {isAvailable ? (
-                    <span className="text-xs bg-blue-600 text-white px-3 py-1 rounded-full font-medium">
-                      Commencer →
-                    </span>
-                  ) : (
-                    <span className="text-xs bg-amber-50 text-amber-600 border border-amber-200 px-3 py-1 rounded-full font-medium">
-                      Bientôt disponible
-                    </span>
-                  )}
-                </div>
+                {/* Nombre de questions */}
+                <span className="text-xs text-gray-400 flex-shrink-0 w-24 text-right hidden sm:block">
+                  {module.questions} questions
+                </span>
+
+                {/* Badge */}
+                {isAvailable ? (
+                  <span className="text-xs bg-blue-600 text-white px-3 py-1 rounded-full font-medium flex-shrink-0">
+                    Commencer →
+                  </span>
+                ) : (
+                  <span className="text-xs bg-amber-50 text-amber-600 border border-amber-200 px-3 py-1 rounded-full font-medium flex-shrink-0">
+                    Bientôt
+                  </span>
+                )}
               </div>
             );
 
@@ -139,5 +157,6 @@ export default function QuizPage() {
 
       </div>
     </div>
+    </>
   );
 }
