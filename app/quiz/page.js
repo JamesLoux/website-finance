@@ -33,14 +33,15 @@ const quizModules = [
   {
     number: "05",
     title: "Fixed Income II",
-    pages: "Cap & Floor · Bond Options & Swaptions · CMS · Convertible Bond · Range Accrual · Modèle de taux",
-    questions: 10,
+    pages: "Cap & Floor · Swaptions · CMS · Convertible · Range Accrual · Modèles de taux",
+    questions: 12,
   },
   {
     number: "06",
     title: "Fixed Income III",
     pages: "FX Swap · CDS · Inflation Swap · TRS",
-    questions: 10,
+    questions: 12,
+    quizEndpoint: "/quiz/module-6-fixed-income-3",
   },
   {
     number: "07",
@@ -88,7 +89,7 @@ export default function QuizPage() {
         {/* Grille des quiz */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {quizModules.map((module) => {
-            const isAvailable = ["01", "02", "03", "08", "09", "10"].includes(module.number);
+            const isAvailable = ["01", "02", "03", "04", "05", "06", "08", "09", "10"].includes(module.number);
             const card = (
               <div className={`bg-white border rounded-xl p-6 transition-all flex flex-col h-full ${
                 isAvailable

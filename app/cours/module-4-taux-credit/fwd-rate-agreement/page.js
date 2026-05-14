@@ -250,7 +250,7 @@ export default function FwdRateAgreement() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Un quiz sur le Module 4 sera bientôt disponible.
+        Le quiz du Module 4 est disponible — <a href="/quiz/module-4" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation ── */}

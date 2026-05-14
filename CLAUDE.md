@@ -74,7 +74,10 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [ ] Module 7 (Produits Equity)
 - [x] Quiz Module 9 (affiché) — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-7
 - [x] Quiz Module 10 (affiché) — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-8
-- [ ] Quiz Modules 4, 5, 6, 7
+- [x] Quiz Module 4 — Fixed Income I (banque 18 questions, tirage stratifié 8/session, 4 groupes A×4 B×5 C×4 D×5, tirage 2+2+2+2)
+- [x] Quiz Module 5 — Fixed Income II (banque 30 questions, tirage stratifié 12/session, 6 groupes A×5 B×5 C×5 D×5 E×5 F×5, tirage 2+2+2+2+2+2)
+- [x] Quiz Module 6 — Fixed Income III (banque 24 questions, tirage stratifié 12/session, 4 groupes A×6 B×6 C×6 D×6, tirage 3+3+3+3) → endpoint réel /quiz/module-6-fixed-income-3
+- [ ] Quiz Module 7
 
 ## Architecture du site
 
@@ -245,17 +248,18 @@ app/
 - **Cohérence** : même palette que la Home et la page /cours
 
 ## Conventions pour les pages de quiz
-- **Template de référence** : `app/quiz/module-1/page.js`
+- **Template de référence** : `app/quiz/module-4/page.js` — architecture canonique avec `choiceStyle()`, `<Link>` next/link, résultats en tableau de booléens, constante `TOTAL`, layout `max-w-2xl mx-auto px-6 py-12` (sans `min-h-screen bg-gray-50`), fil d'Ariane `<nav>`, score `text-5xl`, corrigé avec numérotation et case verte `✓`, pas de "Votre réponse" pour les mauvaises réponses.
 - Composant client (`'use client'`) — KaTeX importé directement dans le fichier (pas via `Math.js` qui est server-only)
-- Pattern KaTeX dans les quiz : `import katex from 'katex'` + `import 'katex/dist/katex.min.css'` + composant helper local `function Katex({ children, block = false })` avec `dangerouslySetInnerHTML`
+- Pattern KaTeX dans les quiz : `import katex from 'katex'` + `import 'katex/dist/katex.min.css'` + composant helper local `function Katex({ children })` avec `dangerouslySetInnerHTML`
 - **⚠️ NE PAS nommer le helper `Math`** — cela écrase le global JavaScript `Math` (`Math.random`, `Math.floor`...) et provoque des erreurs au runtime. Toujours utiliser `Katex`.
 - **Robustesse du composant Katex** : normaliser `children` avant de passer à KaTeX : `const formula = Array.isArray(children) ? children.join('') : String(children)` — évite l'erreur "KaTeX can only parse string typed expression" causée par des espaces traînants dans les balises JSX.
+- **⚠️ CRITIQUE — LaTeX avec accolades dans JSX** : toute formule LaTeX contenant `{...}` doit être passée en string littérale : `<Katex>{'t_{i+1}'}</Katex>`. Ne jamais écrire `<Katex>t_{{i+1}}</Katex>` — les doubles accolades `{{` en texte JSX sont interprétées comme une expression JavaScript (objet littéral) et causent une erreur de parsing à la compilation. Les formules sans accolades (`<Katex>\delta_i</Katex>`) fonctionnent comme du texte JSX normal.
 - Le CSS KaTeX est importé dans chaque page quiz (contrairement aux cours où il est dans `cours/layout.js`)
 - Questions, choix **et explications** sont du JSX (pas des strings) — permet d'imbriquer `<Katex>` dans les énoncés, les choix et le corrigé
 - Choix purement textuels : JSX minimal `<>texte</>` suffit, pas besoin de `<Katex>`
 - Logic standard : `current`, `selected`, `validated`, `results`, `finished` — réutiliser ce pattern pour tous les quiz
-- Page index `/quiz/page.js` : disponibilité via `["01","02","03","08","09","10"].includes(module.number)` (numéros affichés). Les modules 08/09/10 ont un champ `quizEndpoint` qui pointe vers l'endpoint réel (`/quiz/module-6`, `/quiz/module-7`, `/quiz/module-8`). Le href utilise `module.quizEndpoint || \`/quiz/module-${parseInt(module.number)}\``. Pour tout nouveau quiz, ajouter son numéro affiché à l'array et un `quizEndpoint` si le numéro affiché diffère du numéro réel.
-- **Tirage stratifié (banque de questions)** : pour les quiz avec banque large, diviser les questions en groupes thématiques (ex. 4 groupes de 6 = 24 questions). Tirer N questions aléatoires dans chaque groupe via `useEffect(() => setQuestions(drawSession()), [])` avec `useState(null)` comme état initial. **Ne pas utiliser `useState(() => drawSession())`** — cet initialiseur s'exécute aussi côté serveur (SSR) et produit un tirage différent de celui du client, causant une erreur d'hydration React. `handleRestart` déclenche `window.location.reload()` pour forcer un nouveau tirage. Voir `app/quiz/module-2/page.js` comme template de référence.
+- Page index `/quiz/page.js` : disponibilité via `["01","02","03","04","05","08","09","10"].includes(module.number)` (numéros affichés). Les modules 08/09/10 ont un champ `quizEndpoint` qui pointe vers l'endpoint réel (`/quiz/module-6`, `/quiz/module-7`, `/quiz/module-8`). Le href utilise `module.quizEndpoint || \`/quiz/module-${parseInt(module.number)}\``. Pour tout nouveau quiz, ajouter son numéro affiché à l'array et un `quizEndpoint` si le numéro affiché diffère du numéro réel.
+- **Tirage stratifié (banque de questions)** : pour les quiz avec banque large, diviser les questions en groupes thématiques (ex. 6 groupes de 5 = 30 questions). Tirer N questions aléatoires dans chaque groupe via `useEffect(() => setQuestions(drawSession()), [])` avec `useState(null)` comme état initial. **Ne pas utiliser `useState(() => drawSession())`** — cet initialiseur s'exécute aussi côté serveur (SSR) et produit un tirage différent de celui du client, causant une erreur d'hydration React. `handleRestart` déclenche `window.location.reload()` pour forcer un nouveau tirage. Voir `app/quiz/module-4/page.js` comme template de référence.
 
 ## Conventions pour les pages de cours
 - **Template de référence** : `app/cours/module-1-calcul-stochastique/mouvement-brownien/page.js`
@@ -291,7 +295,7 @@ Exception : si le quiz du module existe, remplacer par un lien actif :
   Le quiz du Module 1 est disponible — <a href="/quiz/module-1" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
 </div>
 ```
-Actuellement, les **Modules 1, 2, 3, 6, 7 et 8** ont un quiz actif.
+Actuellement, les **Modules 1, 2, 3, 4, 5, 6, 8, 9 et 10** ont un quiz actif.
 
 **2. Navigation Précédent/Suivant** :
 ```jsx
@@ -719,6 +723,24 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
   - **inflation-swap/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-6-fixed-income-3/trs` ("Total Return Swap →").
   - **`app/cours/page.js`** : Module 6 passe en `active` avec les 4 `href` renseignés (fx-swap, cds, inflation-swap, trs) — la carte est désormais en bleu avec toutes les sous-pages cliquables.
   - **Module 6 — Fixed Income III : COMPLET (4/4 pages)**.
+
+- **2026-05-13** :
+  - **Quiz Module 4 — Fixed Income I** (`app/quiz/module-4/page.js`) créé. Banque de 18 questions réparties en 4 groupes thématiques (A : Obligations & Bases — 4q, B : Duration & Convexité — 5q, C : Fwd Rate Agreement & Bootstrapping — 4q, D : Interest Rate Swap — 5q). Tirage stratifié 8 questions/session (2 par groupe), concaténées dans l'ordre A+B+C+D. Pattern `useState(null)` + `useEffect`. Fonction `shuffle()` Fisher-Yates propre.
+  - **Harmonisation du template** : refonte complète de la forme pour s'aligner sur le template de référence `module-2/page.js` — fil d'Ariane (`Accueil / Quiz / Module 4 — Fixed Income I`) sur les deux écrans, titre `text-3xl font-bold` + sous-titre avec info tirage, barre de progression `h-1 bg-gray-100`, carte question `bg-white border border-gray-300 rounded-xl shadow-sm`, choix en `rounded-lg` avec `hover:bg-gray-50`, explication dans `bg-gray-50 border border-gray-300` avec préfixe "Explication : " à l'intérieur de la carte, bouton aligné à droite (`flex justify-end`), `font-semibold`. Écran de résultats : score dans un encadré coloré (`scoreBg`), corrigé en cartes `bg-white border border-gray-300 rounded-xl p-5` avec `✓` et `text-xs text-gray-500`, bouton "Nouveau tirage".
+  - **`quiz/page.js`** : `isAvailable` étendu à `"04"`.
+  - **4 pages du Module 4** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-4` (obligations-bases, duration-convexite, fwd-rate-agreement, interest-rate-swap).
+
+- **2026-05-13 (suite)** :
+  - **Quiz Module 5 — Fixed Income II** (`app/quiz/module-5/page.js`) créé. Banque de 30 questions réparties en 6 groupes thématiques (A : Cap & Floor — 5q, B : Bond Options & Swaptions — 5q, C : CMS & Ajustement de Convexité — 5q, D : Convertible Bond — 5q, E : Range Accrual — 5q, F : Modèles de taux — 5q). Tirage stratifié 12 questions/session (2 par groupe), concaténées dans l'ordre A+B+C+D+E+F puis mélangées. Pattern `useState(null)` + `useEffect`. Fonction `shuffle()` Fisher-Yates.
+  - **Style uniformisé** sur le template canonique `module-4/page.js` : `choiceStyle()`, `<Link>` next/link, résultats en tableau de booléens, `const TOTAL = 12`, layout `max-w-2xl mx-auto px-6 py-12`, fil d'Ariane `<nav>`, score `text-5xl`, corrigé numéroté avec case verte `✓`, boutons "Nouveau tirage" / "Revoir le Module 5" / "← Tous les quiz". `module-4/page.js` devient le **template de référence canonique** pour tous les nouveaux quiz.
+  - **Bug corrigé — JSX `{{}}` dans les enfants Katex** : les formules LaTeX contenant des accolades (ex. `t_{i+1}`) doivent être passées en string littérale `{'t_{i+1}'}`. Écrire `<Katex>t_{{i+1}}</Katex>` directement dans le JSX provoque une erreur de parsing à la compilation ("Expression expected") car `{{` en texte JSX est interprété comme un objet littéral JavaScript. Deux occurrences corrigées dans le fichier.
+  - **`quiz/page.js`** : `isAvailable` étendu à `"05"`. Module 05 mis à jour : `pages: "Cap & Floor · Swaptions · CMS · Convertible · Range Accrual · Modèles de taux"`, `questions: 12`.
+  - **6 pages du Module 5** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-5` (cap-floor, bond-options-swaptions, cms, convertible-bond, range-accrual, modele-taux).
+
+- **2026-05-14** :
+  - **Quiz Module 6 — Fixed Income III** (`app/quiz/module-6-fixed-income-3/page.js`) créé. Banque de 24 questions réparties en 4 groupes thématiques (A : FX Swap & Cross-Currency Swap — 6q, B : Credit Default Swaps — 6q, C : Swaps d'Inflation — 6q, D : Total Return Swap — 6q). Tirage stratifié 12 questions/session (3 par groupe). Pattern `useState(null)` + `useEffect`. KaTeX utilisé pour les formules des groupes A (parité couverte) et C (payoff ZCIS, Fisher). Équilibrage des positions de réponse : 6 occurrences par position (0,1,2,3) sur les 24 questions — trois réordonnements appliqués (A4 : choices 0↔1, A5 : choices 0↔1, B3 : choices 1↔3).
+  - **`quiz/page.js`** : `isAvailable` étendu à `"06"`. Module 06 : `questions: 12`, `quizEndpoint: "/quiz/module-6-fixed-income-3"` ajouté (évite la collision avec `/quiz/module-6` qui pointe vers le quiz Volatilité).
+  - **4 pages du Module 6** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-6-fixed-income-3` (fx-swap, cds, inflation-swap, trs).
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000

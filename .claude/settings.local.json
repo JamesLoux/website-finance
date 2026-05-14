@@ -7,7 +7,8 @@
       "Bash(npx next:*)",
       "Bash(node -e ' *)",
       "Bash(New-Item -ItemType Directory -Force \"d:\\\\Documents\\\\Travail\\\\website_finance\\\\app\\\\cours\\\\module-6-fixed-income-3\\\\fx-swap\")",
-      "Bash(mkdir -p \"d:/Documents/Travail/website_finance/app/cours/module-6-fixed-income-3/fx-swap\")"
+      "Bash(mkdir -p \"d:/Documents/Travail/website_finance/app/cours/module-6-fixed-income-3/fx-swap\")",
+      "Bash(Get-Content \"d:\\\\Documents\\\\Travail\\\\website_finance\\\\app\\\\quiz\\\\module-4\\\\page.js\" -Raw)"
     ],
     "additionalDirectories": [
       "d:\\Documents\\Travail\\website_finance\\app\\cours\\module-6-fixed-income-3"

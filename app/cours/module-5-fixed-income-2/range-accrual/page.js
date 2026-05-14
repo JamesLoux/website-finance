@@ -116,20 +116,20 @@ export default function RangeAccrualPage() {
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8">
         <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide mb-3">
-          Pourquoi short corrélation ?
+          L'investisseur est long corrélation
         </p>
         <p className="text-gray-700 text-sm leading-relaxed mb-3">
           Si les actifs sont indépendants,{' '}
-          <InlineMath>{'P(A \\cap B) = P(A) \\times P(B)'}</InlineMath>, la probabilité
+          <InlineMath>{'P(A \\cap B) = P(A) \\times P(B)'}</InlineMath> et <InlineMath>{'\\rho = 0'}</InlineMath>, la probabilité
           conjointe de rester dans les deux tunnels est faible, ce qui justifie un coupon
-          élevé. La pire corrélation serait 0 si le Range Accrual est bidirectionnel (où l'investisseur n'a pas désaxé le range)
+          élevé si on est avant l'émission du produit. La pire corrélation pour l'acheteur serait 0 si le Range Accrual est bidirectionnel (où l'investisseur n'a pas désaxé le range)
           ou -1 si le Range Accrual est unidirectionnel (quand l'investisseur l'a désaxé pour exprimer une vue bearish ou bullish).
         </p>
         <p className="text-gray-700 text-sm leading-relaxed">
           Si la corrélation monte, les actifs se comportent de façon similaire : soit ils
-          restent tous dans le tunnel, soit ils en sortent ensemble et le levier sur le coupon
-          disparaît. L&apos;investisseur est donc <strong>short corrélation</strong> et{' '}
-          <strong>long dispersion</strong>.
+          restent tous dans le tunnel, soit ils en sortent ensemble.
+          L&apos;investisseur est donc <strong>long corrélation</strong> et la banque (l'émetteur) est donc <strong>short corrélation</strong> et{' '}
+          <strong>long dispersion</strong> pendant la durée de vie du produit.
         </p>
       </div>
 
@@ -270,7 +270,8 @@ export default function RangeAccrualPage() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Un quiz sur le Module 5 sera bientôt disponible.
+        Le quiz du Module 5 est disponible —{' '}
+        <a href="/quiz/module-5" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}
