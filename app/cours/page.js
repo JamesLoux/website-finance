@@ -108,10 +108,10 @@ export default function CoursPage() {
 
         {/* Rangée 7 → 9 (gauche à droite) */}
         <Row>
-          <Node num="7" title="Equity I" subs={[
-            { label: 'Delta-One et Cash' },
-            { label: 'Options Vanilles' },
-            { label: 'Stratégies Optionnelles' },
+          <Node num="7" title="Equity I" active subs={[
+            { label: 'Delta-One et Cash', href: '/cours/module-5-produits-equity/delta-one-cash' },
+            { label: 'Options Vanilles', href: '/cours/module-5-produits-equity/options-vanilles' },
+            { label: 'Stratégies Optionnelles', href: '/cours/module-5-produits-equity/strategies-optionnelles' },
           ]} />
           <HConn />
           <Node num="8" title="Equity II" subs={[
