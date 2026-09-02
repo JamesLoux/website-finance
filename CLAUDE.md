@@ -23,7 +23,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Page /cours — index des 12 modules (chemin serpent 4 rangées × 3 colonnes)
 - [x] Page /quiz — index des quiz par module
 - [x] Page /simulateur — placeholder
-- [x] Page /a-propos — placeholder
+- [x] Page /a-propos — rédigée (Travaux, Expérience, Formation, Contact) ; section Formation en une colonne, 3 cartes
 - [x] Layout de cours avec sidebar (navigation) + TOC flottante à droite
 - [x] Module 1 / Mouvement Brownien (template de référence)
 - [x] Module 1 / Lemme d'Itô
@@ -260,7 +260,9 @@ app/
     module-6/
       page.js                        ← ✅ Quiz Volatilité (affiché Module 8) : banque 24q, tirage stratifié 12/session (4 groupes × 3)
   simulateur/page.js                 ← Placeholder
-  a-propos/page.js                   ← Placeholder
+  a-propos/page.js                   ← Page rédigée : intro, Travaux (2 cartes côte à côte `md:flex-row`), Expérience (1 carte), Formation (**1 colonne**, 3 cartes empilées, antichronologique), Contact.
+                                       Formation : `flex flex-col gap-4` sans variante responsive — une seule colonne à toutes les tailles, cartes en pleine largeur du conteneur.
+                                       Les listes de modules portent `max-w-lg` : sans elle, une ligne fait ~120 caractères dans un conteneur `max-w-3xl`, bien au-delà d'une longueur de ligne lisible.
 ```
 
 ## Règles de style absolues
@@ -353,6 +355,15 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
     - **Module 8 — Equity II : Exotiques & Path-Dependence** : `digitales-barrieres` (Digitales cash/asset-or-nothing, Barrières KO/KI + parité KO+KI=vanille), `path-dependence` (One/No-touch, Asian, Lookback Fixed/Floating, Forward start).
     - **Module 9 — Equity III : Produits Structurés** : `capital-garanti` (ZC+Call, Capital Protected Note, Shark Fin, Twin Win, Airbag, Tracker Certificate), `yield-enhancement` (Reverse Convertible, Barrier RC, Autocall Athena/Phoenix, Bonus Cap ; renvoi Range Accrual→M5), `multi-asset-correlation` (Basket, Best-of/Worst-of, Spread option, Outperformance, Mountain Range Altiplano/Everest/Himalaya).
   - **Module Extra (réservé, plus tard) — Equity Exotics avancés** : produits à forte path-dependence / vol forward / autocorrélation, volontairement écartés pour ne pas les survoler. Volatilité avancée (Gamma Swap, Corridor Var Swap, renvoi Var Swap→M10) + Heavy Exotics (Cliquet/Ratchet, Napoleon, Accumulator/Decumulator, TARN, Pivot/Fader fade-in/fade-out).
+
+- **2026-09-02 (suite 4) — Section Formation de la page À propos** :
+  - **`app/a-propos/page.js`** — la section Formation passe de deux colonnes à une seule.
+  - **Ce n'était pas une grille** : le conteneur était `flex flex-col md:flex-row gap-4`, pas un `grid`. Le passage en colonne unique consiste donc simplement à retirer `md:flex-row` (et le `flex-1` des cartes, qui n'a plus de sens en direction colonne). Résultat : `flex flex-col gap-4`, **sans aucune variante responsive** — la section ne peut structurellement plus se comporter différemment selon la largeur, garantie plus forte qu'une vérification visuelle par palier.
+  - **Nouvelle carte en première position** : Université Paris-Saclay, Évry — 2026 – 2027 — Master 2 Finance et Gestion des Risques. Modules en français (Calcul stochastique, Modélisation des taux et produits structurés, Asset pricing, Méthodes numériques et machine learning en Python, Fixed Income, Économétrie financière), cohérents avec l'établissement. La carte Brunel garde ses modules en anglais.
+  - **Ordre antichronologique** : Paris-Saclay 2026 – 2027, CY Tech 2025 (année inchangée), Brunel 2024.
+  - **⚠️ `max-w-lg` sur les listes de modules — la contrainte de lisibilité.** En pleine largeur, le conteneur `max-w-3xl` (768px) moins `px-6` donne des cartes de 720px, soit 672px de texte utile : mesuré, cela fait des lignes de **119 à 122 caractères** en `text-xs`, très au-delà d'une longueur de ligne confortable (~75). `max-w-lg` (512px) ramène à **90-91 caractères** et donne 2 lignes par liste. Contrainte posée **sur le paragraphe de modules, pas sur le bloc de cartes** : l'énoncé demandait explicitement que les cartes occupent la pleine largeur du conteneur, et rétrécir le bloc entier aurait désaligné Formation par rapport à Travaux et Expérience au-dessus. La chasse plus courte laisse un blanc à droite dans la carte : c'est voulu, pas un défaut de rendu.
+  - **Contrôles visuels** (Chrome headless, `--force-device-scale-factor=2`) : desktop 1280px, 768px et 390px. Rendu conforme, une colonne partout.
+  - **⚠️ Deux constats signalés, non corrigés** (voir le rapport de session) : (a) la section **Expérience n'est pas périmée** — elle affiche déjà une date de fin explicite « Sep 2025 – Mar 2026 », rien à corriger ; (b) **débordement horizontal du site entier sous ~740px**, préexistant et sans rapport avec cette session : le `Header` est un `flex justify-between` entre un titre non sécable (« Finance according to James », `text-xl font-bold`) et une `<nav>` de 5 liens en `flex gap-6`, dont la largeur incompressible avoisine 720px. En dessous, le document déborde et **toutes les sections de toutes les pages sont rognées à droite** (vérifié sur Travaux et Expérience, intouchées, avant comme après la modification). Correctif à prévoir dans une session dédiée : menu burger ou `flex-wrap` sur le header.
 
 - **2026-09-02 (suite 3) — Activation du Module 7 dans le chemin serpent** :
   - **`app/cours/page.js`** : le Module 7 (Equity I) passe en `active`, avec les 3 `href` renseignés (`delta-one-cash`, `options-vanilles`, `strategies-optionnelles`). Les Modules 8 et 9 restent inactifs.

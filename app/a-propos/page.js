@@ -95,22 +95,31 @@ export default function AProposPage() {
       
       {/* Formation */}
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Formation</h2>
-      <div className="flex flex-col md:flex-row gap-4 mb-12">
+      <div className="flex flex-col gap-4 mb-12">
 
-        <div className="flex-1 bg-white border border-gray-300 rounded-xl p-6">
+        <div className="bg-white border border-gray-300 rounded-xl p-6">
+          <p className="text-sm text-blue-600 font-medium uppercase tracking-wide mb-1">2026 – 2027</p>
+          <p className="font-semibold text-gray-900 mb-1">Université Paris-Saclay, Évry</p>
+          <p className="text-gray-600 text-sm mb-3">Master 2 Finance et Gestion des Risques</p>
+          <p className="text-xs text-gray-500 leading-relaxed max-w-lg">
+            Modules : Calcul stochastique, Modélisation des taux et produits structurés, Asset pricing, Méthodes numériques et machine learning en Python, Fixed Income, Économétrie financière.
+          </p>
+        </div>
+
+        <div className="bg-white border border-gray-300 rounded-xl p-6">
           <p className="text-sm text-blue-600 font-medium uppercase tracking-wide mb-1">2025</p>
           <p className="font-semibold text-gray-900 mb-1">CY Tech (ex-EISTI), Cergy</p>
           <p className="text-gray-600 text-sm mb-3">Ingénieur Génie Mathématiques Appliquées, Option Modélisation Mathématiques pour la Finance</p>
-          <p className="text-xs text-gray-500 leading-relaxed">
+          <p className="text-xs text-gray-500 leading-relaxed max-w-lg">
             Modules : Finance quantitative, Fixed Income, Instruments financiers, Pricing des dérivés, Calibration et modélisation, Processus stochastiques, Grands risques et Valeurs extrêmes.
           </p>
         </div>
 
-        <div className="flex-1 bg-white border border-gray-300 rounded-xl p-6">
+        <div className="bg-white border border-gray-300 rounded-xl p-6">
           <p className="text-sm text-blue-600 font-medium uppercase tracking-wide mb-1">2024</p>
           <p className="font-semibold text-gray-900 mb-1">Brunel University London</p>
           <p className="text-gray-600 text-sm mb-3">MSc Finance — Exchange Program</p>
-          <p className="text-xs text-gray-500 leading-relaxed">
+          <p className="text-xs text-gray-500 leading-relaxed max-w-lg">
             Modules : Interest rate theory, Time series modelling, Machine learning, Big data analysis.
           </p>
         </div>
