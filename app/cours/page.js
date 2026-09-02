@@ -25,7 +25,7 @@ export default function CoursPage() {
 
       <h1 className="text-3xl font-semibold text-gray-900 mb-3">Cours</h1>
       <p className="text-gray-600 mb-8">
-        Un parcours progressif en 10 modules qui suit un chemin narratif (plutôt qu&apos;une progression dans la difficulté).
+        Un parcours progressif en 12 modules qui suit un chemin narratif (plutôt qu&apos;une progression dans la difficulté).
       </p>
 
       {/* Disclaimer */}
@@ -108,38 +108,45 @@ export default function CoursPage() {
 
         {/* Rangée 7 → 9 (gauche à droite) */}
         <Row>
-          <Node num="7" title="Produits Equity" subs={[
-            { label: 'Vanilles & Combinaisons' },
-            { label: 'Options exotiques' },
-            { label: 'Produits structurés' },
+          <Node num="7" title="Equity I" subs={[
+            { label: 'Delta-One et Cash' },
+            { label: 'Options Vanilles' },
+            { label: 'Stratégies Optionnelles' },
           ]} />
           <HConn />
-          <Node num="8" title="Volatilité" active subs={[
-            { label: 'Vol implicite & Nappes', href: '/cours/module-6-volatilite/vol-implicite-nappes' },
-            { label: 'Vol stochastique', href: '/cours/module-6-volatilite/vol-stochastique' },
-            { label: 'Variance Swap & VIX', href: '/cours/module-6-volatilite/variance-swap-vix' },
-            { label: 'Skew Delta', href: '/cours/module-6-volatilite/skew-delta' },
+          <Node num="8" title="Equity II" subs={[
+            { label: 'Digitales & Barrières' },
+            { label: 'Path-Dependence' },
           ]} />
           <HConn />
-          <Node num="9" title="Quanto & FX" active subs={[
-            { label: 'Corrélation Indice & FX', href: '/cours/module-7-quanto-fx/correlation-fx' },
-            { label: 'Options Quanto & Composite', href: '/cours/module-7-quanto-fx/options-quanto' },
+          <Node num="9" title="Equity III" subs={[
+            { label: 'Capital Garanti & Participation' },
+            { label: 'Yield Enhancement' },
+            { label: 'Multi-Asset & Corrélation' },
           ]} />
         </Row>
 
         {/* Virage droite */}
         <VConn side="right" />
 
-        {/* Rangée 10 (droite à gauche, module 10 seul + 2 fantômes) */}
+        {/* Rangée 10 → 12 (droite à gauche) */}
         <Row reverse>
-          <Node num="10" title="Macro" active subs={[
+          <Node num="10" title="Volatilité" active subs={[
+            { label: 'Vol implicite & Nappes', href: '/cours/module-6-volatilite/vol-implicite-nappes' },
+            { label: 'Vol stochastique', href: '/cours/module-6-volatilite/vol-stochastique' },
+            { label: 'Variance Swap & VIX', href: '/cours/module-6-volatilite/variance-swap-vix' },
+            { label: 'Skew Delta', href: '/cours/module-6-volatilite/skew-delta' },
+          ]} />
+          <HConn reverse />
+          <Node num="11" title="Quanto & FX" active subs={[
+            { label: 'Corrélation Indice & FX', href: '/cours/module-7-quanto-fx/correlation-fx' },
+            { label: 'Options Quanto & Composite', href: '/cours/module-7-quanto-fx/options-quanto' },
+          ]} />
+          <HConn reverse />
+          <Node num="12" title="Macro" active subs={[
             { label: 'Fonctionnement de la Fed', href: '/cours/module-8-macro/plomberie-fed' },
             { label: 'Politique monétaire', href: '/cours/module-8-macro/politique-monetaire' },
           ]} />
-          <HConn invisible />
-          <div style={{ width: CARD_W, flexShrink: 0 }} />
-          <HConn invisible />
-          <div style={{ width: CARD_W, flexShrink: 0 }} />
         </Row>
 
       </div>

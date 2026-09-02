@@ -79,16 +79,35 @@ const modules = [
   },
   {
     number: '07',
-    title: 'Produits Equity',
+    title: 'Equity I',
     slug: 'module-5-produits-equity',
     sousPages: [
-      { title: 'Vanilles & combinaisons' },
-      { title: 'Options exotiques' },
-      { title: 'Produits structurés' },
+      { title: 'Delta-One et Cash', slug: 'delta-one-cash' },
+      { title: 'Options Vanilles', slug: 'options-vanilles' },
+      { title: 'Stratégies Optionnelles', slug: 'strategies-optionnelles' },
     ],
   },
   {
     number: '08',
+    title: 'Equity II',
+    slug: 'module-9-equity-2',
+    sousPages: [
+      { title: 'Digitales & Barrières' },
+      { title: 'Path-Dependence' },
+    ],
+  },
+  {
+    number: '09',
+    title: 'Equity III',
+    slug: 'module-10-equity-3',
+    sousPages: [
+      { title: 'Capital Garanti & Participation' },
+      { title: 'Yield Enhancement' },
+      { title: 'Multi-Asset & Corrélation' },
+    ],
+  },
+  {
+    number: '10',
     title: 'Volatilité',
     slug: 'module-6-volatilite',
     sousPages: [
@@ -99,7 +118,7 @@ const modules = [
     ],
   },
   {
-    number: '09',
+    number: '11',
     title: 'Quanto & FX',
     slug: 'module-7-quanto-fx',
     sousPages: [
@@ -108,7 +127,7 @@ const modules = [
     ],
   },
   {
-    number: '10',
+    number: '12',
     title: 'Macro',
     slug: 'module-8-macro',
     sousPages: [

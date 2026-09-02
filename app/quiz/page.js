@@ -45,26 +45,38 @@ const quizModules = [
   },
   {
     number: "07",
-    title: "Produits Equity",
-    pages: "Vanilles & Combinaisons · Options exotiques · Produits structurés",
+    title: "Equity I",
+    pages: "Delta-One et Cash · Options Vanilles · Stratégies Optionnelles",
     questions: 10,
   },
   {
     number: "08",
+    title: "Equity II",
+    pages: "Digitales & Barrières · Path-Dependence",
+    questions: 10,
+  },
+  {
+    number: "09",
+    title: "Equity III",
+    pages: "Capital Garanti & Participation · Yield Enhancement · Multi-Asset & Corrélation",
+    questions: 10,
+  },
+  {
+    number: "10",
     title: "Volatilité",
     pages: "Vol implicite & Nappes · Vol stochastique · Variance Swap & VIX · Skew Delta",
     questions: 12,
     quizEndpoint: "/quiz/module-6",
   },
   {
-    number: "09",
+    number: "11",
     title: "Quanto & FX",
     pages: "Corrélation Indice & FX · Options Quanto & Composite",
     questions: 10,
     quizEndpoint: "/quiz/module-7",
   },
   {
-    number: "10",
+    number: "12",
     title: "Macro",
     pages: "Fonctionnement de la Fed · Politique monétaire",
     questions: 10,
@@ -103,7 +115,7 @@ export default function QuizPage() {
         {/* Liste des quiz — 1 par ligne, format compact */}
         <div className="flex flex-col gap-2">
           {quizModules.map((module) => {
-            const isAvailable = ["01", "02", "03", "04", "05", "06", "08", "09", "10"].includes(module.number);
+            const isAvailable = ["01", "02", "03", "04", "05", "06", "10", "11", "12"].includes(module.number);
             const card = (
               <div className={`bg-white border rounded-lg px-5 h-[52px] flex items-center gap-4 transition-all overflow-hidden ${
                 isAvailable

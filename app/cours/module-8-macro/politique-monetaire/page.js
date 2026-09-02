@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { InlineMath, BlockMath } from '../../../components/Math';
 
 export const metadata = {
-  title: 'Politique monétaire | Module 8 — Macro & Politique Monétaire',
+  title: 'Politique monétaire | Module 12 — Macro & Politique Monétaire',
   description:
     'La courbe des taux : décomposition taux long, signaux économiques, forward guidance et dot plot, QE/QT et duration.',
 };
@@ -15,7 +15,7 @@ export default function PolitiqueMonetairePage() {
       <nav className="text-sm text-gray-500 mb-6 flex flex-wrap gap-1 items-center">
         <Link href="/cours" className="hover:text-blue-600">Cours</Link>
         <span>›</span>
-        <span>Module 8 — Macro &amp; Politique Monétaire</span>
+        <span>Module 12 — Macro &amp; Politique Monétaire</span>
         <span>›</span>
         <span className="text-gray-700 font-medium">Politique monétaire</span>
       </nav>
@@ -238,7 +238,7 @@ export default function PolitiqueMonetairePage() {
 
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mt-6 mb-10">
         <p className="text-blue-600 font-semibold uppercase tracking-wide text-xs mb-3">
-          En résumé — Module 8
+          En résumé — Module 12
         </p>
         <p className="text-gray-700 leading-relaxed">
           La Fed dispose de trois leviers pour piloter les conditions financières. Les taux
@@ -252,7 +252,7 @@ export default function PolitiqueMonetairePage() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Le quiz du Module 8 est disponible — <a href="/quiz/module-8" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
+        Le quiz du Module 12 est disponible — <a href="/quiz/module-8" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}

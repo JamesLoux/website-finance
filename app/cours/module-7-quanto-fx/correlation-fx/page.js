@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { InlineMath, BlockMath } from '../../../components/Math'
 
 export const metadata = {
-  title: 'Corrélation Indice et FX — Module 7 | Finance according to James',
+  title: 'Corrélation Indice et FX — Module 11 | Finance according to James',
   description: 'Corrélation vs Bêta, volatilité d\'indice, corrélation implicite et trading de dispersion.',
 }
 
@@ -14,7 +14,7 @@ export default function CorrelationFX() {
       <nav className="text-sm text-gray-500 mb-6">
         <Link href="/cours" className="hover:text-blue-600">Cours</Link>
         <span className="mx-2">/</span>
-        <span>Module 7 — Quanto & FX</span>
+        <span>Module 11 — Quanto & FX</span>
         <span className="mx-2">/</span>
         <span className="text-gray-700 font-medium">Corrélation Indice et FX</span>
       </nav>
@@ -268,7 +268,7 @@ export default function CorrelationFX() {
 
       {/* ── Quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Le quiz du Module 7 est disponible — <a href="/quiz/module-7" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
+        Le quiz du Module 11 est disponible — <a href="/quiz/module-7" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation ── */}

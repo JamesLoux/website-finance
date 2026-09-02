@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { InlineMath, BlockMath } from '../../../components/Math';
 
 export const metadata = {
-  title: 'Fonctionnement de la Fed | Module 8 — Macro & Politique Monétaire',
+  title: 'Fonctionnement de la Fed | Module 12 — Macro & Politique Monétaire',
   description:
     'Comprendre la plomberie de la Fed : taux administrés (IORB, ON RRP, SRF), bilan T-account, dynamique TGA/réserves, et distinction RMP vs QE.',
 };
@@ -15,7 +15,7 @@ export default function FonctionnementFedPage() {
       <nav className="text-sm text-gray-500 mb-6 flex flex-wrap gap-1 items-center">
         <Link href="/cours" className="hover:text-blue-600">Cours</Link>
         <span>›</span>
-        <span>Module 8 — Macro &amp; Politique Monétaire</span>
+        <span>Module 12 — Macro &amp; Politique Monétaire</span>
         <span>›</span>
         <span className="text-gray-700 font-medium">Fonctionnement de la Fed</span>
       </nav>
@@ -323,7 +323,7 @@ export default function FonctionnementFedPage() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Le quiz du Module 8 est disponible — <a href="/quiz/module-8" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
+        Le quiz du Module 12 est disponible — <a href="/quiz/module-8" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}

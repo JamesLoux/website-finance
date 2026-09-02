@@ -35,7 +35,7 @@ export default function Footer() {
 
           {/* Lien CV — remplacer "#" par le lien vers le PDF du CV */}
           <a
-            href="#"
+            href="/docs/cv.pdf"
             className="text-blue-600 hover:underline flex items-center gap-1"
             target="_blank"
             rel="noopener noreferrer"

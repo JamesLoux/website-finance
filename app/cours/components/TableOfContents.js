@@ -9,10 +9,11 @@ export default function TableOfContents() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const headings = document.querySelectorAll('h2[id]');
+      const headings = document.querySelectorAll('h2[id], h3[id]');
       setToc(Array.from(headings).map((h) => ({
         id: h.id,
         text: h.textContent.replace(/^\d+\.\s*/, ''),
+        level: h.tagName === 'H3' ? 3 : 2,
       })));
     }, 100);
     return () => clearTimeout(timer);
@@ -31,7 +32,11 @@ export default function TableOfContents() {
           <li key={item.id}>
             <a
               href={`#${item.id}`}
-              className="block px-2 py-1 text-sm text-gray-500 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors"
+              className={`block py-1 rounded-md transition-colors hover:text-gray-800 hover:bg-gray-50 ${
+                item.level === 3
+                  ? 'pl-5 pr-2 text-xs text-gray-500'
+                  : 'px-2 text-sm text-gray-500'
+              }`}
             >
               {item.text}
             </a>

@@ -17,7 +17,7 @@ export default function OptionsQuantoPage() {
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
         <Link href="/cours" className="hover:text-blue-600 transition-colors">Cours</Link>
         <span>/</span>
-        <span className="text-gray-500">Module 7 — Quanto & FX</span>
+        <span className="text-gray-500">Module 11 — Quanto & FX</span>
         <span>/</span>
         <span className="text-gray-800 font-medium">Options Quanto & Composite</span>
       </nav>
@@ -468,7 +468,7 @@ export default function OptionsQuantoPage() {
 
       {/* ── Lien quiz ── */}
       <div className="mt-10 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-gray-700">
-        Le quiz du Module 7 est disponible — <a href="/quiz/module-7" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
+        Le quiz du Module 11 est disponible — <a href="/quiz/module-7" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
       </div>
 
       {/* ── Navigation Précédent / Suivant ── */}

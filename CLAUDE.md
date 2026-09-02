@@ -20,7 +20,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Projet Next.js initialisé dans /website_finance
 - [x] Page d'accueil (v1 — modifiable)
 - [x] Navbar (Accueil / Cours / Simulateur / Quiz / À propos)
-- [x] Page /cours — index des 10 modules (chemin serpent 4 rangées × 3 colonnes)
+- [x] Page /cours — index des 12 modules (chemin serpent 4 rangées × 3 colonnes)
 - [x] Page /quiz — index des quiz par module
 - [x] Page /simulateur — placeholder
 - [x] Page /a-propos — placeholder
@@ -32,7 +32,7 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Quiz Module 1 — Calcul stochastique (8 questions, KaTeX, corrigé)
 - [x] Quiz Module 2 — Pricing (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages)
 - [x] Quiz Module 3 — The Greeks (banque 20 questions, tirage stratifié 10/session, 3 groupes : A×8 B×6 C×6, tirage 4+3+3)
-- [x] Quiz Module 8 (affiché) — Volatilité (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages) → endpoint réel /quiz/module-6
+- [x] Quiz Module 10 (affiché) — Volatilité (banque 24 questions, tirage stratifié 12/session, 4 groupes × 3 tirages) → endpoint réel /quiz/module-6
 - [x] Module 2 / Équation de Black-Scholes
 - [x] Module 2 / Formule de Black-Scholes
 - [x] Module 2 / Modèles de diffusion
@@ -42,17 +42,17 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 3 / Quelques démonstrations (grecques-second-ordre)
 - [x] Module 3 / Arbitrage Theta-Gamma (arbitrage-theta-gamma)
 - [x] **Module 3 — The Greeks : COMPLET (3/3 pages)**
-- [x] Module 8 / Vol implicite et nappes (slug : module-6-volatilite)
-- [x] Module 8 / Vol stochastique
-- [x] Module 8 / Variance Swap & VIX
-- [x] Module 8 / Skew Delta
-- [x] **Module 8 — Volatilité : COMPLET (4/4 pages)**
-- [x] Module 9 / Corrélation Indice et FX (slug : module-7-quanto-fx/correlation-fx)
-- [x] Module 9 / Options Quanto & Composite (options-quanto)
-- [x] **Module 9 — Quanto & FX : COMPLET (2/2 pages)**
-- [x] Module 10 / Fonctionnement de la Fed (slug : module-8-macro/plomberie-fed)
-- [x] Module 10 / Politique monétaire
-- [x] **Module 10 — Macro : COMPLET (2/2 pages)**
+- [x] Module 10 / Vol implicite et nappes (slug : module-6-volatilite)
+- [x] Module 10 / Vol stochastique
+- [x] Module 10 / Variance Swap & VIX
+- [x] Module 10 / Skew Delta
+- [x] **Module 10 — Volatilité : COMPLET (4/4 pages)**
+- [x] Module 11 / Corrélation Indice et FX (slug : module-7-quanto-fx/correlation-fx)
+- [x] Module 11 / Options Quanto & Composite (options-quanto)
+- [x] **Module 11 — Quanto & FX : COMPLET (2/2 pages)**
+- [x] Module 12 / Fonctionnement de la Fed (slug : module-8-macro/plomberie-fed)
+- [x] Module 12 / Politique monétaire
+- [x] **Module 12 — Macro : COMPLET (2/2 pages)**
 - [x] Simulateur de positions (book de trades, modale, 4 graphiques Greeks interactifs)
 - [x] Module 4 / Obligations & Bases (obligations-bases) — avec composant ZeroCouponChart interactif
 - [x] Module 4 / Duration & Convexité (duration-convexite) — avec composant ConvexityChart interactif
@@ -71,13 +71,19 @@ des pages. Veut comprendre ce qu'il fait sans être noyé dans le code.
 - [x] Module 6 / Swaps d'Inflation (inflation-swap) — ZCIS & indices (HICPxT/CPI-U/RPI), Fisher/breakeven, réalité desk (lag/gap risk/saisonnalité), arbitrage Bond vs Swap, Deflation Floor
 - [x] Module 6 / Total Return Swap (trs) — mécanique (Equity Leg / Floating Leg), raison d'être HF (levier/bilan/anonymat), cas Archegos, couverture Delta One + lien cash and carry, matrice des risques (Tax/Funding/Repo), synthèse TRS vs Prime Brokerage
 - [x] **Module 6 — Fixed Income III : COMPLET (4/4 pages)**
-- [ ] Module 7 (Produits Equity)
-- [x] Quiz Module 9 (affiché) — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-7
-- [x] Quiz Module 10 (affiché) — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-8
+- [x] Module 7 / Delta-One et Cash (delta-one-cash) — 7 sections, composant ForwardCurveChart interactif
+- [x] Module 7 / Options Vanilles (options-vanilles) — 5 sections : contrat/conventions, payoffs & asymétrie, parité Call-Put, valeur temps & moneyness, options américaines
+- [x] Module 7 / Stratégies Optionnelles (strategies-optionnelles) — 8 sections, 14 sous-sections d'instruments (spreads verticaux, straddle/strangle, calendar spreads, risk reversal/collar, butterfly/condor/iron, overlay & parité, synthèse)
+- [x] Composant `StrategyPayoffChart` — atelier interactif 15 stratégies (section 1 de strategies-optionnelles)
+- [x] **Module 7 — Equity I : COMPLET (3/3 pages)**
+- [ ] Module 8 — Equity II : Exotiques & Path-Dependence (2 pages : digitales-barrieres, path-dependence)
+- [ ] Module 9 — Equity III : Produits Structurés (3 pages : capital-garanti, yield-enhancement, multi-asset-correlation)
+- [x] Quiz Module 11 (affiché) — Quanto & FX (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-7
+- [x] Quiz Module 12 (affiché) — Macro (banque 20 questions, tirage stratifié 10/session, 2 groupes A×10 B×10, tirage 5+5) → endpoint réel /quiz/module-8
 - [x] Quiz Module 4 — Fixed Income I (banque 18 questions, tirage stratifié 8/session, 4 groupes A×4 B×5 C×4 D×5, tirage 2+2+2+2)
 - [x] Quiz Module 5 — Fixed Income II (banque 30 questions, tirage stratifié 12/session, 6 groupes A×5 B×5 C×5 D×5 E×5 F×5, tirage 2+2+2+2+2+2)
 - [x] Quiz Module 6 — Fixed Income III (banque 24 questions, tirage stratifié 12/session, 4 groupes A×6 B×6 C×6 D×6, tirage 3+3+3+3) → endpoint réel /quiz/module-6-fixed-income-3
-- [ ] Quiz Module 7
+- [ ] Quiz Module 7 — Equity I (à construire sur les 3 pages du module : delta-one-cash, options-vanilles, strategies-optionnelles)
 
 ## Architecture du site
 
@@ -91,7 +97,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
 - `/quiz` → Quiz par thématique
 - `/a-propos` → Présentation personnelle
 
-### Structure des cours (10 modules)
+### Structure des cours (12 modules)
 ⚠️ **Mapping affiché → slug réel** : les dossiers physiques ne changent pas, seul le numéro d'affichage a changé.
 
 | Affiché | Titre | Slug réel |
@@ -102,10 +108,12 @@ Accueil / Cours / Simulateur / Quiz / À propos
 | Module 4 | Fixed Income I | module-4-taux-credit |
 | Module 5 | Fixed Income II | module-5-fixed-income-2 |
 | Module 6 | Fixed Income III | module-6-fixed-income-3 |
-| Module 7 | Produits Equity | module-5-produits-equity |
-| Module 8 | Volatilité | module-6-volatilite |
-| Module 9 | Quanto & FX | module-7-quanto-fx |
-| Module 10 | Macro | module-8-macro |
+| Module 7 | Equity I | module-5-produits-equity |
+| Module 8 | Equity II | module-9-equity-2 |
+| Module 9 | Equity III | module-10-equity-3 |
+| Module 10 | Volatilité | module-6-volatilite |
+| Module 11 | Quanto & FX | module-7-quanto-fx |
+| Module 12 | Macro | module-8-macro |
 
 - `/cours/module-1-calcul-stochastique` — mouvement-brownien, lemme-ito, girsanov-risque-neutre
 - `/cours/module-2-pricing` — equation-black-scholes, probabilites-d1-d2, modeles-diffusion, monte-carlo (ordre de navigation)
@@ -115,10 +123,12 @@ Accueil / Cours / Simulateur / Quiz / À propos
 - `/cours/module-4-taux-credit` — `obligations-bases` ✅, `duration-convexite` ✅, `fwd-rate-agreement` ✅ (pages actives, sidebar cliquables) ; grisée : Interest Rate Swap
 - `/cours/module-5-fixed-income-2` — `cap-floor` ✅, `bond-options-swaptions` ✅, `cms` ✅, `convertible-bond` ✅, `range-accrual` ✅, `modele-taux` ✅ — module complet
 - `/cours/module-6-fixed-income-3` — `fx-swap` ✅, `cds` ✅, `inflation-swap` ✅, `trs` ✅ — module complet
-- `/cours/module-5-produits-equity` — vanilles-combinaisons, options-exotiques, produits-structures (grisé, pas de pages créées)
-- `/cours/module-6-volatilite` — vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta
-- `/cours/module-7-quanto-fx` — correlation-fx ("Corrélation Indice et FX"), options-quanto ("Options Quanto & Composite")
-- `/cours/module-8-macro` — plomberie-fed ("Fonctionnement de la Fed"), politique-monetaire
+- `/cours/module-5-produits-equity` — `delta-one-cash` ✅, `options-vanilles` ✅, `strategies-optionnelles` ✅ (module complet, sidebar entièrement cliquable) — **affiché Module 7 — Equity I**
+- `/cours/module-9-equity-2` — digitales-barrieres, path-dependence (grisé, pas de pages créées) — **affiché Module 8 — Equity II**
+- `/cours/module-10-equity-3` — capital-garanti, yield-enhancement, multi-asset-correlation (grisé, pas de pages créées) — **affiché Module 9 — Equity III**
+- `/cours/module-6-volatilite` — vol-implicite-nappes, vol-stochastique, variance-swap-vix, skew-delta — **affiché Module 10**
+- `/cours/module-7-quanto-fx` — correlation-fx ("Corrélation Indice et FX"), options-quanto ("Options Quanto & Composite") — **affiché Module 11**
+- `/cours/module-8-macro` — plomberie-fed ("Fonctionnement de la Fed"), politique-monetaire — **affiché Module 12**
   - ⚠️ `gestion-reserves` supprimé : contenu abandonné, module réduit à 2 sous-pages.
 
 ### Simulateur
@@ -126,7 +136,7 @@ Accueil / Cours / Simulateur / Quiz / À propos
 - Lien contextuel depuis les pages de cours concernées
 
 ## Fonctionnalités prévues
-1. Pages de cours (10 modules, 2-6 sous-pages chacun, contenu MDX rédigé par le propriétaire)
+1. Pages de cours (12 modules, 2-6 sous-pages chacun, contenu MDX rédigé par le propriétaire)
 2. Composants interactifs : payoffs avec curseurs (strike, maturité, vol)
 3. Simulateur de stratégies : prix, Greeks, surfaces de vol
 4. Quiz par thématique
@@ -139,6 +149,15 @@ Accueil / Cours / Simulateur / Quiz / À propos
 
 ## Architecture des fichiers clés
 ```
+scripts/
+  payoff-tests/                      ← Harnais de vérification des payoffs — `npm run test:payoff`
+    README.md                        ← Comment le lancer, ce qu'il vérifie, comment l'étendre
+    extract-engine.mjs               ← ⭐ Cœur du dispositif : découpe le moteur DANS le fichier composant réel (tout ce qui précède `export default function`, moins `'use client'`, les imports et `Chart.register`), réexporte automatiquement les symboles de premier niveau (47 à ce jour). Garantit que le code testé est le code exécuté, sans recopie susceptible de diverger.
+    run.mjs                          ← Régénère le moteur puis enchaîne les 3 suites, code de sortie non nul si échec
+    engine.mjs                       ← GÉNÉRÉ, dans le .gitignore — ne jamais éditer
+    01-moteur.mjs                    ← Parité call-put, N(x), convergence B→A à τ=0, additivité des jambes, invariant valeur temps au spot, signes de Theta, Box Spread, bornes d'axe (123 contrôles)
+    02-structures.mjs                ← Les 21 structures : quantités fractionnaires, jambe action négative, règle du flux initial, légende des points morts, recoupement avec le texte des sections 5 et 7 (87 contrôles)
+    03-exemples-page.mjs             ← Chaque nombre écrit en dur dans strategies-optionnelles/page.js (33 contrôles)
 app/
   layout.js                          ← Layout global : Header + Footer (toutes les pages)
   page.js                            ← Page d'accueil
@@ -150,10 +169,10 @@ app/
     Math.js                          ← <InlineMath> et <BlockMath> via KaTeX (server component)
   cours/
     layout.js                        ← Layout deux colonnes pour /cours/** (importe KaTeX CSS)
-    page.js                          ← Index des 10 modules (chemin serpent 4 rangées)
+    page.js                          ← Index des 12 modules (chemin serpent 4 rangées × 3 colonnes)
     components/
       CoursClientLayout.js           ← Wrapper client : état sidebar + hamburger mobile + TOC
-      Sidebar.js                     ← Sidebar : navigation 10 modules, sous-pages sans slug rendues comme <span> non cliquable
+      Sidebar.js                     ← Sidebar : navigation 12 modules, sous-pages sans slug rendues comme <span> non cliquable
       TableOfContents.js             ← TOC flottante sticky à droite (visible xl+), scan h2[id] + délai 100ms
       BrownianMotionChart.js         ← Composant interactif : simulation MB avec slider σ
       DiffusionComparisonChart.js    ← Composant interactif : densités Normale (bleue) vs Log-Normale (verte), slider σ 0.1→1.0, ligne rouge frontière zéro, parsing:false + LinearScale
@@ -171,7 +190,9 @@ app/
       ConvexityChart.js              ← Composant Chart.js : prix réel P(y) (noir épais) vs approximation ordre 1 (orange pointillés) vs ordre 2 (bleu pointillés). Obligation couponnée 10 ans, nominal 100, coupons annuels. X fixes 0.1%→23% (N_POINTS=200, calculés une seule fois). Axes figés X:0→23, Y:0→200. Ligne verticale au taux y₀ via plugin beforeDraw + y0Ref. 2 sliders (taux central y₀ + coupon). 3 cartes (Sensibilité, Convexité, Erreur Δ-hedging à +200bps). Pattern : init useEffect([]) + update useEffect([y0, couponPct]) → chart.update('none') sans recréation.
       CallableBondChart.js           ← Composant Chart.js : Bond classique (noir, dataset 2) vs Callable Bond (bleu, dataset 0) + helper fill vert (dataset 1, fill:'+1'). Seuil de rappel = coupon (y < couponPct → min(prix, 100.5)). Axe X 0.5%→10%, Y 60→140. Ligne verticale pointillée bleue au taux de marché actuel via marketRateRef mutable. 2 sliders (coupon 1→10% / taux marché 0.5→10%). 2 cartes (valeur de l'option au taux actuel en vert / gain si rappel en bps, texte rouge si négatif). Pattern deux useEffect anti-vibration.
       CDS01Chart.js                  ← Composant Chart.js : CS01 en fonction du spread (10→3000 bps), scale linéaire, ticks explicites [50/500/1000/2000/3000], ligne verticale "HY typique" à 300 bps via plugin beforeDraw.
-      DigitalReplicationChart.js     ← Composant Chart.js : réplication d'une option digitale par Call Spread. K=100, S 80→120 (201 points). Courbe noire pointillée "Digital idéale" (step function via deux points 99.999/100.001) + courbe bleue pleine "Call Spread". Slider ε 0.5→10 (pas 0.5, défaut 4). Axe Y fixé 0→1.2. Mise à jour directement dans le handler onChange (pas dans useEffect) — contournement du bug chart.update('none') avec animation:false.
+      DigitalReplicationChart.js     ← Composant Chart.js : réplication d'une option digitale par Call Spread.
+      ForwardCurveChart.js           ← Composant Chart.js : forward equity F(T) vs maturité T — courbe discrète bleue (dents de scie) + courbe continue grise. VA = Σ Dᵢ·e^{−r·tᵢ}, condition tᵢ ≤ T + 1e-9. 4 contrôles (r, b, divTotal, freq), hlinePlugin (y=S₀). Pattern deux useEffect anti-vibration. Note : creux légèrement > 100 quand r=q — correct mathématiquement (écart ≈ (r/freq)²/2). K=100, S 80→120 (201 points). Courbe noire pointillée "Digital idéale" (step function via deux points 99.999/100.001) + courbe bleue pleine "Call Spread". Slider ε 0.5→10 (pas 0.5, défaut 4). Axe Y fixé 0→1.2. Mise à jour directement dans le handler onChange (pas dans useEffect) — contournement du bug chart.update('none') avec animation:false.
+      StrategyPayoffChart.js         ← Composant Chart.js : atelier de la page strategies-optionnelles. Architecture « une stratégie = une liste de jambes signées » — chaque entrée de STRATEGIES (21) déclare ses strikes et une fonction legs(K, n) rendant [{type:'call'|'put'|'stock', strike, qty}], qty signée et éventuellement fractionnaire (ratio 1×2 = qty −2 ; Ratio Collar = qty −1,6). Une stratégie peut déclarer `ratio: {min, max, step, default}` : un slider de quantité apparaît alors automatiquement, visible pour elle seule (seul le Ratio Collar en déclare un, 0,5→2,5 pas 0,1 défaut 1,6 ; le minimum est à 0,5 et non 1,0 pour que le ratio d'autofinancement, qui descend à 0,61 à volatilité plate, reste atteignable sur toute la plage de skew — c'est ce que demande l'encadré de calibration de la page). La jambe stock accepte une quantité négative (Reversal). Tout le moteur (prime, payoff, prix, Greeks, extrema, points morts) boucle sur legs : aucun cas particulier par stratégie. Chaque jambe est valorisée à sa propre σ(K) = max(0.01, σ_ATM − skew·ln(K/S₀)) — c'est ce qui rend vraie l'affirmation de la section #call-spread. Prime figée à l'initiation (S₀=100, τ=1 an, r=2%, q=0) : le curseur de temps représente l'écoulement du temps sur une position déjà montée, il ne repricé pas l'entrée. Trois familles de courbes, toutes en P&L net de prime : A noire à maturité, B bleue avant maturité (converge exactement vers A à τ=0), C jambes individuelles nettes de leur propre prime (leur somme reproduit A à 1e-15 près). Extrema et points morts calculés analytiquement sur les nœuds {0} ∪ strikes et la pente à l'infini — exacts hors de la fenêtre d'affichage 50→150, donc « perte non bornée » ne dépend pas de la grille. Deux notions de prime : netPremium (jambe action incluse, décale les courbes) et optionPremium (overlay seul, affiché dans la carte « Flux initial » — c'est le sens des fiches). **Règle générale du flux initial**, déduite de la seule présence d'une jambe stock via `stockLeg(legs)`, sans liste codée en dur : dès qu'une structure détient ou vend à découvert le sous-jacent, la carte n'affiche que l'overlay optionnel et porte la mention « hors achat / hors vente à découvert de l'action à S₀ », les courbes continuant d'utiliser la prime totale. Calendar et Diagonal exclus du sélecteur : pas de payoff terminal unique. Légende native limitée aux deux courbes combinées plus une troisième entrée « Point mort » / « Points morts » portant les valeurs de S_T (2 décimales, séparateur ·) : dataset vide d'index 2, porté seulement par son label et son style pointillé bleu ciel identique aux lignes du plugin — le plugin de dessin n'a pas été modifié. Entrée masquée par `labels.filter` quand aucun point mort n'existe (Box Spread, Conversion, Reversal), et `onClick` neutralisé sur elle (repère, pas une série masquable). Les jambes, elles, sont identifiées par les chips de cases à cocher (couleur + motif de trait). Ordre des datasets : 0 = courbe A, 1 = courbe B, 2 = repère points morts, 3+ = jambes. Axe Y figé à la sélection de stratégie puis élargi de façon monotone si une courbe sort du cadre (jamais rétréci → pas de vibration), amplitude plancher 10 pour le cas plat du Box Spread. Pattern deux useEffect : [strategyId] recrée (le nombre de datasets change), [strikes, tau, sigma, skew, visibleLegs] met à jour + chart.update('none').
     module-1-calcul-stochastique/
       mouvement-brownien/page.js     ← ⭐ TEMPLATE DE RÉFÉRENCE pour toutes les pages de cours
       lemme-ito/page.js              ← ✅ Fait
@@ -217,6 +238,12 @@ app/
       cds/CDS01Wrapper.js              ← Wrapper 'use client' pour CDS01Chart (next/dynamic ssr:false)
       inflation-swap/page.js           ← ✅ Fait (5 sections : ZCIS & indices HICPxT/CPI-U/RPI + YoY Swap, Fisher/breakeven Treasury-TIPS, lag/gap risk/saisonnalité, arbitrage Bond vs Swap + Basis, Deflation Floor)
       trs/page.js                      ← ✅ Fait (5 sections : mécanique Equity/Floating Leg, raison d'être HF, couverture Delta One, matrice des risques Tax/Funding/Repo, synthèse TRS vs Prime Brokerage)
+    module-5-produits-equity/
+      delta-one-cash/page.js           ← ✅ Fait (7 sections : delta-one, stock/portage, forward equity + composant, futures, div swaps, ETF, synthèse)
+      delta-one-cash/ForwardCurveWrapper.js ← Wrapper 'use client' pour ForwardCurveChart (next/dynamic ssr:false)
+      options-vanilles/page.js         ← ✅ Fait (5 sections : contrat/conventions, payoffs & asymétrie + composant CallValueChart, parité Call-Put, valeur temps & moneyness, options américaines)
+      strategies-optionnelles/page.js  ← ✅ Fait (8 sections h2, 14 sous-sections h3 avec id : spreads verticaux, volatilité pure, spreads calendaires, skew et couverture, convexité, overlay et parité, synthèse). Composant interactif StrategyPayoffChart en clôture de section 1. Motif "fiche stratégie" à 7 champs (composant local `Fiche`). Composant local `AtelierLink` (ex-`SimLink`) : les 4 liens contextuels pointent vers l'ancre #lecture, plus vers /simulateur.
+      strategies-optionnelles/StrategyPayoffWrapper.js ← Wrapper 'use client' pour StrategyPayoffChart (next/dynamic ssr:false)
     module-7-quanto-fx/
       correlation-fx/page.js           ← ✅ Fait (titre : "Corrélation Indice et FX") — affiché Module 9
       options-quanto/page.js           ← ✅ Fait (titre : "Options Quanto & Composite") — regroupe Quanto + Composite, page finale du module
@@ -269,6 +296,7 @@ app/
 - **Chemin d'import Math.js** : tous les modules (1 à 8) utilisent `'../../../components/Math'` (3 niveaux). La structure `app/cours/[module]/[page]/page.js` est identique pour tous les modules — 3 niveaux suffisent pour remonter à `app/`.
 - **⚠️ CRITIQUE — next/dynamic {ssr:false} depuis un Server Component** : impossible d'utiliser `next/dynamic(() => import('...'), { ssr: false })` directement dans un fichier `page.js` (qui est un Server Component par défaut). Il faut créer un fichier wrapper `'use client'` intermédiaire (ex. `VolSurfaceWrapper.js`) dans le même dossier que la page, qui fait l'import dynamique, puis importer ce wrapper dans `page.js`. Applicable à tout composant Three.js ou browser-only.
 - **⚠️ Chemin dans le wrapper `'use client'`** : le wrapper est dans `module-X/page-slug/`, donc pour atteindre `cours/components/`, il faut `'../../components/NomComposant'` (2 niveaux), pas 3.
+- **⚠️ CRITIQUE — audit des ancres et `next/dynamic { ssr: false }`** : les `id` et les liens `href="#..."` émis par un composant chargé en `{ ssr: false }` **sont absents du HTML rendu côté serveur**, puisque le composant ne s'exécute que dans le navigateur. Un audit d'ancres par `curl | grep` sur la page produit donc des **faux négatifs** (une ancre parfaitement valide semble manquer parce qu'elle vit dans le composant) et des **faux positifs** (une ancre morte pointant vers un `id` porté par un composant passe inaperçue). **Tout audit d'ancres doit porter sur les sources — fichier de page ET fichiers de composants confondus — jamais sur le HTML rendu.** Vaut pour tous les composants du site, existants et futurs : `VolSurfaceChart`, `SABRCalibrationChart`, `StrategyPayoffChart`, et tous les wrappers `ssr:false`.
 - **Style texte** : ne pas utiliser de tirets longs (—) comme séparateurs décoratifs dans le corps du texte
 - La TOC est générée automatiquement par `TableOfContents.js` (scan `h2[id]` avec délai 100ms) — panneau flottant sticky à droite, visible uniquement sur écrans xl+ (≥1280px)
 - La TOC se met à jour automatiquement dès qu'on modifie le texte ou l'`id` d'un `h2` — pas besoin de toucher à `TableOfContents.js` ni à la sidebar
@@ -295,7 +323,7 @@ Exception : si le quiz du module existe, remplacer par un lien actif :
   Le quiz du Module 1 est disponible — <a href="/quiz/module-1" className="text-blue-600 hover:underline font-medium">S&apos;entraîner →</a>
 </div>
 ```
-Actuellement, les **Modules 1, 2, 3, 4, 5, 6, 8, 9 et 10** ont un quiz actif.
+Actuellement, les **Modules 1, 2, 3, 4, 5, 6, 10, 11 et 12** ont un quiz actif.
 
 **2. Navigation Précédent/Suivant** :
 ```jsx
@@ -312,6 +340,20 @@ Actuellement, les **Modules 1, 2, 3, 4, 5, 6, 8, 9 et 10** ont un quiz actif.
 Si première page (pas de précédent) : `<div />` à la place du lien gauche. Utiliser `<a>` simples, **pas** `<Link>` avec carte.
 
 ## Journal des sessions
+- **2026-06-10** :
+  - **Passage de 10 à 12 modules — restructuration Equity** : ajout de deux modules Equity pour transformer l'ancien Module 7 "Produits Equity" en trois modules Equity I / II / III, sur le modèle Fixed Income I/II/III. Restructuration purement affichage + sidebar + serpent — aucune page de cours créée, aucun contenu rédactionnel (viendra dans des sessions ultérieures, rédigé par le propriétaire).
+  - **Deux dossiers créés** (vides, `.gitkeep`) : `module-9-equity-2` (affiché Module 8 — Equity II) et `module-10-equity-3` (affiché Module 9 — Equity III). Pas de `page.js`.
+  - **Décalage des modules suivants** (affichage uniquement, slugs inchangés) : Volatilité 8→10 (`module-6-volatilite`), Quanto & FX 9→11 (`module-7-quanto-fx`), Macro 10→12 (`module-8-macro`).
+  - **`app/cours/components/Sidebar.js`** : 12 modules dans l'ordre affiché. Equity I renommé (ex-"Produits Equity") avec 3 sous-pages non cliquables. Equity II (2 sous-pages) et Equity III (3 sous-pages) ajoutés, sous-pages sans slug en `<span>` non cliquable.
+  - **`app/cours/page.js`** : chemin serpent passe à 4 rangées pleines de 3 (3×4=12), alignement parfait sans fantôme. Suppression des 2 fantômes et du VConn bancal de l'ancienne rangée 10-seul. 3 virages VConn right/left/right. Rangées 10→12 (Volatilité/Quanto/Macro) actives ; rangée 7→9 (Equity I/II/III) inactive (pas de contenu).
+  - **`app/quiz/page.js`** : 12 entrées. `isAvailable` = `["01","02","03","04","05","06","10","11","12"]`. Equity I/II/III (affichés 07/08/09) en "Bientôt disponible". `quizEndpoint` inchangés pour Volatilité/Quanto/Macro/FI-III.
+  - **8 pages de cours existantes** : numéros affichés mis à jour dans fils d'Ariane et liens quiz (slugs/hrefs inchangés) — 4 pages Volatilité (Module 6→10), 2 pages Quanto (7→11), 2 pages Macro (8→12, titre "En résumé — Module 12" inclus).
+  - **Plan Equity acté** (à rédiger ultérieurement) :
+    - **Module 7 — Equity I : Delta-One & Vanilles** : `delta-one-cash` (Stocks, Forwards, Futures, Div Swaps, ETF/Trackers ; renvoi TRS→M6), `options-vanilles` (Call/Put EU-US), `strategies-optionnelles` (Spreads, Straddle/Strangle, Risk Reversal/Collar, Butterfly/Condor/Iron).
+    - **Module 8 — Equity II : Exotiques & Path-Dependence** : `digitales-barrieres` (Digitales cash/asset-or-nothing, Barrières KO/KI + parité KO+KI=vanille), `path-dependence` (One/No-touch, Asian, Lookback Fixed/Floating, Forward start).
+    - **Module 9 — Equity III : Produits Structurés** : `capital-garanti` (ZC+Call, Capital Protected Note, Shark Fin, Twin Win, Airbag, Tracker Certificate), `yield-enhancement` (Reverse Convertible, Barrier RC, Autocall Athena/Phoenix, Bonus Cap ; renvoi Range Accrual→M5), `multi-asset-correlation` (Basket, Best-of/Worst-of, Spread option, Outperformance, Mountain Range Altiplano/Everest/Himalaya).
+  - **Module Extra (réservé, plus tard) — Equity Exotics avancés** : produits à forte path-dependence / vol forward / autocorrélation, volontairement écartés pour ne pas les survoler. Volatilité avancée (Gamma Swap, Corridor Var Swap, renvoi Var Swap→M10) + Heavy Exotics (Cliquet/Ratchet, Napoleon, Accumulator/Decumulator, TARN, Pivot/Fader fade-in/fade-out).
+
 - **2026-04-13** :
   - **Page "Options Quanto & Composite"** (`app/cours/module-7-quanto-fx/options-quanto/page.js`) créée. Deuxième et dernière sous-page du Module 7. 5 sections h2.
     - **Section 1 — Les deux processus de base** : trois encadrés séparés `bg-gray-100` pour les EDS de l'action, du FX et la corrélation. Boîte bleue "Convention" sur le sens de cotation EUR/USD.
@@ -751,6 +793,120 @@ Si première page (pas de précédent) : `<div />` à la place du lien gauche. U
   - **Quiz Module 6 — Fixed Income III** (`app/quiz/module-6-fixed-income-3/page.js`) créé. Banque de 24 questions réparties en 4 groupes thématiques (A : FX Swap & Cross-Currency Swap — 6q, B : Credit Default Swaps — 6q, C : Swaps d'Inflation — 6q, D : Total Return Swap — 6q). Tirage stratifié 12 questions/session (3 par groupe). Pattern `useState(null)` + `useEffect`. KaTeX utilisé pour les formules des groupes A (parité couverte) et C (payoff ZCIS, Fisher). Équilibrage des positions de réponse : 6 occurrences par position (0,1,2,3) sur les 24 questions — trois réordonnements appliqués (A4 : choices 0↔1, A5 : choices 0↔1, B3 : choices 1↔3).
   - **`quiz/page.js`** : `isAvailable` étendu à `"06"`. Module 06 : `questions: 12`, `quizEndpoint: "/quiz/module-6-fixed-income-3"` ajouté (évite la collision avec `/quiz/module-6` qui pointe vers le quiz Volatilité).
   - **4 pages du Module 6** : bloc quiz "bientôt disponible" → lien actif `/quiz/module-6-fixed-income-3` (fx-swap, cds, inflation-swap, trs).
+
+- **2026-08-28** :
+  - **Page "Les Fondations Equity — L'Univers Delta-One"** (`app/cours/module-5-produits-equity/delta-one-cash/page.js`) créée. Première sous-page du Module 7 (slug physique `module-5-produits-equity`). 7 sections h2. Contenu rédigé par le propriétaire, composant interactif créé par Claude Code.
+    - **Section 1 — Delta-One : définition** (`id="delta-one"`) : définition d'un produit Delta-One (exposition linéaire pure au sous-jacent, Delta ≡ 1), mise en perspective avec les produits optionnels.
+    - **Section 2 — L'action et le portage** (`id="stock"`) : coût de portage d'une position longue action — financement, dividende reçu, repo, borrow. Boîte bleue "Coût de portage net".
+    - **Section 3 — Le Forward Equity** (`id="forward"`) : trois sous-sections h3. (A) Prix forward — formule indice `F = S₀·e^{(r−q−b)T}` et formule single-stock `F = (S₀ − VA(Div≤T))·e^{(r−b)T}` encadrées ; contango vs backwardation. (B) Le Repo et le Borrow implicite — extraction du repo rate depuis le spread Forward/Spot, signal hard-to-borrow. Composant `ForwardCurveChart` interactif inséré ici. (C) La Base (The Basis) — écart Forward calculé vs Forward de marché, causes (dividendes spéciaux, M&A, flux), exploitation par les arbitragistes.
+    - **Section 4 — Les Futures sur indices** (`id="futures"`) : différences avec le forward OTC (standardisation, mark-to-market quotidien, appels de marge), roll du futures, Fair Value et opportunités d'arbitrage.
+    - **Section 5 — Les Dividend Swaps** (`id="div-swaps"`) : définition, payoff `N × (Div_réalisé − Div_fixé)` encadré, utilité (hedging du risque dividende des structurés, vue directionnelle sur la politique de distribution), lien avec les futures sur dividendes (DEDZ sur Eurostoxx 50).
+    - **Section 6 — Les ETF et Trackers** (`id="etf"`) : mécanisme creation/redemption via les Authorised Participants, tracking error (frais de gestion, dividendes, réplication), distinction physique vs synthétique (swap de performance). Boîte bleue "Pourquoi le tracking error est presque nul".
+    - **Section 7 — Tableau de synthèse** (`id="synthese"`) : tableau 5 lignes × 4 colonnes (Action / Forward OTC / Futures / ETF / Dividend Swap — Sous-jacent / Livraison / Levier / Usage typique).
+    - **Navigation** : pas de Précédent (`<div />`), → Options Vanilles (lien `<div />` car page non encore créée).
+    - **Quiz** : bloc "bientôt disponible" (quiz Module 7 non encore créé).
+  - **`app/cours/components/Sidebar.js`** : `slug: 'delta-one-cash'` ajouté sur la première sous-page du Module 07 — "Delta-One et Cash" est désormais cliquable. "Options Vanilles" et "Stratégies Optionnelles" restent en `<span>` grisé.
+  - **Composant `ForwardCurveChart`** (`app/cours/components/ForwardCurveChart.js`) créé. Composant Chart.js interactif — forward equity F(T) en fonction de la maturité T ∈ [0, 3 ans].
+    - **Deux courbes** : bleue pleine = forward discret single-stock `F(T) = (S₀ − VA(Div≤T)) · e^{(r−b)T}` avec dents de scie aux ex-dates ; grise pointillée = forward continu indice `F(T) = S₀ · e^{(r−q−b)T}`.
+    - **VA correctement actualisée** : `VA = Σ_{tᵢ ≤ T} Dᵢ · e^{−r·tᵢ}` — chaque dividende est actualisé à t=0 avant sommation. Condition d'inclusion `tᵢ ≤ T + 1e-9` (epsilon pour la sécurité flottante).
+    - **Ligne horizontale** `y = S₀` via plugin `hlinePlugin` (`beforeDraw`). S₀ constant, pas de `ref` mutable nécessaire.
+    - **4 contrôles** : slider r (0→10%, pas 0.5%), slider b (0→10%, pas 0.5%), slider dividende annuel total (0→8€, pas 0.5€), sélecteur fréquence (1×/2×/4× par an). Checkbox pour masquer/afficher la courbe continue.
+    - **3 cartes** : Régime (Contango vert / Backwardation rouge), F continu à T=3 ans, Rendement div. continu q.
+    - **Pattern anti-vibration deux `useEffect`** : initialisation une seule fois `useEffect([], [])`, mise à jour données `useEffect([r, b, divTotal, freq, showContinuous])` → `chart.update('none')`. Zéro recréation du chart.
+    - **Note mathématique** : le creux des dents de scie est légèrement au-dessus de 100 quand r = q (par ex. 100.02 au premier creux pour r=q=4%, freq=2). Cet écart est mathématiquement correct — il vient de la différence entre capitalisation continue et discrète : `e^{r/freq} − r/freq > 1` d'un facteur ≈ `(r/freq)²/2`. Le creux grandit aux ex-dates suivantes (100.10 à T=3 pour freq=2, ~100.22 pour freq=1). Ce n'est pas un bug mais une propriété de la formule no-arbitrage exacte.
+  - **`ForwardCurveWrapper`** (`app/cours/module-5-produits-equity/delta-one-cash/ForwardCurveWrapper.js`) : wrapper `'use client'` + `next/dynamic { ssr: false }` pour importer `ForwardCurveChart` depuis le Server Component `page.js`. Chemin `'../../components/ForwardCurveChart'` (2 niveaux depuis le dossier de la page).
+  - **Intégration dans page.js** : `ForwardCurveWrapper` inséré dans la section 3, entre la sous-section 3B (Le Repo et le Borrow) et la sous-section 3C (La Base), avec phrase de transition.
+
+- **2026-08-29** :
+  - **Page "Options Vanilles"** (`app/cours/module-5-produits-equity/options-vanilles/page.js`) créée. Deuxième sous-page du Module 7 — Equity I. 5 sections h2 (contrat, payoff, parite, valeur-temps, americaines). Pas de composant interactif (prévu pour une session ultérieure).
+    - **Section 1 — Le contrat et ses conventions** : 5 paramètres du contrat, style d'exercice, Listed vs OTC, règlement physique/cash, échéances standardisées. Boîte bleue "On ne cote pas une option en prix, on la cote en volatilité".
+    - **Section 2 — Payoffs et asymétrie** : payoffs Call/Put encadrés, asymétrie gain non borné/perte bornée. Boîte bleue distinguant asymétrie du payoff (statique) et risque Gamma (dynamique, coût de recouverture).
+    - **Section 3 — La parité Call-Put** : `C - P = e^{-rT}(F-K)` encadrée, Conversion/Reversal, usage inverse pour extraire repo/dividende implicite, conséquence sur l'unicité de la vol implicite par (K,T), encadrement américain (bornes de Merton distinguées).
+    - **Section 4 — Valeur temps et moneyness** : décomposition Prix = intrinsèque + temps, maximum à l'ATM forward, piège de la valeur temps négative sur put européen deep ITM (borné par Ke^{-rT}), tableau 3 lignes moneyness (Spot/Forward/Delta), clarification N(d₁)/N(d₂) comme probabilités sous deux mesures (changement de numéraire, pas une approximation) et Dual Delta = e^{-rT}N(d₂).
+    - **Section 5 — Le cas des options américaines** : call américain quasi jamais exercé (sauf ex-dividende, condition `D > K(1-e^{-r(T-t)})`), put américain régulièrement exercé (lien direct avec la section 4), arbre binomial et Longstaff-Schwartz, convention indices européens vs single-stocks américaines.
+    - **Bloc "Pour aller plus loin"** (`bg-gray-50`) avant le bloc quiz : 3 liens (Module 3 Greeks, Module 10 Vol implicite, Simulateur). Mention sans lien vers Stratégies Optionnelles et Module 8.
+    - Nombreux liens de redirection internes (Delta-One et Cash, Girsanov, Cap & Floor, Bond Options & Swaptions, Convertible Bond, Vol implicite et nappes, Skew Delta, Monte-Carlo, Black-Scholes, Greeks).
+    - Navigation : ← Les Fondations Equity, l'Univers Delta-One / pas de suivant (`<div />`, strategies-optionnelles pas encore créée).
+  - **Sidebar** : `slug: 'options-vanilles'` ajouté dans le Module 07 — "Options Vanilles" est désormais cliquable. "Stratégies Optionnelles" reste en `<span>` grisé.
+  - Build `next build` vérifié sans erreur.
+  - **Composant `CallValueChart` réutilisé** : ajouté à la fin de la section 2 (Payoffs et asymétrie) d'`options-vanilles/page.js`, import direct `'../../components/CallValueChart'` (pas de wrapper `next/dynamic`, c'est un composant Chart.js pur comme dans `arbitrage-theta-gamma/page.js`). Phrase d'intro adaptée au contexte (payoff à maturité vs prix avant échéance).
+  - Le propriétaire a également retouché le texte de la page (intro, section 1) après la création initiale — contenu affiné, structure inchangée.
+
+- **2026-08-31** :
+  - **Décision d'architecture — TOC à deux niveaux.** `TableOfContents.js` scanne désormais `h2[id], h3[id]` en une seule requête `querySelectorAll` (ordre du document préservé), avec un champ `level` (2 ou 3) par entrée. Rendu : les `h3` sont indentés (`pl-5`, `text-xs`) contre `px-2 text-sm` pour les `h2`. Conséquence pour la suite : pour faire apparaître une sous-section dans la TOC, il suffit de lui donner un `id` explicite — un `h3` sans `id` reste invisible dans le sommaire, comme avant. Grep de vérification avant modification : aucun `<h3 id=...>` n'existait nulle part dans `app/cours/` — aucune régression, aucune TOC existante enrichie par surprise.
+  - **Page "Stratégies optionnelles"** (`app/cours/module-5-produits-equity/strategies-optionnelles/page.js`) créée. Troisième et dernière sous-page du Module 7 — Equity I. 8 sections h2, 14 sous-sections h3 avec `id` (donc visibles dans la nouvelle TOC à deux niveaux). Pas de composant interactif (`StrategyPayoffChart` explicitement reporté).
+    - **Section 1 — Ce que l'on négocie vraiment** (`id="lecture"`) : grille de lecture (tableau 5 lignes : facteur négocié / instrument canonique / Greek dominant), distinction débit/crédit, boîte bleue "Comment lire une fiche".
+    - **Section 2 — Les spreads verticaux** (`id="spreads-verticaux"`) : `call-spread` (pricing par jambe avec vol propre à chaque strike — renvoi explicite à la démonstration d'unicité de la vol implicite dans `options-vanilles#parite`, présenté comme conséquence directe plutôt qu'affirmation isolée ; Vega de signe variable ; convergence vers la digitale), `put-spread` (skew favorable à l'acheteur), `ratio-backspread` (Ratio 1×2, Backspread, boîte amber perte non bornée).
+    - **Section 3 — La volatilité pure** (`id="volatilite-pure"`) : `straddle` (Delta non nul hors ATM-forward, ordre de grandeur du prix, distinction straddle nu / delta-hedgé avec formule P&L Theta-Gamma), `strangle` (profil "V à fond plat", pas un "U"), `limites-vega` (Vega qui s'évapore hors de la monnaie, renvoi Variance Swap & VIX et CMS/Carr-Madan).
+    - **Section 4 — Les spreads calendaires** (`id="spreads-calendaires"`) : `calendar` (signes de Greeks via comportement en √T), `diagonal`.
+    - **Section 5 — Skew et couverture** (`id="skew"`) : `risk-reversal` (cotation en différence de vols 25-delta, Vanna comme vrai Greek, boîte amber sur le risque de queue vendu), `collar` (équivalence call spread déguisé, renvoi Cap & Floor), `variantes-financees` (Put Spread Collar, Seagull, Ratio Collar en paragraphes condensés, pas de fiches complètes).
+    - **Section 6 — Les stratégies de convexité** (`id="convexite"`) : `butterfly`, `condor`, `structures-iron` (équivalence Iron = version OTM du butterfly classique, formule crédit/débit avec `\text{Credit}`/`\text{Debit}` sans accent pour éviter tout souci de parsing KaTeX), `densite-risque-neutre` (résultat de Breeden-Litzenberger, corollaire de non-arbitrage, paramétrisation du smile en 3 nombres ATM/RR/Fly).
+    - **Section 7 — Overlay et parité** (`id="overlay-parite"`) : `covered-call` (équivalence vente de put nu), `cash-secured-put` (pont vers Reverse Convertible, mention Module 9 sans lien car page non créée), `synthetique-box` (forward synthétique, Conversion/Reversal, Box Spread) — trois renvois vers `options-vanilles#parite` pour la démonstration de parité déjà établie, jamais re-démontrée ici.
+    - **Section 8 — Réalité d'exécution et synthèse** (`id="desk-synthese"`) : `pieges-desk` (coût d'exécution multi-jambes, legging risk, pin risk, exercice anticipé — raccourci à une phrase de conséquence opérationnelle avec renvoi unique vers `options-vanilles#americaines`, marge, liquidité des ailes, portage de la jambe cash), `tableau-synthese` (tableau 14 lignes × 7 colonnes, boîte bleue de clôture renvoyant au simulateur).
+    - **Renvois d'ancre vérifiés avant écriture** : les `id` réels des `h2` de `options-vanilles/page.js` ont été relus (`contrat`, `payoff`, `parite`, `valeur-temps`, `americaines`) avant d'écrire tout lien profond — aucune ancre devinée.
+  - **Nouveau motif rédactionnel réutilisable : la "fiche stratégie".** Composant local `Fiche` (non exporté, défini dans `page.js`) prenant 7 props (`construction`, `vue`, `flux`, `gainMax`, `perteMax`, `pointsMorts`, `greeks`) et rendant toujours le même gabarit `bg-gray-50 border border-gray-300 rounded-xl p-4 text-sm` en grille `sm:grid-cols-[160px_1fr]`. Garantit l'uniformité absolue entre les 14 fiches de la page (aucune variation de champ, même quand trivial). À réutiliser tel quel pour les Modules 8 et 9 (Equity II et III) plutôt que de recopier le HTML à la main.
+  - **Sidebar** : `slug: 'strategies-optionnelles'` ajouté — la troisième sous-page du Module 07 est désormais cliquable. Module 7 entièrement cliquable dans la sidebar.
+  - **options-vanilles/page.js** : lien Suivant mis à jour de `<div />` vers `/cours/module-5-produits-equity/strategies-optionnelles` ("Stratégies optionnelles →").
+  - **Module 7 — Equity I : COMPLET (3/3 pages)**.
+  - Build `next build` vérifié sans erreur (le warning KaTeX `€` observé provient d'une autre page pré-existante, pas de cette session).
+  - **Reste à faire** : Quiz Module 7, composant interactif `StrategyPayoffChart` (sélecteur de stratégie, sliders sur les strikes, payoff à maturité et P&L net) — reportés à une session ultérieure.
+
+- **2026-09-02** :
+  - **Corrections post-création sur `strategies-optionnelles/page.js`** (page créée le 2026-08-31), suite à une relecture complète par le propriétaire.
+  - **Section 4, `id="diagonal"` (Diagonal Spread), enrichie puis corrigée.** La fiche initiale (3 champs "dépend du couple de strikes retenu") a été jugée trop pauvre :
+    - Ajout d'une phrase de convention juste avant la fiche : les deux jambes sont des calls, T₁ < T₂, la relation entre K₁ et K₂ reste libre et définit deux configurations de risque distinctes.
+    - Fiche réécrite : Vue exprimée (stagnation sous K₁ jusqu'à T₁ puis hausse), Flux initial (débit dans la plupart des cas, crédit possible), Perte maximum (débit net si K₂&nbsp;<&nbsp;K₁ ; (K₂−K₁)+débit net si K₂&nbsp;>&nbsp;K₁ — **toujours bornée dans les deux cas**, la jambe longue expirant après la jambe courte et plafonnant systématiquement la perte).
+    - **Erreur corrigée en cours de session** : une première version affirmait la perte "non bornée en cas d'assignation non couverte si K₁ < K₂" — c'est faux et a été retiré. L'assignation anticipée de la jambe courte crée une exposition temporaire non couverte, mais la perte reste toujours bornée car la jambe longue, encore vivante, plafonne le risque.
+    - Ajout de 3 blocs après la fiche : paragraphe "Un trade en deux temps" (short Theta jusqu'à T₁, puis position directionnelle pure via le call long K₂), tableau de comparaison des deux configurations (K₂<K₁ = couverture intégrale/Poor Man's Covered Call ; K₂>K₁ = couverture partielle/hausse progressive à budget réduit), exemple chiffré (spot 100, call 2 ans K=120 à 8, call 3 mois K=100 à 6, débit net 2, perte plafonnée à 22).
+    - Conservé et déplacé après ces ajouts : le paragraphe "pourquoi il n'y a pas de payoff fermé" (dépendance à la vol implicite forward non connue), le tableau des cas dégénérés (Calendar / spread vertical / diagonal), la boîte amber sur le risque d'assignation non couverte, le paragraphe Poor Man's Covered Call (renvois vers `#covered-call` et `delta-one-cash`, ancres vérifiées avant écriture).
+  - **Section 5, `id="variantes-financees"`, restructurée.** Erreur de rédaction initiale : Put Spread Collar et Seagull décrivaient la même structure en deux entrées séparées.
+    - **Fusion** en une entrée unique "Put Spread Collar, ou Seagull" : construction à 4 jambes (long action + long Put K₂ + short Put K₁ + short Call K₃, K₁<K₂<K₃), les deux noms désignant la même chose selon le desk (gestion actions vs FX/structuration), la contrepartie (protection interrompue sous K₁), mention du seagull haussier (sans équivalent collar).
+    - **Ratio Collar développé** en sous-section dédiée (`id="ratio-collar"`, nouvelle ancre) avec un exemple chiffré complet : portefeuille 1 000 actions à 100, Put 90 à 4 (coût 4 000), Call 110 ne rapportant que 2,50 à cause du skew négatif (financement à nominal égal impossible), les deux sorties (resserrer le call à 105, plafond 5 % ; ou vendre 1 600 calls à 110, ratio 1,6). Boîte amber (même style que `ratio-backspread`) regroupant Le piège (600 calls nus, portefeuille net short 600 au-dessus de 110), Chiffrage à 130 (titres +30 000, calls −32 000, résultat net négatif), Conclusion (couverture devenue perdante dans le scénario favorable). Renvoi vérifié vers `#ratio-backspread` (même mécanisme short gamma).
+  - Build `next build` vérifié sans erreur après chaque modification.
+  - **Session close** : le propriétaire a relu la page `strategies-optionnelles` dans son intégralité et y a fait quelques ajustements manuels directement dans le code ; le contenu est considéré final. Reste à faire inchangé : Quiz Module 7, `StrategyPayoffChart`.
+
+- **2026-09-02 (suite) — Composant `StrategyPayoffChart`** :
+  - **Motif d'architecture réutilisable : « une stratégie = une liste de jambes signées ».** Le composant ne contient aucune fonction de payoff par stratégie. Chaque entrée du catalogue déclare ses strikes et une fonction `legs(K)` renvoyant `[{type, strike, qty}]` avec `qty` signée. Prime, payoff, prix Black-Scholes, Greeks, extrema et points morts sont tous des réductions sur cette liste. Ajouter une structure au catalogue ne touche pas une ligne du moteur. **À réutiliser tel quel pour les Modules 8 et 9 (Equity II et III)** : les payoffs de produits structurés (Reverse Convertible, Autocall, Capital Protected Note, Bonus Cap) se décrivent de la même façon, il suffira d'ajouter des types de jambe (digitale, barrière) au `switch` de `legPayoff`/`legPrice`.
+  - **Deux notions de prime, à ne pas confondre** : `netPremium` inclut la jambe action à S₀ (c'est elle qui décale les courbes de P&L), `optionPremium` ne compte que l'overlay optionnel. La carte « Flux initial » affiche la seconde, car c'est le sens du champ homonyme dans les fiches : un Covered Call est au crédit de 3,86 même si entrer en position coûte 100 en achetant l'action. Afficher `netPremium` donnait « Débit 96,14 », en contradiction avec la fiche.
+  - **Extrema et points morts calculés analytiquement**, pas balayés sur la grille d'affichage : le payoff est linéaire par morceaux, donc les extrema se lisent sur les nœuds `{0} ∪ strikes` et la pente asymptotique `Σ qty` des jambes call et action. Conséquence importante : « perte non bornée » est un fait mathématique sur `[0, +∞)`, indépendant de la fenêtre 50→150. Un Covered Call affiche donc une perte bornée à −96,14 (chute à zéro) et non « non bornée » comme le suggérerait la pente au bord gauche du graphique.
+  - **Axe Y : figé à la sélection de stratégie, puis élargi de façon monotone.** Écart assumé avec la spec initiale, qui demandait des bornes strictement constantes : figer sans jamais élargir tronquait la courbe dès qu'un strike était tiré loin de sa valeur par défaut. L'élargissement seul (l'axe ne rétrécit jamais tant qu'on ne change pas de stratégie) évite le tronquage sans réintroduire de vibration, puisqu'il n'oscille pas. Plancher d'amplitude à 10 pour le Box Spread, dont la courbe est plate.
+  - **Légende** : la légende native Chart.js est filtrée sur les deux courbes combinées uniquement (`labels.filter: item => item.datasetIndex < 2`). Les jambes sont identifiées par les chips de cases à cocher, qui portent la couleur et le motif de trait du graphique — six entrées de légende saturaient le bandeau, et la redondance chip/légende brouillait le lien case-courbe.
+  - **Harnais de test hors navigateur** (`scratchpad/test.mjs`) : le moteur est extrait du vrai fichier composant (tout ce qui précède `export default function`, imports React/Chart.js retirés) puis importé par un script Node. Le code testé est donc exactement le code exécuté, sans recopie susceptible de diverger. 10 sections de tests, toutes vertes : convergence B→A exacte à τ=0, valeur temps au spot sur les 15 structures, additivité des jambes (écart ≤ 1e-4, dû au seul arrondi d'affichage), signes de Theta, cas dégénéré du Box Spread, bornes d'axe, **26 recoupements chiffrés avec les fiches à sept champs de la page**, sens des flux, effet du skew, libellés de jambes.
+  - **Ratio 1×2 : défaut passé de K₂ = 110 à K₂ = 108.** À 110 et skew 0,30, la structure est au débit de 1,20, ce qui est un cas licite (la fiche le prévoit) mais pas sa présentation canonique. À 108 elle est au crédit de 0,48. Les deux régimes décrits par la fiche sont reproduits exactement : au crédit, un seul point mort en `2K₂ − K₁ + C` ; au débit, deux points morts en `K₁ + D` et `2K₂ − K₁ − D`. Vérifié pour K₂ ∈ {105, 108, 110, 115}.
+  - **Intégration** : composant inséré en clôture de la section 1 (`#lecture`), après la boîte bleue « Comment lire une fiche ». Le composant local `SimLink` est renommé `AtelierLink` et pointe désormais vers `#lecture` au lieu de `/simulateur` — une seule édition couvre les quatre liens contextuels des sections 2, 3, 5 et 6. Le lien vers `/simulateur` de la boîte bleue de clôture de la section 8 est conservé : il pointe vers un book de positions réel, pas vers l'atelier pédagogique.
+  - **Écart relevé, non corrigé, à trancher par le propriétaire** : la fiche du Box Spread annonce « Tous nuls : Delta, Gamma, Vega et Theta sont nuls par construction ». Delta, Gamma et Vega sont bien nuls à 1e-16 près, mais **le Theta ne l'est pas** : la valeur du Box est `(K₂−K₁)e^{−rτ}`, donc `Θ = r(K₂−K₁)e^{−rτ}` ≈ +0,196/an, soit +0,0005/jour pour un Box 95/105. C'est le portage d'un zéro-coupon qui tire vers le pair. L'atelier affiche cette valeur ; la fiche n'a pas été modifiée.
+  - **Reste à faire** : Quiz Module 7.
+
+- **2026-09-02 (fin de session) — Extension de `StrategyPayoffChart` à 21 stratégies** :
+  - **Fiche du Box Spread corrigée** (`#synthetique-box`). Le champ Greeks dominants passe de « Tous nuls : Delta, Gamma, Vega et Theta sont nuls par construction » à « Delta, Gamma et Vega nuls par construction. Theta strictement positif : Θ = r(K₂−K₁)e^{−rτ}, le portage du zéro-coupon qui tire la valeur vers K₂−K₁ ». Paragraphe ajouté dans le corps de la sous-section : ce Theta positif n'est pas un résidu numérique mais la confirmation de la nature de l'instrument, acheter un box revient à prêter et un prêt rapporte de l'intérêt. C'est l'écart relevé par l'atelier à la session précédente ; c'était bien la fiche qui était fausse.
+  - **Six stratégies ajoutées** : `put-spread-collar` (Put Spread Collar (Seagull), une seule entrée pour les deux noms puisque la section 5 les a fusionnés), `seagull-haussier` (structure distincte, sans sous-jacent détenu), `ratio-collar`, `synthetique` (Forward synthétique), `conversion`, `reversal`. Défauts 90/100/110 pour les structures à trois strikes, 90 et 110 pour le Ratio Collar, 100 pour les strikes uniques.
+  - **Quantités fractionnaires** : `fmtQty` formate à la française (1,6). Le Ratio Collar vend n calls par action détenue, n piloté par le slider de ratio. La carte Flux initial affiche le nominal implicite (« 1,6 call vendu pour 1 action détenue »).
+  - **Cas dégénérés Conversion / Reversal** : P&L constant valant ±K(1−e^{−rT}) = ±1,98 pour K=100 et r=2 %, Reversal exactement opposé à la Conversion, aucun point mort, plancher d'amplitude 10 de l'axe Y réutilisé, entrée de légende masquée. Même traitement que le Box Spread.
+  - **Vérifications contre le texte** (suite `scratchpad/test2.mjs`, sections 11 à 20, toutes vertes) : Delta du Forward synthétique = 1 à 1e-12 près et prime = S₀ − Ke^{−rT}, ce qui valide la phrase « donne un Delta de 1 et reproduit exactement une position forward » ; Put Spread Collar avec protection interrompue sous K₁, plateau entre K₁ et K₂, gain plafonné au-dessus de K₃ et overlay moins cher qu'un collar de même protection et même cap ; Seagull haussier = call spread financé par un put vendu, gain plafonné à K₃−K₂−P ; Ratio Collar à perte non bornée au-dessus de K₂.
+  - **Écart relevé, non corrigé, à trancher par le propriétaire — exemple chiffré du Ratio Collar (section 5).** Le texte annonce put 90 à 4,00, call 110 à 2,50, donc un ratio de coût nul de 1,6. Sous les paramètres de l'atelier (T = 1 an, σ_ATM = 20 %, skew linéaire en ln(K/S₀)), le put 90 vaut bien 4,02, mais le call 110 vaut 3,86 au skew par défaut de 0,30, ce qui donne un ratio de coût nul de 1,04 et non 1,6. Le ratio de coût nul monte à 0,61 / 0,80 / 1,04 / 1,36 / 1,80 pour un skew de 0 / 0,15 / 0,30 / 0,45 / 0,60 : le mécanisme décrit par le texte est bien reproduit et fort (il triple), mais **l'exemple chiffré de la page correspond à un skew d'environ 0,6, pas 0,3**. Conséquence visible : au défaut n = 1,6 et skew 0,30, l'overlay est au crédit de 2,15 et le P&L à S = 130 vaut +0,15, alors que la boîte amber annonce un résultat net négatif. En portant le curseur de skew à 0,60, l'atelier retrouve l'exemple de la page : call 110 à 2,81, ratio de coût nul 1,80, P&L à 130 de −2,56 contre les −2 par action du texte. Ni le texte ni les défauts n'ont été modifiés.
+  - **Nettoyage de session précédente conservé** : les 4 liens contextuels pointent vers `#lecture` via `AtelierLink`, le lien `/simulateur` de la section 8 est intact.
+
+- **2026-09-02 (suite 2) — Recalage des exemples chiffrés de `strategies-optionnelles` sur le moteur** :
+  - **Exemple du Ratio Collar (section 5) réécrit.** L'écart signalé à la session précédente est tranché en corrigeant les strikes, pas le skew : le skew par défaut de 0,30 est réaliste et reste inchangé. Le couple passe de (90, 110) avec un ratio annoncé de 1,6 — qui ne correspondait à rien sous les paramètres de l'atelier — à **(90, 110) conservé, mais avec le raisonnement refondu** et le scénario de hausse porté de +30 % à +50 %.
+  - **Recadrage économique du paragraphe**, décidé par le propriétaire et plus honnête que la version d'origine : à n = 1,6 et skew 0,30, la structure n'est pas autofinancée, elle est **au-dessus du coût nul et encaisse un crédit de 2 155 sur 1 000 actions**. Le collar à nominal égal étant déjà quasi autofinancé (résidu de 160, ratio de coût nul 1,04), le gérant qui vend 1,6 call par action ne cherche pas à financer son put : il vend du nominal supplémentaire pour empocher une prime. C'est précisément ce qui rend le piège attractif.
+  - **Tous les chiffres proviennent du moteur** : put 90 à 4,02 (4 018 sur 1 000 actions), call 110 à 3,86 (3 858 à nominal égal, 6 173 pour 1 600 calls), crédit net 2 155, 600 calls nus sur 1 600. Scénario S = 150 : titres +50 000, calls −64 000, crédit +2 155, **P&L net −11 845 soit −11,85 par action**. Boîte amber confirmée, la perte est franche.
+  - **Deux corrections de chiffres avancés en cours de discussion.** Le point de bascule n'est pas 128,75 : la formule `110 + 30/1,6` donne le spot où la perte sur les calls nus atteint 30, pas celui où le P&L croise zéro. Le moteur donne **130,26**, le crédit encaissé repoussant la bascule de 126,67 à 130,26, soit 3,6 points de spot seulement. Et le postulat « le financement à nominal égal est impossible » de la version d'origine est faux sous ces paramètres, d'où la refonte ci-dessus.
+  - **Encadré de calibration ajouté** sous l'exemple : le ratio d'autofinancement de (90, 110) vaut 0,61 à volatilité plate, 1,04 au skew de référence, 1,80 sur un skew deux fois plus creusé. Le lecteur est invité à déplacer le curseur de skew de l'atelier puis à ramener le curseur de ratio jusqu'à annuler le flux initial. **C'est le meilleur usage du composant sur cette page** : il transforme une erreur de rédaction en démonstration du fait que le ratio est dicté par la pente du smile, pas choisi.
+  - **Minimum du slider de ratio abaissé de 1,0 à 0,5** — écart assumé à la spec, rendu nécessaire par l'encadré ci-dessus : à skew inférieur à 0,30 le ratio d'autofinancement descend sous 1,0 (0,61 à volatilité plate) et la manipulation décrite dans le texte était impossible sur la moitié basse de la plage de skew.
+  - **Exemple du Diagonal (section 4) recalé.** Les primes passent de 8 et 6 à **5,95 (call 2 ans K=120) et 4,23 (call 3 mois K=100)**, débit net 1,72, perte plafonnée 21,72. Le raisonnement et la structure `(K₂−K₁) + débit net` sont inchangés, ils étaient justes. Note ajoutée sous l'exemple : ces primes sont calculées **à volatilité plate**, l'atelier n'ayant pas de structure par terme de skew et ne pouvant donc pas valoriser une jambe à deux ans — c'est aussi la raison pour laquelle le Diagonal est absent du sélecteur. ⚠️ Le débit affiché est la différence des deux primes **arrondies** (5,95 − 4,23 = 1,72) et non l'arrondi du net exact (1,7148 → 1,71) : écart d'un centime assumé, pour que le lecteur qui refait le calcul sur la page tombe juste.
+  - **Exemple du Straddle (section 3)** vérifié et laissé intact : le moteur donne 15,85 contre « environ 16 » dans le texte.
+  - **33 contrôles supplémentaires** (`scratchpad/test3.mjs`) recoupant **chaque nombre écrit dans ces deux exemples** contre le moteur, en plus des 210 déjà en place. Total : 243 contrôles, aucun échec.
+  - **Finitions de clôture** : Straddle section 3 vérifié et laissé intact, le texte disait déjà « environ 16 points » — l'écart avec les 15,85 du moteur est le prix de la règle mentale 0,8·S·σ√T et l'assumer fait partie de la leçon. Poor Man's Covered Call section 4 : strike indicatif ajouté, un Delta de 0,85 à deux ans correspond à un strike de l'ordre de 74 pour un spot à 100 (delta exact 0,8499, prime ≈ un tiers du spot), formulé comme ordre de grandeur puisqu'il dépend entièrement de la nappe retenue. Audit complet des ancres internes : 29 `id` définis, 7 liens `#`, **aucune ancre morte** (`#lecture` ×5 — les 4 `AtelierLink` plus l'encadré de calibration —, `#call-spread`, `#calendar`, `#diagonal`, `#covered-call`, `#ratio-backspread`) ; les 2 liens `/simulateur` restants sont la navbar et la boîte de clôture de la section 8, comme voulu. Note : `#call-spread`, `#calendar` et `#diagonal` sont émis par le composant, donc absents du HTML serveur puisqu'il est en `ssr: false` — leurs cibles existent bien.
+
+  - **⚠️ ENSEIGNEMENT PRINCIPAL DE LA SESSION — à appliquer aux Modules 8 et 9.** Le composant a servi d'outil de vérification autant que d'outil pédagogique. En recoupant l'atelier avec les fiches et le corps du texte, **quatre erreurs de contenu ont été trouvées, toutes par le composant et aucune par la relecture humaine** :
+    1. **Points morts du Ratio 1×2** — la fiche décrivait correctement les deux régimes, mais la configuration présentée comme canonique tombait dans le régime débit alors que le texte la donnait au crédit. Défaut du sélecteur déplacé à K₂ = 108 pour retrouver le cas crédit, avec un seul point mort à la hausse.
+    2. **Theta du Box Spread** — la fiche annonçait « tous les Greeks nuls ». Delta, Gamma et Vega le sont à 1e-16 près, mais le Theta vaut r(K₂−K₁)e^{−rτ} ≈ +0,196/an : c'est le portage du zéro-coupon. Fiche corrigée, et le paragraphe qui en découle renforce le propos « acheter un box revient à prêter ».
+    3. **Exemple chiffré du Ratio Collar** — primes inventées à la main (put 4,00, call 2,50), incompatibles entre elles sous toute nappe cohérente. A entraîné une refonte complète du raisonnement, le postulat « le financement à nominal égal est impossible » étant lui-même faux.
+    4. **Primes du Diagonal** — 8 et 6 écrites à la main, recalculées à 5,95 et 4,23.
+  - **Règle de méthode qui en découle, valable au-delà de cette page : tout exemple chiffré d'une page de cours doit être produit par un moteur, jamais écrit à la main.** Une prime plausible à l'œil ne l'est presque jamais une fois recoupée, et les erreurs se propagent ensuite dans les fiches, les points morts et les conclusions. Pour les Modules 8 et 9, écrire le composant **avant** de rédiger les exemples, et faire produire chaque nombre par lui. Le motif « une stratégie = une liste de jambes signées » rend ce moteur réutilisable tel quel pour les payoffs de produits structurés.
+  - **Le harnais n'est pas jetable : il est versionné dans `scripts/payoff-tests/` et se réutilise pour les payoffs des Modules 8 et 9.** Il a été déplacé du scratchpad vers le dépôt en fin de session, précisément parce qu'il a trouvé quatre erreurs que la relecture n'avait pas vues. Lancement : `npm run test:payoff`. Emplacement choisi hors de `app/` : tout ce qui vit sous `app/` est dans l'arbre de l'App Router et scanné par Next et Turbopack, un harnais Node autonome n'y a pas sa place. **La propriété à préserver impérativement en l'étendant est le mécanisme d'extraction** (`extract-engine.mjs`) : le moteur est découpé dans le fichier composant réel, jamais recopié. Un harnais qui recopierait les formules validerait sa propre copie et ne prouverait rien sur la page en production. Pour un nouveau composant de payoff, pointer `SOURCE` vers son fichier (ou passer la constante en paramètre si les deux doivent coexister) et ajouter une suite sur le modèle de `03-exemples-page.mjs`. Voir `scripts/payoff-tests/README.md`.
+  - **Deux arbitrages de convention consignés** : (a) le débit net du Diagonal est affiché à **1,72**, différence des deux primes arrondies (5,95 − 4,23), et non 1,71 qui serait l'arrondi du net exact 1,7148 — le lecteur qui refait le calcul sur la page doit tomber juste ; (b) le slider de ratio du Ratio Collar va de **0,5 à 2,5** et non de 1,0 à 2,5, parce que le ratio d'autofinancement descend à 0,61 à volatilité plate et que l'encadré de calibration invite explicitement le lecteur à l'atteindre sur toute la plage de skew.
+  - **Module 7 — Equity I : COMPLET (3/3 pages)**, contenu et composants interactifs inclus. **Reste à faire : Quiz Module 7**, à construire sur les trois pages du module (delta-one-cash, options-vanilles, strategies-optionnelles).
 
 ## Commandes utiles
 - Lancer en local : npm run dev → http://localhost:3000
