@@ -100,7 +100,14 @@ const N_PTS      = 200;
 const M_ARR      = Array.from({ length: N_PTS }, (_, i) => 0.5 + i / (N_PTS - 1));
 const GREEK_KEYS   = ['Delta', 'Gamma', 'Vega', 'Theta'];
 const GREEK_LABELS = { Delta: 'Delta (€)', Gamma: 'Gamma (€)', Vega: 'Vega (€)', Theta: 'Theta (€/j)' };
-const COLORS     = ['#2563eb', '#ef4444'];
+const MAX_TRADES   = 4;
+const TRADE_COLORS = ['#2563eb', '#dc2626', '#16a34a', '#d97706'];
+
+// Plus petit slot libre (0 → 3), null si le book est plein
+function firstFreeSlot(trades) {
+  for (let s = 0; s < MAX_TRADES; s++) if (!trades.some(t => t.slot === s)) return s;
+  return null;
+}
 
 const DEFAULT_FORM = {
   type: 'Call', sens: 'Long',
@@ -127,15 +134,15 @@ function fillDatasets(refData) {
   ];
 }
 
-function buildDatasets(gName, trades) {
+function buildDatasets(gName, trades, aggOnly) {
   const curve = (t) => M_ARR.map(m => ({
     x: m,
     y: greekBS(gName, t.type, m * t.K, t.K, t.r, t.q, t.sigma, t.T) * scaleEur(gName, t),
   }));
-  const spotPt = (t, color) => ({
+  const spotPt = (t) => ({
     label: '_spot',
     data: [{ x: t.S / t.K, y: greekBS(gName, t.type, t.S, t.K, t.r, t.q, t.sigma, t.T) * scaleEur(gName, t) }],
-    borderColor: color, backgroundColor: color,
+    borderColor: TRADE_COLORS[t.slot], backgroundColor: TRADE_COLORS[t.slot],
     pointRadius: 6, borderWidth: 0, fill: false, showLine: false,
   });
 
@@ -144,21 +151,27 @@ function buildDatasets(gName, trades) {
     const refData = curve(t);
     return [
       ...fillDatasets(refData),
-      { label: `${t.sens} ${t.type}`, data: refData, borderColor: COLORS[0], borderWidth: 2, pointRadius: 0, tension: 0.2, fill: false },
-      spotPt(t, COLORS[0]),
+      { label: `${t.sens} ${t.type}`, data: refData, borderColor: TRADE_COLORS[t.slot], borderWidth: 2, pointRadius: 0, tension: 0.2, fill: false },
+      spotPt(t),
     ];
   }
 
-  const d0 = curve(trades[0]);
-  const d1 = curve(trades[1]);
-  const aggData = M_ARR.map((m, i) => ({ x: m, y: d0[i].y + d1[i].y }));
+  const curves  = trades.map(curve);
+  const aggData = M_ARR.map((m, i) => ({ x: m, y: curves.reduce((s, c) => s + c[i].y, 0) }));
+
+  // Une courbe pointillée + un point au spot par trade, sauf en mode « Agrégé seul »
+  const individuels = aggOnly ? [] : trades.flatMap((t, i) => ([
+    {
+      label: `T${t.slot + 1}: ${t.sens} ${t.type}`, data: curves[i],
+      borderColor: TRADE_COLORS[t.slot], borderWidth: 1.5, borderDash: [5, 4],
+      pointRadius: 0, tension: 0.2, fill: false,
+    },
+    spotPt(t),
+  ]));
 
   return [
     ...fillDatasets(aggData),
-    { label: `T1: ${trades[0].sens} ${trades[0].type}`, data: d0, borderColor: COLORS[0], borderWidth: 1.5, borderDash: [5, 4], pointRadius: 0, tension: 0.2, fill: false },
-    spotPt(trades[0], COLORS[0]),
-    { label: `T2: ${trades[1].sens} ${trades[1].type}`, data: d1, borderColor: COLORS[1], borderWidth: 1.5, borderDash: [5, 4], pointRadius: 0, tension: 0.2, fill: false },
-    spotPt(trades[1], COLORS[1]),
+    ...individuels,
     { label: 'Agrégé', data: aggData, borderColor: '#111827', borderWidth: 2.5, pointRadius: 0, tension: 0.2, fill: false },
   ];
 }
@@ -171,6 +184,9 @@ export default function SimulateurPage() {
   const [formData, setFormData]           = useState(DEFAULT_FORM);
   const [visibleGreeks, setVisibleGreeks] = useState({ Delta: true, Gamma: true, Vega: true, Theta: true });
   const [infoOpen, setInfoOpen]           = useState(false);
+  const [aggOnly, setAggOnly]             = useState(false);
+  const [editingId, setEditingId]         = useState(null);   // null = mode création
+  const [sameUnderlying, setSameUnderlying] = useState(true);
 
   // Canvas refs
   const cDelta = useRef(null); const cGamma = useRef(null);
@@ -181,10 +197,22 @@ export default function SimulateurPage() {
   // Ref partagée avec le plugin ligne verticale
   const tradesRef = useRef(trades);
 
+  // Identifiants de trade, stables sur toute la vie de la page
+  const nextId = useRef(1);
+
   const canvases = [cDelta, cGamma, cVega, cTheta];
   const charts   = [iDelta, iGamma, iVega, iTheta];
 
-  useEffect(() => { tradesRef.current = trades; }, [trades]);
+  // Assignée dans le corps du composant : le plugin lit toujours la valeur courante
+  tradesRef.current = trades;
+
+  // Le book est trié par slot : le trade de référence est donc trades[0]
+  const refTrade     = trades.length > 0 ? trades[0] : null;
+  const editingTrade = editingId !== null ? trades.find(t => t.id === editingId) : null;
+  // r est éditable en création si le book est vide, en édition sur le seul trade de référence
+  const rLocked = editingId === null
+    ? trades.length > 0
+    : !!(refTrade && editingTrade && editingTrade.id !== refTrade.id);
 
   // ── Calcul temps réel dans la modale ───────────────────────────────────────
   const preview = (() => {
@@ -205,26 +233,86 @@ export default function SimulateurPage() {
 
   function update(field, val) { setFormData(p => ({ ...p, [field]: val })); }
 
-  function openModal() {
+  const pct = (v) => String(+(v * 100).toFixed(4));
+
+  function openCreate() {
+    if (trades.length >= MAX_TRADES) return;
     const base = { ...DEFAULT_FORM };
-    if (trades.length > 0) base.r = String(+(trades[0].r * 100).toFixed(2));
+    if (refTrade) {
+      base.r = pct(refTrade.r);
+      // Défaut « même sous-jacent » : S, σ et q hérités, mais librement modifiables
+      base.S     = String(refTrade.S);
+      base.sigma = pct(refTrade.sigma);
+      base.q     = pct(refTrade.q);
+    }
+    setSameUnderlying(true);
+    setEditingId(null);
     setFormData(base);
     setModalOpen(true);
+  }
+
+  function openEdit(t) {
+    setEditingId(t.id);
+    setFormData({
+      type: t.type, sens: t.sens,
+      S: String(t.S), K: String(t.K), sigma: pct(t.sigma),
+      T: String(t.T), q: pct(t.q), r: pct(t.r), montant: String(t.montant),
+    });
+    setModalOpen(true);
+  }
+
+  // Toggle « même sous-jacent » : ne touche que S, σ et q
+  function toggleSameUnderlying(val) {
+    setSameUnderlying(val);
+    if (!refTrade) return;
+    setFormData(p => ({
+      ...p,
+      S:     val ? String(refTrade.S)   : DEFAULT_FORM.S,
+      sigma: val ? pct(refTrade.sigma)  : DEFAULT_FORM.sigma,
+      q:     val ? pct(refTrade.q)      : DEFAULT_FORM.q,
+    }));
   }
 
   function submitTrade() {
     if (!canSubmit) return;
     const { prime, contrats, S, K, sigma, T, q, r, montant } = preview;
-    setTrades(p => [...p, { type: formData.type, sens: formData.sens, S, K, sigma, T, q, r, montant, prime, contrats }]);
+    const fields = { type: formData.type, sens: formData.sens, S, K, sigma, T, q, r, montant, prime, contrats };
+
+    if (editingId !== null) {
+      setTrades(prev => {
+        if (!prev.some(t => t.id === editingId)) return prev;
+        const editingRef = prev[0].id === editingId;  // le trade édité porte-t-il le r de référence ?
+        return prev.map(t => {
+          if (t.id === editingId) return { ...t, ...fields };   // id et slot conservés
+          if (!editingRef || t.r === r) return t;
+          // Propagation du nouveau r : la prime des autres trades est recalculée
+          const p2 = bsPrice(t.type, t.S, t.K, r, t.q, t.sigma, t.T);
+          return { ...t, r, prime: p2, contrats: p2 > 0 ? Math.round(t.montant / (p2 * 100)) : t.contrats };
+        });
+      });
+    } else {
+      const slot = firstFreeSlot(trades);
+      if (slot === null) return;
+      const id = nextId.current++;
+      setTrades(prev => [...prev, { id, slot, ...fields }].sort((a, b) => a.slot - b.slot));
+    }
     setModalOpen(false);
   }
 
-  // ── Rebuild des graphiques ─────────────────────────────────────────────────
+  // Signature de structure : tout ce qui change le nombre ou l'ordre des datasets
+  const structureKey = JSON.stringify({
+    slots: trades.map(t => t.slot),
+    aggOnly,
+    visibleGreeks,
+  });
+
+  // ── Création des graphiques — uniquement quand la structure change ─────────
   useEffect(() => {
+    const trs = tradesRef.current;
     GREEK_KEYS.forEach((name, idx) => {
       charts[idx].current?.destroy();
       charts[idx].current = null;
-      if (!visibleGreeks[name] || !canvases[idx].current || trades.length === 0) return;
+      if (!visibleGreeks[name] || !canvases[idx].current || trs.length === 0) return;
 
       const vlinePlugin = {
         id: `vl_${name}`,
@@ -242,15 +330,15 @@ export default function SimulateurPage() {
           ctx.globalAlpha = 1;
           ctx.stroke();
 
-          // Lignes verticales au spot de chaque trade
-          const trs = tradesRef.current;
-          if (trs.length) {
+          // Lignes verticales au spot de chaque trade ouvert
+          const cur = tradesRef.current;
+          if (cur.length) {
             ctx.lineWidth = 1;
             ctx.setLineDash([4, 3]);
             ctx.globalAlpha = 0.45;
-            trs.forEach((t, i) => {
+            cur.forEach((t) => {
               const xPx = scales.x.getPixelForValue(t.S / t.K);
-              ctx.strokeStyle = COLORS[i];
+              ctx.strokeStyle = TRADE_COLORS[t.slot];
               ctx.beginPath();
               ctx.moveTo(xPx, scales.y.top);
               ctx.lineTo(xPx, scales.y.bottom);
@@ -265,7 +353,7 @@ export default function SimulateurPage() {
       charts[idx].current = new Chart(canvases[idx].current, {
         type: 'line',
         plugins: [vlinePlugin],
-        data: { datasets: buildDatasets(name, trades) },
+        data: { datasets: buildDatasets(name, trs, aggOnly) },
         options: {
           parsing: false,
           animation: false,
@@ -305,7 +393,22 @@ export default function SimulateurPage() {
     return () => {
       charts.forEach(c => { c.current?.destroy(); c.current = null; });
     };
-  }, [trades, visibleGreeks]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [structureKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Mise à jour des données — sans jamais recréer les graphiques ───────────
+  useEffect(() => {
+    GREEK_KEYS.forEach((name, idx) => {
+      const chart = charts[idx].current;
+      if (!chart || trades.length === 0) return;
+      const next = buildDatasets(name, trades, aggOnly);
+      if (next.length !== chart.data.datasets.length) return; // pris en charge par l'effet de structure
+      next.forEach((d, i) => {
+        chart.data.datasets[i].data  = d.data;
+        chart.data.datasets[i].label = d.label;
+      });
+      chart.update('none');
+    });
+  }, [trades, structureKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Helpers JSX ───────────────────────────────────────────────────────────
   const inputCls = (locked) =>
@@ -313,13 +416,16 @@ export default function SimulateurPage() {
       locked ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' : 'border-gray-300 text-gray-900 bg-white'
     }`;
 
+  // Sous-jacent hérité : S et q sont figés, σ reste libre (la vol dépend du strike et de la maturité)
+  const sousJacentHerite = editingId === null && !!refTrade && sameUnderlying;
+
   const INPUTS = [
-    { field: 'S',       label: 'Cours actuel (S)',           step: '1'    },
+    { field: 'S',       label: 'Cours actuel (S)',           step: '1',   lock: sousJacentHerite },
     { field: 'K',       label: 'Strike (K)',                  step: '1'    },
     { field: 'sigma',   label: 'Volatilité annuelle σ (%)',   step: '0.5'  },
     { field: 'T',       label: 'Maturité T (années)',         step: '0.1'  },
-    { field: 'q',       label: 'Dividende continu q (%)',     step: '0.1'  },
-    { field: 'r',       label: 'Taux sans risque r (%)',      step: '0.1', lock: trades.length > 0 },
+    { field: 'q',       label: 'Dividende continu q (%)',     step: '0.1', lock: sousJacentHerite },
+    { field: 'r',       label: 'Taux sans risque r (%)',      step: '0.1', lock: rLocked },
     { field: 'montant', label: 'Montant de la position (€)',  step: '1000' },
   ];
 
@@ -334,34 +440,51 @@ export default function SimulateurPage() {
             <h1 className="text-4xl font-bold text-gray-900 mb-1">Simulateur de positions</h1>
             <p className="text-gray-500 text-sm">Visualisez l&apos;exposition aux Greeks de votre book d&apos;options.</p>
           </div>
-          {trades.length < 2 && (
+          <div className="flex flex-col items-end gap-1">
             <button
-              onClick={openModal}
-              className="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm"
+              onClick={openCreate}
+              disabled={trades.length >= MAX_TRADES}
+              className="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-200"
             >
               {trades.length === 0 ? 'Ouvrir un trade' : 'Ajouter un trade'}
             </button>
-          )}
+            {trades.length >= MAX_TRADES && (
+              <span className="text-xs text-gray-400">Book plein ({MAX_TRADES} trades).</span>
+            )}
+          </div>
         </div>
 
         {/* ── Book de trades ── */}
         {trades.length > 0 && (
-          <div className="flex flex-wrap gap-4 mb-8">
-            {trades.map((t, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {trades.map((t) => (
               <div
-                key={idx}
-                className={`relative flex-1 min-w-64 bg-white border border-gray-300 rounded-xl p-4 border-l-4 ${idx === 0 ? 'border-l-blue-500' : 'border-l-red-500'}`}
+                key={t.id}
+                className="relative bg-white border border-gray-300 rounded-xl p-4 border-l-4"
+                style={{ borderLeftColor: TRADE_COLORS[t.slot] }}
               >
-                <button
-                  onClick={() => setTrades(p => p.filter((_, i) => i !== idx))}
-                  aria-label="Fermer"
-                  className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full text-xl leading-none"
-                >
-                  ×
-                </button>
+                <div className="absolute top-3 right-3 flex items-center gap-0.5">
+                  <button
+                    onClick={() => openEdit(t)}
+                    aria-label={`Modifier le trade ${t.slot + 1}`}
+                    className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-blue-600 hover:bg-gray-100 rounded-full text-sm leading-none"
+                  >
+                    ✎
+                  </button>
+                  <button
+                    onClick={() => setTrades(p => p.filter(x => x.id !== t.id))}
+                    aria-label={`Fermer le trade ${t.slot + 1}`}
+                    className="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full text-xl leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
                 <div className="flex items-center gap-2 mb-3">
-                  <span className={`text-xs font-bold uppercase tracking-wide ${idx === 0 ? 'text-blue-600' : 'text-red-500'}`}>
-                    Trade {idx + 1}
+                  <span
+                    className="text-xs font-bold uppercase tracking-wide"
+                    style={{ color: TRADE_COLORS[t.slot] }}
+                  >
+                    Trade {t.slot + 1}
                   </span>
                   <span className={`text-xs rounded-full px-2 py-0.5 font-medium ${t.sens === 'Long' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
                     {t.sens}
@@ -408,9 +531,8 @@ export default function SimulateurPage() {
               >ⓘ</button>
             </div>
             {GREEK_KEYS.map(name => {
-              const v1 = trades.length > 0 ? getGreekAtSpot(trades[0], name) : null;
-              const v2 = trades.length > 1 ? getGreekAtSpot(trades[1], name) : null;
-              const aggV = v2 !== null ? v1 + v2 : null;
+              const vals = trades.map(t => getGreekAtSpot(t, name));
+              const agg  = vals.reduce((s, v) => s + v, 0);
               return (
                 <div key={name} className="flex items-start gap-1.5">
                   <label className="flex items-center gap-1.5 cursor-pointer mt-0.5">
@@ -422,20 +544,18 @@ export default function SimulateurPage() {
                     />
                     <span className="text-sm text-gray-700">{name}</span>
                   </label>
-                  {v1 !== null && (
-                    <div className="inline-flex flex-col items-start ml-1 text-xs font-mono leading-tight">
-                      <span className="flex items-center gap-1">
-                        <span className="text-blue-500">●</span>
-                        <span className={signCls(v1)}>{fmtG(v1)}</span>
-                      </span>
-                      {aggV !== null && (
+                  {vals.length > 0 && (
+                    <div className="inline-flex flex-col items-start ml-1 text-[11px] font-mono leading-[1.25]">
+                      {trades.map((t, i) => (
+                        <span key={t.id} className="flex items-center gap-1">
+                          <span style={{ color: TRADE_COLORS[t.slot] }}>●</span>
+                          <span className={signCls(vals[i])}>{fmtG(vals[i])}</span>
+                        </span>
+                      ))}
+                      {vals.length > 1 && (
                         <>
-                          <span className="flex items-center gap-1">
-                            <span className="text-red-500">●</span>
-                            <span className={signCls(v2)}>{fmtG(v2)}</span>
-                          </span>
                           <div className="border-t border-gray-400 w-full my-0.5" />
-                          <span className={`pl-3 ${signCls(aggV)}`}>{fmtG(aggV)}</span>
+                          <span className={`pl-3 ${signCls(agg)}`}>{fmtG(agg)}</span>
                         </>
                       )}
                     </div>
@@ -443,7 +563,29 @@ export default function SimulateurPage() {
                 </div>
               );
             })}
+            {trades.length > 1 && (
+              <label className="flex items-center gap-1.5 cursor-pointer mt-0.5">
+                <input
+                  type="checkbox"
+                  checked={aggOnly}
+                  onChange={e => setAggOnly(e.target.checked)}
+                  className="accent-gray-800 w-4 h-4"
+                />
+                <span className="text-sm text-gray-700">Agrégé seul</span>
+              </label>
+            )}
           </div>
+
+          {/* Avertissement : strikes hétérogènes, l'agrégation en moneyness perd son sens */}
+          {new Set(trades.map(t => t.K)).size > 1 && (
+            <div className="mb-5 bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-900">
+              <span className="mr-1">⚠</span>
+              Vos trades n&apos;ont pas le même strike. L&apos;axe horizontal étant gradué en moneyness S/K,
+              un même point de l&apos;axe correspond à un spot différent pour chaque trade : la courbe noire
+              agrégée n&apos;a pas de sens financier dans cette configuration. Les courbes individuelles,
+              elles, restent justes.
+            </div>
+          )}
 
           {/* État vide */}
           {trades.length === 0 && (
@@ -453,7 +595,7 @@ export default function SimulateurPage() {
                 Cliquez sur &quot;Ouvrir un trade&quot; pour visualiser votre exposition aux Greeks.
               </p>
               <button
-                onClick={openModal}
+                onClick={openCreate}
                 className="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
               >
                 Ouvrir un trade
@@ -532,7 +674,9 @@ export default function SimulateurPage() {
             {/* En-tête modale */}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-gray-900">
-                {trades.length === 0 ? 'Ouvrir un trade' : 'Ajouter un trade'}
+                {editingTrade
+                  ? `Modifier le trade ${editingTrade.slot + 1}`
+                  : trades.length === 0 ? 'Ouvrir un trade' : 'Ajouter un trade'}
               </h2>
               <button
                 onClick={() => setModalOpen(false)}
@@ -543,6 +687,26 @@ export default function SimulateurPage() {
             </div>
 
             <div className="space-y-5">
+              {/* Toggle Même sous-jacent — création uniquement */}
+              {editingId === null && refTrade && (
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    Même sous-jacent que le trade {refTrade.slot + 1} ?
+                  </p>
+                  <div className="flex gap-2">
+                    {[['Oui', true], ['Non', false]].map(([lbl, val]) => (
+                      <button key={lbl} type="button" onClick={() => toggleSameUnderlying(val)}
+                        className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${sameUnderlying === val ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                        {lbl}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Fige S et q sur ceux du trade {refTrade.slot + 1}. σ reste modifiable : la vol implicite dépend du strike et de la maturité.
+                  </p>
+                </div>
+              )}
+
               {/* Toggle Type */}
               <div>
                 <p className="text-sm font-medium text-gray-700 mb-2">Type</p>
@@ -583,7 +747,11 @@ export default function SimulateurPage() {
                     className={inputCls(lock)}
                   />
                   {lock && (
-                    <p className="text-xs text-gray-400 mt-1">Partagé avec le trade 1 pour cohérence du pricing.</p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {field === 'r'
+                        ? `Partagé avec le trade ${refTrade ? refTrade.slot + 1 : 1} pour cohérence du pricing.`
+                        : `Hérité du trade ${refTrade ? refTrade.slot + 1 : 1} — répondre « Non » ci-dessus pour le modifier.`}
+                    </p>
                   )}
                 </div>
               ))}
@@ -612,7 +780,7 @@ export default function SimulateurPage() {
               disabled={!canSubmit}
               className="mt-4 w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
             >
-              Lancer mon trade →
+              {editingTrade ? 'Enregistrer les modifications' : 'Lancer mon trade →'}
             </button>
           </div>
         </div>
